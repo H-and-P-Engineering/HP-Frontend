@@ -4,8 +4,11 @@
     <head>
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
 
-        <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+        <!-- open location library for converting geocode to plus code -->
+        <script src="https://cdn.jsdelivr.net/npm/open-location-code@1.0.4/js/openlocationcode.min.js"></script>
 
+        <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+        
         <!-- jquery for register-as.html  --> 
         <script>
             $(document).ready(function() {
@@ -38,9 +41,15 @@
                 $(".buyland-searchicon").click(function() {
                     $(".filterby-overlay").css("display", "block");
                 });
+                $(document).click(function() {
+                    $("#housing-details-form").addClass("housing-details-form-hidden");
+                });
+                $(".vendor-feat-arrow").click(function() {
+                    $(".vendor-feat-arrow").addClass("")
+                });
             });  
-        </script>
-        <!-- user pages css -->
+        </script> 
+        <!-- user pages css --> 
         <link href="{{ url_for ('static', filename = 'index.css') }}" rel="stylesheet">
         <link href="{{ url_for ('static', filename = 'signin.css') }}" rel="stylesheet">
         <link href="{{ url_for ('static', filename = 'register-as.css') }}" rel="stylesheet">
@@ -49,7 +58,12 @@
         <link href="{{ url_for ('static', filename = 'user-filterby.css') }}" rel="stylesheet">
         <!-- user purchase pages class -->
         <link href="{{ url_for ('static', filename = 'user-rent.css') }}" rel="stylesheet">
-        <link href="{{ url_for ('static', filename = 'user-buyland.css') }}" rel="stylesheet">
+        <link href="{{ url_for ('static', filename = 'user-buyland.css') }}" rel="stylesheet"> 
+        <link href="{{ url_for ('static', filename = 'homepage-filterbys.css') }}" rel="stylesheet">
+        <link href="{{ url_for ('static', filename = 'user-land-house-nav3.css') }}" rel="stylesheet">
+        <link href="{{ url_for ('static', filename = 'user-vendorsearch-nav2.css') }}" rel="stylesheet">
+
+        <link href="{{ url_for ('static', filename = 'get-user-location.css') }}" rel="stylesheet">
         <!-- land agents pages -->
         <link href="{{ url_for ('static', filename = 'landagent-homepage.css') }}" rel="stylesheet">
         <link href="{{ url_for ('static', filename = 'agent-land-listing.css') }}" rel="stylesheet">
@@ -57,10 +71,19 @@
         <link href="{{ url_for ('static', filename = 'housing-agent-bungalow-listingpg2.css') }}" rel="stylesheet">
         <link href="{{ url_for ('static', filename = 'form-to-add-item-housingagent.css') }}" rel="stylesheet">
         <link href="{{ url_for ('static', filename = 'insightpage-housingagent.css') }}" rel="stylesheet">
+
+        <!-- user, agents, vendors create account forms -->
+        <link href="{{ url_for ('static', filename = 'create-account.css') }}" rel="stylesheet">
+
+        <!-- agents, vendors create account forms --> 
+        <link href="{{ url_for ('static', filename = 'agents-vendors-homepage.css') }}" rel="stylesheet">
+
+        <!-- all sellers profile page -->
+        <link href="{{ url_for ('static', filename = 'sellers-profilepage.css') }}" rel="stylesheet">
         
         <meta name="viewport" content="initial-scale=1, width=device-width">        
 
-        <title>hello</title>
+        <title>hello</title>   
     </head>
     <body>
         {% block body %}{% endblock %}

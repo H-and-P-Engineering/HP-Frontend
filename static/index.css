@@ -263,9 +263,8 @@
     border-right: 15px solid black;
     border-bottom: 15px solid black;
     border-radius: 50%;
-    animation: spinloader 4s linear 3;
+    animation: spinloader 4s linear infinite;
     background-color: orange;
-    animation-delay: 3s;
     transform: rotate(90deg);
 }  
 @keyframes spinloader 
@@ -293,16 +292,34 @@
 .div3in1-fade-lp
 {
     opacity: 1;
-    /* animation: every3slides 4s linear 1; */
-    /* animation-delay: 2s; */
 }
-/* @keyframes every3slides
+.FAQ-leftnav
 {
-    0%{visibility: visible;}
-    100% {visibility: hidden;}
-} */
-
-
+    overflow-y: scroll;
+    height: 530px;
+    flex: 30%;
+}
+.Ans-rightnav
+{
+    position: relative;
+    flex: 30%;
+    height: 530px;
+    background-color: #004aad;
+    color: white;
+    overflow-y: hidden;
+}
+.Ans-rightnav-slide
+{
+    position: absolute;
+    visibility: visible;
+    width: 100%;
+    height: 500px;
+}
+.customer-vendor-agent-navbutton
+{
+    position: absolute;
+    display: block;
+}
 
 
 .section-two

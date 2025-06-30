@@ -14,21 +14,25 @@ def registeras():
 def signin():
     return render_template("signin.html")
 
+@app.route("/reg_direction")
+def reg_direction():
+    return render_template("registration-direction.html")
+
 @app.route("/createaccount-user")
 def createaccountuser():
-    return render_template("createaccount-user.html")
+    return render_template("signup-user.html")
 
 @app.route("/createaccount-vendor")
 def createaccountvendor():
-    return render_template("createaccount-vendor.html")
+    return render_template("signup-vendor.html")
 
-@app.route("/createaccount-land-agent")
-def createaccountlandtagent():
-    return render_template("createaccount-land-agent.html")
+@app.route("/createaccount-agents")
+def createaccountagents():
+    return render_template("signup-agents.html")
 
-@app.route("/createaccount-housing-agent")
-def createaccounthousingagent():
-    return render_template("createaccount-housing-agent.html")
+@app.route("/createaccount-explore")
+def createaccountexplore():
+    return render_template("signup-explore.html")
 
 # OTP pages to verify email
 @app.route("/verify_useremail_otp", methods=["GET", "POST"])
@@ -58,6 +62,13 @@ def verify_houseagentemail_otp():
         return render_template("verify-houseagentemail-otp.html")
     else:
         return render_template("verify-houseagentemail-otp.html")
+    
+@app.route("/verify_explorersemail_otp", methods=["GET", "POST"])
+def verify_explorersemail_otp():
+    if request.method == "POST":
+        return render_template("verify-explorersemail-otp.html")
+    else:
+        return render_template("verify-explorersemail-otp.html")
 
 
 
@@ -123,6 +134,10 @@ def user_land_house_nav3():
 @app.route("/user_vendorsearch_nav")
 def user_allcategories_nav(): 
     return render_template("user-vendorsearch-nav.html")
+
+@app.route("/user_cart_nav4")
+def user_cart_nav4(): 
+    return render_template("user-cart-nav4.html")
 
 @app.route("/user-account")
 def useraccount(): 
@@ -289,6 +304,14 @@ def vendor_storeoperations():
         return render_template("vendor-storeoperations.html")
     else:
         return render_template("vendor-storeoperations.html")
+    
+# this section is for the explorers after they've registered/logged in
+@app.route("/explorers_profilepage", methods=["GET", "POST"])
+def explorers_profilepage():
+    if request.method == "POST":
+        return render_template("explorers-profilepage.html")
+    else:
+        return render_template("explorers-profilepage.html")
 
 # This if for the after logout, the page that serves them a login option back   
 @app.route("/after_logout_page")

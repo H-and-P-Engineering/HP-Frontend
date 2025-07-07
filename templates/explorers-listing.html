@@ -10,7 +10,7 @@
         </div>
     </div>
 
-    <!-- <div>
+    <div>
         <div style="display: flex; flex-direction: column; align-items: center; width: 800px; margin: auto;
             margin-top: 150px;">
             <div>You haven't added</div>
@@ -25,73 +25,44 @@
                 </a>          
             </div>
         </div>
-    </div> -->
+    </div>
     <!-- lets define the width of the columns and the height of the rows -->
     <!-- Nb: Each of this category will be displayed when the agent adds an item in any -->
-
-    <div>
+    <div style="display: none;">
         <div style="display: flex; justify-content: center;">
             <div class="agent-land-listing-pg1-categories">
         
-                <div style="background-color: dodgerblue; height: auto; width: 600px;">
+                <div style="background-color: dodgerblue; height: 600px; width: 600px;">
                     <div class="inner-sub-div-agent-land-listing">
                         <div style="width: 300px;">........</div>
                         <input type="button" value="-------"  style="width: 100px;">
                     </div>
                     
                     <div class="inner-sub-div-agent-land-listing">
-                        <a href="landing_agent_oneacre_listingpg2" style="text-decoration: none;">
-                            <div style="width: 300px; height: 400px;">One acre</div>    
+                        <a href="housing_agent_bungalow_listingpg2" style="text-decoration: none;">
+                            <div style="width: 300px; height: 400px;">One room</div>    
                         </a>
-                        <a href="landing_agent_oneacre_listingpg2" style="margin-left: 40px;">
+                        <a href="housing_agent_bungalow_listingpg2" style="margin-left: 40px;">
                             <input type="button" value="view details" style="width: 100px;">
                         </a>
         
                     </div>
                 
                     <div class="inner-sub-div-agent-land-listing">
-                        <div style="width: 300px;">Two acres</div>
+                        <div style="width: 300px;">2 bedrooms</div>
                         <input type="button" value="view details" style="width: 100px;">
                     </div>
                     
                     <div class="inner-sub-div-agent-land-listing">
-                        <div style="width: 300px;">Three acres</div>
+                        <div style="width: 300px;">3 Bedrooms</div>
                         <input type="button" value="view details" style="width: 100px;">
-                    </div>
-                    
-                    <!-- a plot is 1/6th of an acre, so 5 plots will be represnted,
-                    as 6 plots means one acre -->
-                    <div class="inner-sub-div-agent-land-listing">
-                        <div style="width: 300px;">One plot</div>
-                        <input type="button" value="view details" style="width: 100px;">
-                    </div>
-                    
-                    <div class="inner-sub-div-agent-land-listing">
-                        <div style="width: 300px;">Two plots</div>
-                        <input type="button" value="view details" style="width: 100px;">
-                    </div>
-                    
-                    <div class="inner-sub-div-agent-land-listing">
-                        <div style="width: 300px;">Three plots</div>
-                        <input type="button" value="view details" style="width: 100px;">
-                    </div>
-                    
-                    <div class="inner-sub-div-agent-land-listing">
-                        <div style="width: 300px;">Four plots</div>
-                        <input type="button" value="view details" style="width: 100px;">
-                    </div>
-                    
-                    <div class="inner-sub-div-agent-land-listing">
-                        <div style="width: 300px;">Five plots</div>
-                        <input type="button" value="view details" style="width: 100px;">
-                    </div>           
+                    </div>          
                 </div>   
-            </div>
-            
+            </div>         
         </div>
     </div>
 
-    <a href="form_to_add_item_landagent">
+    <a href="form_to_add_item_housingagent">
         <div style="position: fixed; bottom: 110px; right: 100px; width: 50px; height: 50px; z-index: 1;
             border: 1px solid green; border-radius: 50%; background-color: white; box-shadow: inset;
             font-size: 20px; display: flex; justify-content: center; align-items: center;"> +
@@ -103,29 +74,28 @@
         <i class="material-icons" style="font-size: 35px; color: white; text-align: center;">message</i>
     </div>
 
-
     <div class="agent-homepage-navlist-container">
         <div class="user-homepage-navlist-subdiv">
             <div style="color: black; position: absolute;">Orders</div>
-            <a href="land_agent_homepage" class="agent-homepage-navlist-link">
+            <a href="housing_agent_homepage" class="agent-homepage-navlist-link">
                 <img src="{{url_for ('static', filename='user-home-icon.jpg') }}" class="users-homepage-navicon">
             </a>
-            <div style="color: black; position: absolute;">Land listing</div>
-            <a href="agent_land_listing" class="agent-homepage-navlist-link">
+            <div style="color: black; position: absolute;">House listing</div>
+            <a href="agent_housing_listing" class="agent-homepage-navlist-link">
                 <img src="{{url_for ('static', filename='land-icon.jpg') }}" class="users-homepage-navicon">
             </a>
             <div style="color: black; position: absolute;">Appointments</div>
-            <a href="agent_land_listing" class="agent-homepage-navlist-link">
+            <a href="agent_housing_listing" class="agent-homepage-navlist-link">
                 <img src="{{url_for ('static', filename='user-rent-icon.jpg') }}" class="users-homepage-navicon">
             </a>
-            <div style="color: black; position: absolute;">Insight</div>
+            <div style="color: black; position: absolute;">Insights</div>
             <a href="insights_page_housingagent" class="agent-homepage-navlist-link">
                 <img src="{{url_for ('static', filename='user-houseitems-icon.jpg') }}" class="users-homepage-navicon">
             </a>
             <div style="color: black; position: absolute;">Account</div>
-            <a href="landagent_profilepage" class="agent-homepage-navlist-link">
+            <a href="houseagent_profilepage" class="agent-homepage-navlist-link">
                 <img src="{{url_for ('static', filename='user-account-icon.jpg') }}" class="users-homepage-navicon">
             </a>
-        </div>    
+        </div> 
     </div>
 {% endblock %}

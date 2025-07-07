@@ -18,7 +18,7 @@ def signin():
 def reg_direction():
     return render_template("registration-direction.html")
 
-@app.route("/createaccount-user")
+@app.route("/createaccount-user", methods=["GET", "POST"])
 def createaccountuser():
     return render_template("signup-user.html")
 

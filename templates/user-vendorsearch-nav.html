@@ -3,23 +3,32 @@
 
     <div id="storespage-asseen-byuser">       
         <section style="width: 100%;" id="container-search-catg-andsubcatg">
-            <div style="position: relative; width: 500px; height: 50px; margin: auto;" id="inputAndClose">
-                <input autocomplete="off" type="search" placeholder="Vendor, item eg Air conditioner, pots, bed" 
-                    style="width: 700px; height: 50px; border-radius: 15px; background-color: #dcdada;"
-                id="user-buyvendor-searchinput">
-                <!-- <span style="position: absolute; right: 10px; top: 50%; width: 35px; height: 35px;
-                    display: flex; align-items: center; justify-content: center; transform: translateY(-50%);"
-                    id="container-close-search">
-                    <span id="close-filter-display" class="close-filter-display">&times;</span>   
-                </span> -->
-                <div class="vendor-category-search-results-dropdown">
-                    <ul>
-                        <li>posha stores</li>
-                        <li>pot</li>
-                        <li>power furnitures</li>
-                        <li>powerbank</li>
-                    </ul>
+            <div style="width: 900px; height: 70px; margin: auto; display: flex; justify-content: center;
+                align-items: center; gap: 2px;" id="inputAndClose">
+                <div style="position: relative; height: 70px; display: flex; align-items: center;">
+                    <input autocomplete="off" type="search" placeholder="Vendor, item eg Air conditioner, pots, bed" 
+                        style="width: 700px; height: 50px; border-radius: 10px; border: 1px solid black;
+                        padding: 5px 10px; outline: none;" id="user-buyvendor-searchinput">
+                    <span style="position: absolute; right: 10px; top: 50%; width: 35px; height: 35px;
+                        display: flex; align-items: center; justify-content: center; transform: translateY(-50%);"
+                        id="container-close-search">
+                        <span id="close-filter-display" class="close-filter-display">&times;</span>   
+                    </span>
+                    <div class="vendor-category-search-results-dropdown">
+                        <ul>
+                            <li>posha stores</li>
+                            <li>pot</li>
+                            <li>power furnitures</li>
+                            <li>powerbank</li>
+                        </ul>
+                    </div>
                 </div>
+                
+                
+                <div style="width: 90px; height: 50px; background-color: purple; border-radius: 10px;
+                    display: flex; align-items: center; justify-content: center; color: white;">
+                    <div>Search</div>
+                </div>  
             </div>
     
             <!-- <div style="display: flex; gap: 20px; width: 90%; margin: auto;
@@ -122,7 +131,7 @@
                                 <div>Kitchen</div>
                             </div>
                             <div style="flex: 20%; color: red; display: flex; justify-content: flex-end;">
-                                <div>See All</div>
+                                <div id="see-all-kitchen-catg">See All</div>
                             </div>
                         </div>
                         <div style="display: grid; grid-template-columns: auto auto auto auto auto; gap: 10px;
@@ -220,20 +229,32 @@
             </section>
 
             <section id="items-in-subcategories" style="width: 100%; padding-top: 10px; display: none; background-color: whitesmoke;">
-                <div style="display: flex; align-items: center; gap: 5px; width: 100%; height: 70px; margin-top: -10px; background-color: white;">
+                <div style="display: flex; align-items: center; gap: 2px; width: 100%; height: 70px; margin-top: -10px; background-color: white;">
                     <div class="search-description-header"> < Cookware</div>
                     <div class="input-and-inputicon-parent">
                         <i class="material-icons searchicon-for-items-in-subcategories">search</i>
-                        <input type="text" class="input-for-items-in-subcategories">
-                        <div class="search-results-autocomplete-dropdown">
-                            <ul>
-                                <li>posha stores</li>
-                                <li>pot</li>
-                                <li>power furnitures</li>
-                                <li>powerbank</li>
-                            </ul>
-                        </div>
-                    </div>                 
+                        <div style="position: relative; height: 70px; display: flex; align-items: center;">
+                            <input placeholder="Search store, category or items" type="text"
+                                class="input-for-items-in-subcategories">
+                            <span style="position: absolute; right: 10px; top: 50%; width: 35px; height: 35px;
+                                display: flex; align-items: center; justify-content: center; transform: translateY(-50%);"
+                                id="container-close-search">
+                                <span id="close-filter-display" class="close-filter-display">&times;</span>   
+                            </span>
+                            <div class="search-results-autocomplete-dropdown">
+                                <ul>
+                                    <li>posha stores</li>
+                                    <li>pot</li>
+                                    <li>power furnitures</li>
+                                    <li>powerbank</li>
+                                </ul>
+                            </div>
+                        </div>   
+                        <div style="width: 90px; height: 50px; background-color: purple; border-radius: 10px;
+                            display: flex; align-items: center; justify-content: center; color: white;">
+                            <div>Search</div>
+                        </div>                 
+                    </div>                                          
                 </div>
                 <div style="width: 90%; margin: auto; margin-top: 10px; background-color: white;">
                     <!-- column1: stores selling the subcategory clicked -->
@@ -815,6 +836,20 @@
             storeSellingSubcategory.addEventListener('click', ()=> {
                 displayedSubcategories.classList.remove('blockDisplay');
                 storesItemsArrangement.classList.add('flexDisplay');
+            });
+        });
+
+        // ------------------------------------------------------------------------------------------------------------
+        document.addEventListener('DOMContentLoaded', () => {
+            const seeAllKitchenCatg = document.getElementById("see-all-kitchen-catg");
+            const displayedSubcategories =document.getElementById("items-in-subcategories");
+            const searchDescriptionHeader = document.querySelector(".search-description-header");
+            const inputAndClose = document.getElementById("inputAndClose");
+            seeAllKitchenCatg.addEventListener('click', function() {
+                displaySubcategories.classList.add('noneDisplay');
+                inputAndClose.classList.add('noneDisplay');
+                displayedSubcategories.classList.add('blockDisplay');
+                searchDescriptionHeader.textContent = " < Kitchen";
             });
         });
 

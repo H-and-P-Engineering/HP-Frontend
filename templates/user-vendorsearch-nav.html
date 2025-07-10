@@ -199,31 +199,31 @@
                         </div>
                         <div style="display: grid; grid-template-columns: auto auto auto auto auto; gap: 10px; justify-content: center;">
                             <div style="width: auto; display: flex; flex-direction: column; align-items: center;"
-                                onclick="openSubcategory()">
+                                onclick="openSubcategory(this)">
                                 <img src="{{url_for ('static', filename='land-icon.jpg') }}" 
                                 style="width: 50%; text-align: center; height: 100px; border-radius: 15px;">
                                 <div>Camera</div>
                             </div>
                             <div style="width: auto; display: flex; flex-direction: column; align-items: center;"
-                                onclick="openSubcategory()">
+                                onclick="openSubcategory(this)">
                                 <img src="{{url_for ('static', filename='land-icon.jpg') }}" 
                                 style="width: 50%; text-align: center; height: 100px; border-radius: 15px;">
                                 <div>Television</div>
                             </div>
                             <div style="width: auto; display: flex; flex-direction: column; align-items: center;"
-                                onclick="openSubcategory()">
+                                onclick="openSubcategory(this)">
                                 <img src="{{url_for ('static', filename='land-icon.jpg') }}" 
                                 style="width: 50%; text-align: center;  height: 100px; border-radius: 15px;">
                                 <div>Audio</div>
                             </div>
                             <div style="width: auto; box-sizing: border-box; display: flex; flex-direction: column;
-                                align-items: center;" onclick="openSubcategory()">
+                                align-items: center;" onclick="openSubcategory(this)">
                                 <img src="{{url_for ('static', filename='land-icon.jpg') }}" 
                                 style="width: 50%; text-align: center;  height: 100px; border-radius: 15px;">
                                 <div>Generator, & <br>Portable power</div>
                             </div>
                             <div style="width: auto; display: flex; flex-direction: column; align-items: center;"
-                                onclick="openSubcategory()">
+                                onclick="openSubcategory(this)">
                                 <img src="{{url_for ('static', filename='land-icon.jpg') }}" 
                                 style="width: 50%; text-align: center;  height: 100px; border-radius: 15px;">
                                 <div>Lighting</div>
@@ -302,7 +302,7 @@
                             box-sizing: border-box;">                  
                             <div style="max-width: 100%; flex: 70%; height: 70%; border-radius: 15px; background-color: gray;
                                 text-align: center;">
-                                <img src="{{url_for ('static', filename='land-icon.jpg') }}" onclick="openFullImage()"
+                                <img src="{{url_for ('static', filename='land-icon.jpg') }}" onclick="openFullImage(this)"
                                 style="width: 90%; height: 100%;">
                             </div>
                             <div style="flex: 5%; display: flex; align-items: center; gap: 10px; max-width: 100%;">
@@ -327,7 +327,7 @@
                             box-sizing: border-box;">                  
                             <div style="max-width: 100%; flex: 70%; height: 70%; border-radius: 15px; background-color: gray;
                                 text-align: center;">
-                                <img src="{{url_for ('static', filename='land-icon.jpg') }}" onclick="openFullImage()"
+                                <img src="{{url_for ('static', filename='land-icon.jpg') }}" onclick="openFullImage(this)"
                                 style="width: 90%; height: 100%;">
                             </div>
                             <div style="flex: 5%; display: flex; align-items: center; gap: 10px; max-width: 100%;">
@@ -351,7 +351,7 @@
                             box-sizing: border-box;">                  
                             <div style="max-width: 100%; flex: 70%; height: 70%; border-radius: 15px; background-color: gray;
                                 text-align: center;">
-                                <img src="{{url_for ('static', filename='land-icon.jpg') }}" onclick="openFullImage()"
+                                <img src="{{url_for ('static', filename='land-icon.jpg') }}" onclick="openFullImage(this)"
                                 style="width: 90%; height: 100%;">
                             </div>
                             <div style="flex: 5%; display: flex; align-items: center; gap: 10px; max-width: 100%;">
@@ -476,7 +476,7 @@
                             box-sizing: border-box;">                  
                             <div style="max-width: 100%; flex: 70%; height: 70%; border-radius: 15px; background-color: gray;
                                 text-align: center;">
-                                <img src="{{url_for ('static', filename='land-icon.jpg') }}" onclick="openFullImage()"
+                                <img src="{{url_for ('static', filename='land-icon.jpg') }}" onclick="openFullImage(this)"
                                 style="width: 90%; height: 100%;">
                             </div>
                             <div style="flex: 5%; display: flex; align-items: center; gap: 10px; max-width: 100%;">
@@ -501,7 +501,7 @@
                             box-sizing: border-box;">                  
                             <div style="max-width: 100%; flex: 70%; height: 70%; border-radius: 15px; background-color: gray;
                                 text-align: center;">
-                                <img src="{{url_for ('static', filename='land-icon.jpg') }}" onclick="openFullImage()"
+                                <img src="{{url_for ('static', filename='land-icon.jpg') }}" onclick="openFullImage(this)"
                                 style="width: 90%; height: 100%;">
                             </div>
                             <div style="flex: 5%; display: flex; align-items: center; gap: 10px; max-width: 100%;">
@@ -526,7 +526,7 @@
                             box-sizing: border-box;">                  
                             <div style="max-width: 100%; flex: 70%; height: 70%; border-radius: 15px; background-color: gray;
                                 text-align: center;">
-                                <img src="{{url_for ('static', filename='land-icon.jpg') }}" onclick="openFullImage()"
+                                <img src="{{url_for ('static', filename='land-icon.jpg') }}" onclick="openFullImage(this)"
                                 style="width: 90%; height: 100%;">
                             </div>
                             <div style="flex: 5%; display: flex; align-items: center; gap: 10px; max-width: 100%;">
@@ -563,7 +563,7 @@
                             box-sizing: border-box;">                  
                             <div style="max-width: 100%; flex: 70%; height: 70%; border-radius: 15px; background-color: gray;
                                 text-align: center;">
-                                <img src="{{url_for ('static', filename='land-icon.jpg') }}" onclick="openFullImage()"
+                                <img src="{{url_for ('static', filename='land-icon.jpg') }}" onclick="openFullImage(this)"
                                 style="width: 90%; height: 100%;">
                             </div>
                             <div style="flex: 5%; display: flex; align-items: center; gap: 10px; max-width: 100%;">
@@ -588,7 +588,7 @@
                             box-sizing: border-box;">                  
                             <div style="max-width: 100%; flex: 70%; height: 70%; border-radius: 15px; background-color: gray;
                                 text-align: center;">
-                                <img src="{{url_for ('static', filename='land-icon.jpg') }}" onclick="openFullImage()"
+                                <img src="{{url_for ('static', filename='land-icon.jpg') }}" onclick="openFullImage(this)"
                                 style="width: 90%; height: 100%;">
                             </div>
                             <div style="flex: 5%; display: flex; align-items: center; gap: 10px; max-width: 100%;">
@@ -613,7 +613,7 @@
                             box-sizing: border-box;">                  
                             <div style="max-width: 100%; flex: 70%; height: 70%; border-radius: 15px; background-color: gray;
                                 text-align: center;">
-                                <img src="{{url_for ('static', filename='land-icon.jpg') }}" onclick="openFullImage()"
+                                <img src="{{url_for ('static', filename='land-icon.jpg') }}" onclick="openFullImage(this)"
                                 style="width: 90%; height: 100%;">
                             </div>
                             <div style="flex: 5%; display: flex; align-items: center; gap: 10px; max-width: 100%;">
@@ -664,16 +664,17 @@
             </div>
             <div style="width: 90%; margin: auto; border-radius: 15px; margin-top: 20px;
                 display: flex; gap: 20px;"> 
-                <div style="flex: 40%; max-width: 40%; display: flex; flex-direction: column; background-color: white;">
+                <div style="flex: 40%; max-width: 40%; display: flex; flex-direction: column; background-color: white;"
+                    class="items-with-thumbnails" data-item-id="item1">
                     <div style="max-width: 100%; height: 400px; border-radius: 15px;
                         display: flex; gap: 20px;" id="fullitem-img-slideshow" class="lighbox-container">
                         <div style="width: 100%; height: 400px; display: flex; align-items: center;">
                             <img src="{{url_for ('static', filename='land-icon.jpg') }}" class="main-image" id="mainImage"
-                            style="width: 100%; height: 350px;">
+                            style="width: 100%; max-width: 100%; height: 350px;  margin-bottom: 20px;">
                         </div>
                     </div>
                     <div class="thumbnail-container" id="thumbnailContainer">
-                        <img src="{{url_for ('static', filename='land-icon.jpg') }}" class="thumbnail active"
+                        <img src="{{url_for ('static', filename='land-icon.jpg') }}" class="thumbnail"
                             style="width: 50px; height: 50px;">
                         <img src="{{url_for ('static', filename='kitchen-utensils.jpg') }}" class="thumbnail"
                         style="width: 50px; height: 50px;">
@@ -749,15 +750,8 @@
         const storesItems = document.getElementById("stores-items-arrangement");
         
         vendornavSearchinput.addEventListener('input', function() { 
-            // displaySubcategories.style.display = "none";
             vendorCategorySearchDropdown.classList.add('blockDisplay');
-            // displaySearchedstore.style.display = "block";
             if (vendornavSearchinput.value === '') {
-                // if (displaySearchedstore.style.display === "block") {
-                //     displaySearchedstore.style.display = "none";
-                //     displaySubcategories.style.display = "flex";
-                //     displaySubcategories.style.marginTop = "0";
-                // }
                 if (vendorCategorySearchDropdown.classList.contains('blockDisplay')) {
                     vendorCategorySearchDropdown.classList.remove('blockDisplay');
                 }
@@ -782,7 +776,7 @@
         const storesItemsArrangement = document.getElementById("stores-items-arrangement");
         const homepageNavlist = document.getElementById("homepage-navlist-container");
         const itemsInSubcategories = document.getElementById("items-in-subcategories");
-        function openFullImage() {
+        function openFullImage(element) {
             if (storesItemsArrangement.classList.contains("flexDisplay")) {
                 storesItemsArrangement.classList.remove("flexDisplay");
             }
@@ -792,20 +786,26 @@
         }
 
         // ----------------------------------------------------------------------------------------------------------
-
         document.addEventListener('DOMContentLoaded', () => {
-            const mainImage = document.getElementById("mainImage");
             const thumbnails = document.querySelectorAll('.thumbnail');
-            thumbnails.forEach(thumbnail =>{
+            thumbnails.forEach (thumbnail => {
                 thumbnail.addEventListener('click', () => {
-                    thumbnails.forEach(thumb => thumb.classList.remove('active'));
+                    // find the parent element of the larger main image to scope the changes to it only
+                    const item = thumbnail.closest('.items-with-thumbnails');
+                    const itemId = item.dataset.itemId;
+                    const mainImage = item.querySelector('.main-image');
+                    // get the thumbnail's data-main-src
+                    const newSrc = thumbnail.src;
+                    // update the main image source
+                    mainImage.src = newSrc;
+                    // remove the class 'active' from all thumbnails in this item
+                    item.querySelectorAll('.thumbnail').forEach(thumb => {
+                        thumb.classList.remove('active');
+                    });
+                    // add 'active' class to the clicked thumbnail 
                     thumbnail.classList.add('active');
-                    mainImage.src = thumbnail.src;
                 });
             });
-            // set first image as default on page load
-            mainImage.src = thumbnails[0].src;
-            thumbnails[0].classList.add('active');
         });
 
 
@@ -827,23 +827,13 @@
         });
 
         // -------------------------------------------------------------------------------------------------------------
-        // document.addEventListener('DOMContentLoaded', () => {
             const cookwareItems = document.getElementById("all-cookware-items");
-            // const itemsInSubcategories = document.getElementById("items-in-subcategories");
-            // const displaySubcategories = document.getElementById("vendor-subcategories-display");
             const inputAndClose = document.getElementById("inputAndClose");
-            function openSubcategory() {
+            function openSubcategory(element) {
                 displaySubcategories.style.display = "none";
                 itemsInSubcategories.classList.add('blockDisplay');
                 inputAndClose.classList.add("noneDisplay");
             }
-            // cookwareItems.addEventListener('click', () => {
-            //     displaySubcategories.style.display = "none";
-            //     itemsInSubcategories.classList.add('blockDisplay');
-            //     inputAndClose.classList.add("noneDisplay");
-            // });
-        // });
-
 
     // ----------------------------------------------------------------------------------------------------------------
         document.addEventListener('DOMContentLoaded', () => {

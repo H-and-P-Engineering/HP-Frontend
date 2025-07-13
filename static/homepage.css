@@ -1,3 +1,12 @@
+.noneDisplay {
+    display: none !important;
+}
+.flexDisplay {
+    display: flex !important;
+}
+.blockDisplay {
+    display: block !important; 
+}
 .container-homepage-explore {
     overflow-x: scroll;
     width: 100%;
@@ -48,7 +57,8 @@
     display: flex;
     gap: 15px;
     width: 1260px;
-    height: 250px;
+    height: 400px;
+    background-color: rgb(225, 219, 220);
     margin-left: 70px;
     left: 0px;
 }
@@ -61,9 +71,9 @@
 {
     width: 300px;
     height: 180px;
-    border: 3px solid black;
+    /* border: 3px solid black;
     border-radius: 15px;
-    background-color: white; 
+    background-color: white;  */
 }
 .homepage-container-rent
 {

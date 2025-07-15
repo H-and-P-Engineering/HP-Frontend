@@ -3,7 +3,7 @@
 {% block body %}
 
     <div>
-        <div>
+        <section>
             <div style="display: flex; gap: 15px; justify-content: center; align-items: center;">
                 <div class="rent-location" onclick="displayFilterSlideup('display-location-slideup-container')">
                     <div class="user-rent-pg1-filterby-redirect">
@@ -19,9 +19,23 @@
             </div>
 
             <!-- this appears when land button is clicked -->
-            <div style="display: flex; flex-direction: column; gap: 20px; width: 700px; margin: auto; margin-top: 30px;">
+            <div style="display: flex; flex-direction: column; gap: 20px; width: 700px; margin: auto; margin-top: 30px;
+                box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); background-color: white;">
                 <div style="display: flex; gap: 20px; width: 100%; height: 50px;">
-                    <input type="search" placeholder="Search by Area, Estate, or" style="flex: 60%; height: 100%;">
+                    <div style="position: relative; flex: 60%; height: 100%; display: flex; align-items: center;">
+                        <input type="search" placeholder="Search by Area, Estate, or" style="width: 100%; height: 100%;"
+                        id="landagent-seachinput1">
+                        <div id="userlandagent-first-search-dropdown" style="position: absolute; top: 100%; 
+                            display: none; width: 100%; z-index: 1; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); 
+                            height: auto; background-color: white;">
+                            <ul>
+                                <li>Ikeja, Lagos</li>
+                                <li>Beautiful city Estate, Lekki, Lagos</li>
+                                <li>Ipaja, Ipaja, Lagos</li>
+                                <li>Gowon crescent, Surulere, Lagos</li>
+                            </ul>
+                        </div>
+                    </div>
                     <div style="position: relative; flex: 30%; height: 100%; border: 1px solid olive;
                         padding: 10px; box-sizing: border-box;">
                         <div style="display: flex; align-items: center; width: 100%;
@@ -149,12 +163,10 @@
                         </div>
                     </div>
                 </div>
-                <div style="width: 500px; height: 50px; border-radius: 15px; margin: auto; margin-top: 20px;">
-                    <input value="Search" style="width: 500px; height: 50px; border-radius: 15px;
-                        background-color: #0056b3;">
-                </div>
             </div>
+        </section>
 
+        <section id="useragent-recentsearch">
             <div style="display: flex; gap: 30px; background-color: rgb(235, 234, 234); width: 700px; margin: auto;
                 margin-top: 120px;">
                 <div style="flex: 20%; display: flex; flex-direction: column; gap: 10px;">
@@ -185,7 +197,9 @@
                     <div>Yaba</div>
                 </div>
             </div>
+        </section>
 
+        <section id="featured-premium-agentitems">
             <!-- this will be on the page initially -->
             <div style="margin-left: 100px; margin-top: 60px;">
                 <div style="font-size: 20px;">Featured Estates</div>
@@ -244,7 +258,120 @@
                     </div>
                 </div>
             </div>
-        </div>
+        </section>
+
+        <!-- what appears when a location is searched and picked and other filter if used -->
+        <section style="display: none; width: 100%; margin-top: 50px; padding-top: 20px; background-color: whitesmoke;"
+            id="agent-and-items-in-seaarchedarea">
+            <!-- the agent's store info -->
+            <div style="display: flex; gap: 20px; width: 50%; margin: auto; height: 60px; margin: auto;
+                background-color: white;" id="store-selling-clicked-subcategory">
+                <div style="flex: 5%; align-self: center;">
+                    <div style="display: flex; justify-self: flex-end; justify-content: end;">
+                        <i class="material-icons" style="font-size: 20px; color: black; text-align: center;">star</i>
+                        <div>4.5</div>
+                    </div>
+                </div>
+                <div style="flex: 35%; align-self: center;">
+                    <img src="{{url_for ('static', filename='land-icon.jpg') }}" 
+                    style="width: 80%; height: 40px; border-radius: 15px;">
+                </div>
+                <div style="flex: 50%; align-self: center;">
+                    <div style="display: flex; gap: 5px;">
+                        <div style="flex: 85%;">Ados Furnitures</div>
+                        <i class="material-icons" style="justify-self: flex-end; font-size: 20px; color: black; text-align: center;">favorite</i>
+                    </div>         
+                </div>               
+            </div>
+            <!-- flex for all items from the agent in a row. 2 items in a row-->
+            <div style="display: flex; gap: 20px; max-width: 95%; margin: auto;">
+                <!-- flex for each items arrangement (column). -->
+                <div style="flex: 50%; max-width: 50%; display: flex; flex-direction: column; gap: 10px; height: 400px;
+                    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); background-color: white; border-radius: 15px;
+                    padding: 10px; box-sizing: border-box;" class="items-with-thumbnails" data-item-id="item1">
+                    <!-- flex for each items arrangement (row) -->
+                    <div style="flex: 75%; max-height: 75%; display: flex; gap: 20px; max-width: 100%;">
+                        <div style="max-width: 50%; flex: 50%; height: 100%; border-radius: 15px; background-color: gray;
+                            text-align: center;">
+                            <img src="{{url_for ('static', filename='land-icon.jpg') }}" onclick="openFullImage(this)"
+                            style="width: 90%; height: 100%;" class="main-image" id="mainImage">                 
+                        </div>                      
+                        <div style="flex: 50%; max-width: 50%; height: 100%; position: relative; display: flex; gap: 2px; flex-direction: column;
+                            font-size: 12px; color: brown;">
+                            <!-- valid land tites eg excision, c of o, consent, deed. one will be selected -->
+                            <div style="font-size: 20px; color: black;">N87,000,000</div>
+                            <div style="font-size: 13px; color: black;">Ikeja, Lagos</div>
+                            <div style="margin-bottom: 20px;">625sqm Land</div>
+                            <!-- <div>Survey, Security, Drainage system</div>
+                            <div>Supermarket nearby, Excision</div> -->
+                            <!-- for water treatment, if the land is connected to a public water supply,
+                             treatment is usually handled by the provider -->
+                            <div style="margin-bottom: 20px;">water treatment, C of O </div>
+                            <!-- <div>Governor's Consent, Deed of Assignment</div> -->
+                            <div>Updated 1 June 2025</div>
+                            <div>Added 13th May 2025</div>
+                            <div style="position: absolute; bottom: 0; font-size: 20px; color: black; display: flex; 
+                                align-items: center; justify-content: center; width: 100px; height: 50px; font-weight: 400;
+                                background-color: yellow; border-radius: 15px; margin-top: 15px;">        
+                                <div>Chat Agent</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div style="flex: 25%; max-height: 25%; display: flex; flex-direction: column;">
+                        <div>
+                            <img src="{{url_for ('static', filename='land-icon.jpg') }}" class="thumbnail"
+                            style="width: 50px; height: 50px;">
+                            <img src="{{url_for ('static', filename='kitchen-utensils.jpg') }}" class="thumbnail"
+                            style="width: 50px; height: 50px;">
+                        </div>
+                        <div style="font-size: 30px; font-weight: 700;">625sqm Land for sale</div>
+                    </div>
+                </div>
+
+                <div style="flex: 50%; max-width: 50%; display: flex; flex-direction: column; gap: 10px; height: 400px;
+                    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); background-color: white; border-radius: 15px;
+                    padding: 10px; box-sizing: border-box;" class="items-with-thumbnails" data-item-id="item1">
+                    <!-- flex for each items arrangement (row) -->
+                    <div style="flex: 75%; max-height: 75%; display: flex; gap: 20px; max-width: 100%;">
+                        <div style="max-width: 50%; flex: 50%; height: 100%; border-radius: 15px; background-color: gray;
+                            text-align: center;">
+                            <img src="{{url_for ('static', filename='land-icon.jpg') }}" onclick="openFullImage(this)"
+                            style="width: 90%; height: 100%;" class="main-image" id="mainImage">                 
+                        </div>                      
+                        <div style="flex: 50%; max-width: 50%; height: 100%; position: relative; display: flex; gap: 2px; flex-direction: column;
+                            font-size: 12px; color: brown;">
+                            <!-- valid land tites eg excision, c of o, consent, deed. one will be selected -->
+                            <div style="font-size: 20px; color: black;">N87,000,000</div>
+                            <div style="font-size: 13px; color: black;">Ikeja, Lagos</div>
+                            <div style="margin-bottom: 20px;">625sqm Land</div>
+                            <!-- <div>Survey, Security, Drainage system</div>
+                            <div>Supermarket nearby, Excision</div> -->
+                            <!-- for water treatment, if the land is connected to a public water supply,
+                             treatment is usually handled by the provider -->
+                            <div style="margin-bottom: 20px;">water treatment, C of O </div>
+                            <!-- <div>Governor's Consent, Deed of Assignment</div> -->
+                            <div>Updated 1 June 2025</div>
+                            <div>Added 13th May 2025</div>
+                            <div style="position: absolute; bottom: 0; font-size: 20px; color: black; display: flex; 
+                                align-items: center; justify-content: center; width: 100px; height: 50px; font-weight: 400;
+                                background-color: yellow; border-radius: 15px; margin-top: 15px;">        
+                                <div>Chat Agent</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div style="flex: 25%; max-height: 25%; display: flex; flex-direction: column;">
+                        <div>
+                            <img src="{{url_for ('static', filename='land-icon.jpg') }}" class="thumbnail"
+                            style="width: 50px; height: 50px;">
+                            <img src="{{url_for ('static', filename='kitchen-utensils.jpg') }}" class="thumbnail"
+                            style="width: 50px; height: 50px;">
+                        </div>
+                        <div style="font-size: 30px; font-weight: 700;">625sqm Land for sale</div>
+                    </div>
+                </div>
+            </div>
+            
+        </section>
 
         <div class="homepage-navlist-container">
             <div class="user-homepage-navlist-subdiv">
@@ -270,6 +397,39 @@
 
     <script>
 
+        document.addEventListener('DOMContentLoaded', () => {
+            const thumbnails = document.querySelectorAll('.thumbnail');
+            thumbnails.forEach (thumbnail => {
+                thumbnail.addEventListener('click', () => {
+                    // find the parent element of the larger main image to scope the changes to it only
+                    const item = thumbnail.closest('.items-with-thumbnails');
+                    const itemId = item.dataset.itemId;
+                    const mainImage = item.querySelector('.main-image');
+                    // get the thumbnail's data-main-src
+                    const newSrc = thumbnail.src;
+                    // update the main image source
+                    mainImage.src = newSrc;
+                    // remove the class 'active' from all thumbnails in this item
+                    item.querySelectorAll('.thumbnail').forEach(thumb => {
+                        thumb.classList.remove('active');
+                    });
+                    // add 'active' class to the clicked thumbnail 
+                    thumbnail.classList.add('active');
+                });
+            });
+            // set the 1st thumbnail as active and it's corresponding main image for each item
+            document.querySelectorAll('.items-with-thumbnails').forEach(item => {
+                const firstThumbnail = item.querySelector('.thumbnail');
+                if(firstThumbnail) {
+                    firstThumbnail.classList.add('active');
+                    const mainImage = item.querySelector('.main-image');
+                    mainImage.src = firstThumbnail.src;
+
+                }
+            });
+        });
+
+    // ------------------------------------------------------------------------------------------------------------
         const dropdownsForsorting = document.querySelectorAll(".dropdowns-to-sort-by");
         const textsAboveDropdowns = document.getElementsByClassName("texts-above-dropdowns")
         for (let i=0; i<textsAboveDropdowns.length; i++) {
@@ -287,5 +447,27 @@
                 }
             });
         }
+
+        // ------------------------------------------------------------------------------------------------------------
+        const landagentSeachinput1 = document.getElementById("landagent-seachinput1");
+        const userlandagentFirstSearchDropdown = document.getElementById("userlandagent-first-search-dropdown");
+        const ItemsInSeaarchedarea = document.getElementById("agent-and-items-in-seaarchedarea");
+        const useragentRecentsearch = document.getElementById("useragent-recentsearch");
+        const featuredPremiumAgentitems = document.getElementById("featured-premium-agentitems");
+
+        landagentSeachinput1.addEventListener('input', function() {
+            userlandagentFirstSearchDropdown.classList.add('blockDisplay');
+            if (landagentSeachinput1.value === '') {
+                if (userlandagentFirstSearchDropdown.classList.contains('blockDisplay')) {
+                    userlandagentFirstSearchDropdown.classList.remove('blockDisplay');
+                }
+            }
+            userlandagentFirstSearchDropdown.addEventListener('click', function() {
+                userlandagentFirstSearchDropdown.classList.remove('blockDisplay');
+                ItemsInSeaarchedarea.classList.add('blockDisplay');
+                useragentRecentsearch.classList.add('noneDisplay');
+                featuredPremiumAgentitems.classList.add('noneDisplay');
+            });
+        });
     </script>
 {% endblock %}

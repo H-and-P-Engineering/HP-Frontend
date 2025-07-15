@@ -3,15 +3,32 @@
 
     <div id="storespage-asseen-byuser">       
         <section style="width: 100%;" id="container-search-catg-andsubcatg">
-            <div style="position: relative; width: 500px; height: 50px; margin: auto;">
-                <input autocomplete="off" type="search" placeholder="Vendor, item eg Air conditioner, pots, bed" 
-                    style="width: 500px; height: 50px; border-radius: 15px; background-color: #dcdada;"
-                id="user-buyvendor-searchinput">
-                <span style="position: absolute; right: 10px; top: 50%; width: 35px; height: 35px;
-                    display: flex; align-items: center; justify-content: center; transform: translateY(-50%);"
-                    id="container-close-search">
-                    <span id="close-filter-display" class="close-filter-display">&times;</span>   
-                </span>
+            <div style="width: 900px; height: 70px; margin: auto; display: flex; justify-content: center;
+                align-items: center; gap: 2px;" id="inputAndClose">
+                <div style="position: relative; height: 70px; display: flex; align-items: center;">
+                    <input autocomplete="off" type="search" placeholder="Vendor, item eg Air conditioner, pots, bed" 
+                        style="width: 700px; height: 50px; border-radius: 10px; border: 1px solid black;
+                        padding: 5px 10px; outline: none;" id="user-buyvendor-searchinput">
+                    <span style="position: absolute; right: 10px; top: 50%; width: 35px; height: 35px;
+                        display: flex; align-items: center; justify-content: center; transform: translateY(-50%);"
+                        id="container-close-search">
+                        <span id="close-filter-display" class="close-filter-display">&times;</span>   
+                    </span>
+                    <div class="vendor-category-search-results-dropdown">
+                        <ul>
+                            <li>posha stores</li>
+                            <li>pot</li>
+                            <li>power furnitures</li>
+                            <li>powerbank</li>
+                        </ul>
+                    </div>
+                </div>
+                
+                
+                <div style="width: 90px; height: 50px; background-color: purple; border-radius: 10px;
+                    display: flex; align-items: center; justify-content: center; color: white;">
+                    <div>Search</div>
+                </div>  
             </div>
     
             <!-- <div style="display: flex; gap: 20px; width: 90%; margin: auto;
@@ -114,48 +131,55 @@
                                 <div>Kitchen</div>
                             </div>
                             <div style="flex: 20%; color: red; display: flex; justify-content: flex-end;">
-                                <div>See All</div>
+                                <div id="see-all-kitchen-catg">See All</div>
                             </div>
                         </div>
                         <div style="display: grid; grid-template-columns: auto auto auto auto auto; gap: 10px;
                             justify-content: center;">
                             <div style="width: auto; display: flex; flex-direction: column; align-items: center;"
-                                id="all-cookware-items">
+                                id="all-cookware-items" onclick="openSubcategory()">
                                 <img src="{{url_for ('static', filename='land-icon.jpg') }}" 
                                 style="width: 50%; text-align: center; height: 100px; border-radius: 15px;">
                                 <div>Cook ware</div>
                             </div>
-                            <div style="width: auto; display: flex; flex-direction: column; align-items: center;">
+                            <div style="width: auto; display: flex; flex-direction: column; align-items: center;"
+                                onclick="openSubcategory()">
                                 <img src="{{url_for ('static', filename='land-icon.jpg') }}" 
                                 style="width: 50%; text-align: center; height: 100px; border-radius: 15px;">
                                 <div>Small Appliances</div>
                             </div>
-                            <div style="width: auto; display: flex; flex-direction: column; align-items: center;">
+                            <div style="width: auto; display: flex; flex-direction: column; align-items: center;"
+                                onclick="openSubcategory()">
                                 <img src="{{url_for ('static', filename='land-icon.jpg') }}" 
                                 style="width: 50%; text-align: center;  height: 100px; border-radius: 15px;">
                                 <div>Bakeware</div>
                             </div>
-                            <div style="width: auto; display: flex; flex-direction: column; align-items: center;">
+                            <div style="width: auto; display: flex; flex-direction: column; align-items: center;"
+                                onclick="openSubcategory()">
                                 <img src="{{url_for ('static', filename='land-icon.jpg') }}" 
                                 style="width: 50%; text-align: center;  height: 100px; border-radius: 15px;">
                                 <div>Cutlery & Knife</div>
                             </div>
-                            <div style="width: auto; display: flex; flex-direction: column; align-items: center;">
+                            <div style="width: auto; display: flex; flex-direction: column; align-items: center;"
+                                onclick="openSubcategory()">
                                 <img src="{{url_for ('static', filename='land-icon.jpg') }}" 
                                 style="width: 50%; text-align: center;  height: 100px; border-radius: 15px;">
                                 <div>Large Appliances</div>
                             </div>
-                            <div style="width: auto; display: flex; flex-direction: column; align-items: center;">
+                            <div style="width: auto; display: flex; flex-direction: column; align-items: center;"
+                                onclick="openSubcategory()">
                                 <img src="{{url_for ('static', filename='land-icon.jpg') }}" 
                                 style="width: 50%; text-align: center;  height: 100px; border-radius: 15px;">
                                 <div>Storage</div>
                             </div>
-                            <div style="width: auto; display: flex; flex-direction: column; align-items: center;">
+                            <div style="width: auto; display: flex; flex-direction: column; align-items: center;"
+                                onclick="openSubcategory()">
                                 <img src="{{url_for ('static', filename='land-icon.jpg') }}" 
                                 style="width: 50%; text-align: center;  height: 100px; border-radius: 15px;">
                                 <div>plates & bowls</div>
                             </div>
-                            <div style="width: auto; display: flex; flex-direction: column; align-items: center;">
+                            <div style="width: auto; display: flex; flex-direction: column; align-items: center;"
+                                onclick="openSubcategory()">
                                 <img src="{{url_for ('static', filename='land-icon.jpg') }}" 
                                 style="width: 50%; text-align: center;  height: 100px; border-radius: 15px;">
                                 <div>Grind & Crush</div>
@@ -175,27 +199,31 @@
                         </div>
                         <div style="display: grid; grid-template-columns: auto auto auto auto auto; gap: 10px; justify-content: center;">
                             <div style="width: auto; display: flex; flex-direction: column; align-items: center;"
-                                id="all-cookware-items">
+                                onclick="openSubcategory(this)">
                                 <img src="{{url_for ('static', filename='land-icon.jpg') }}" 
                                 style="width: 50%; text-align: center; height: 100px; border-radius: 15px;">
                                 <div>Camera</div>
                             </div>
-                            <div style="width: auto; display: flex; flex-direction: column; align-items: center;">
+                            <div style="width: auto; display: flex; flex-direction: column; align-items: center;"
+                                onclick="openSubcategory(this)">
                                 <img src="{{url_for ('static', filename='land-icon.jpg') }}" 
                                 style="width: 50%; text-align: center; height: 100px; border-radius: 15px;">
                                 <div>Television</div>
                             </div>
-                            <div style="width: auto; display: flex; flex-direction: column; align-items: center;">
+                            <div style="width: auto; display: flex; flex-direction: column; align-items: center;"
+                                onclick="openSubcategory(this)">
                                 <img src="{{url_for ('static', filename='land-icon.jpg') }}" 
                                 style="width: 50%; text-align: center;  height: 100px; border-radius: 15px;">
                                 <div>Audio</div>
                             </div>
-                            <div style="width: auto; box-sizing: border-box; display: flex; flex-direction: column; align-items: center;">
+                            <div style="width: auto; box-sizing: border-box; display: flex; flex-direction: column;
+                                align-items: center;" onclick="openSubcategory(this)">
                                 <img src="{{url_for ('static', filename='land-icon.jpg') }}" 
                                 style="width: 50%; text-align: center;  height: 100px; border-radius: 15px;">
                                 <div>Generator, & <br>Portable power</div>
                             </div>
-                            <div style="width: auto; display: flex; flex-direction: column; align-items: center;">
+                            <div style="width: auto; display: flex; flex-direction: column; align-items: center;"
+                                onclick="openSubcategory(this)">
                                 <img src="{{url_for ('static', filename='land-icon.jpg') }}" 
                                 style="width: 50%; text-align: center;  height: 100px; border-radius: 15px;">
                                 <div>Lighting</div>
@@ -212,7 +240,33 @@
             </section>
 
             <section id="items-in-subcategories" style="width: 100%; padding-top: 10px; display: none; background-color: whitesmoke;">
-                
+                <div style="display: flex; align-items: center; gap: 2px; width: 100%; height: 70px; margin-top: -10px; background-color: white;">
+                    <div class="search-description-header"> < Cookware</div>
+                    <div class="input-and-inputicon-parent">
+                        <i class="material-icons searchicon-for-items-in-subcategories">search</i>
+                        <div style="position: relative; height: 70px; display: flex; align-items: center;">
+                            <input placeholder="Search store, category or items" type="text"
+                                class="input-for-items-in-subcategories">
+                            <span style="position: absolute; right: 10px; top: 50%; width: 35px; height: 35px;
+                                display: flex; align-items: center; justify-content: center; transform: translateY(-50%);"
+                                id="container-close-search">
+                                <span id="close-filter-display" class="close-filter-display">&times;</span>   
+                            </span>
+                            <div class="search-results-autocomplete-dropdown">
+                                <ul>
+                                    <li>posha stores</li>
+                                    <li>pot</li>
+                                    <li>power furnitures</li>
+                                    <li>powerbank</li>
+                                </ul>
+                            </div>
+                        </div>   
+                        <div style="width: 90px; height: 50px; background-color: purple; border-radius: 10px;
+                            display: flex; align-items: center; justify-content: center; color: white;">
+                            <div>Search</div>
+                        </div>                 
+                    </div>                                          
+                </div>
                 <div style="width: 90%; margin: auto; margin-top: 10px; background-color: white;">
                     <!-- column1: stores selling the subcategory clicked -->
                     <div style="display: flex; gap: 20px; width: 50%; margin: auto; height: 60px; margin: auto; margin-top: 20px;
@@ -248,7 +302,7 @@
                             box-sizing: border-box;">                  
                             <div style="max-width: 100%; flex: 70%; height: 70%; border-radius: 15px; background-color: gray;
                                 text-align: center;">
-                                <img src="{{url_for ('static', filename='land-icon.jpg') }}" 
+                                <img src="{{url_for ('static', filename='land-icon.jpg') }}" onclick="openFullImage(this)"
                                 style="width: 90%; height: 100%;">
                             </div>
                             <div style="flex: 5%; display: flex; align-items: center; gap: 10px; max-width: 100%;">
@@ -273,7 +327,7 @@
                             box-sizing: border-box;">                  
                             <div style="max-width: 100%; flex: 70%; height: 70%; border-radius: 15px; background-color: gray;
                                 text-align: center;">
-                                <img src="{{url_for ('static', filename='land-icon.jpg') }}" 
+                                <img src="{{url_for ('static', filename='land-icon.jpg') }}" onclick="openFullImage(this)"
                                 style="width: 90%; height: 100%;">
                             </div>
                             <div style="flex: 5%; display: flex; align-items: center; gap: 10px; max-width: 100%;">
@@ -297,7 +351,7 @@
                             box-sizing: border-box;">                  
                             <div style="max-width: 100%; flex: 70%; height: 70%; border-radius: 15px; background-color: gray;
                                 text-align: center;">
-                                <img src="{{url_for ('static', filename='land-icon.jpg') }}" 
+                                <img src="{{url_for ('static', filename='land-icon.jpg') }}" onclick="openFullImage(this)"
                                 style="width: 90%; height: 100%;">
                             </div>
                             <div style="flex: 5%; display: flex; align-items: center; gap: 10px; max-width: 100%;">
@@ -316,7 +370,6 @@
                             </div>
                             <div style="max-width: 100%; flex: 5%; color: red; font-size: 10px;">Out of stock</div>  
                         </div>
-
                     </div>
                 </div>          
             </section>
@@ -418,75 +471,79 @@
                     </div>
 
                     <div style="display: flex; max-width: 100%; gap: 15px;">
-                        <div style="flex-basis: 30%; max-width: 30%; flex-grow: 0; flex-shrink: 1; height: 350px; border-radius: 15px;
-                            border: 1px solid olive; display: flex; flex-direction: column; gap: 6px; padding: 15px;"
-                            onclick="openFullImage()">
-                        
-                            <div style="width: 100%; flex: 70%; height: 70%; border-radius: 15px; background-color: gray;
+                        <div style="flex-basis: 20%; max-width: 20%; flex-grow: 0; flex-shrink: 1; height: 250px; border-radius: 15px;
+                            border: 1px solid olive; display: flex; flex-direction: column; gap: 2px; padding: 5px;
+                            box-sizing: border-box;">                  
+                            <div style="max-width: 100%; flex: 70%; height: 70%; border-radius: 15px; background-color: gray;
                                 text-align: center;">
-                                <img src="{{url_for ('static', filename='land-icon.jpg') }}" 
-                                style="width: 80%;height: 100%;">
+                                <img src="{{url_for ('static', filename='land-icon.jpg') }}" onclick="openFullImage(this)"
+                                style="width: 90%; height: 100%;">
                             </div>
-                            <div style="width: 100%; flex: 5%; height: 10%; justify-self: flex-end; justify-items: end;">
-                                <div style="width: 30px; height: 30px; line-height: 30px; vertical-align: middle;
-                                text-align: center; border-radius: 50%; color: white; background-color: #0056b3;"
-                                >+</div>
-                            </div>
-                            <div style="width: 100%; flex: 5%; height: 10%;">
-                                <div>N6,800</div>
-                            </div>
-                            <div style="width: 50%; flex: 5%; height: 15%;">
-                                <div style="display: -webkit-box; line-clamp: 2; -webkit-line-clamp: 2; -webkit-box-orient: vertical;
-                                overflow: hidden; word-break: keep-all; text-overflow: ellipsis;">
+                            <div style="flex: 5%; display: flex; align-items: center; gap: 10px; max-width: 100%;">
+                                <div style="flex: 80%;">
+                                    <div>N6,800</div>
+                                </div>
+                                <div style="flex: 10%; justify-self: flex-end; justify-items: end;">
+                                    <div style="width: 30px; height: 30px; line-height: 30px; vertical-align: middle;
+                                    text-align: center; border-radius: 50%; color: white; background-color: #0056b3;"
+                                    >+</div>
+                                </div>
+                            </div>                      
+                            <div style="max-width: 80%; flex: 5%;">
+                                <div style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">
                                 Add a description for the itemwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwww)</div>
                             </div>
-                            <div style="width: 100%; flex: 5%; color: red;"></div>  
-                        </div>
-                        
-                        <div style="flex-basis: 30%; max-width: 30%; flex-grow: 0; flex-shrink: 1; height: 350px; border-radius: 15px;
-                            border: 1px solid olive; display: flex; flex-direction: column; gap: 6px; padding: 15px;">
-                        
-                            <div style="width: 100%; flex: 70%; height: 70%; border-radius: 15px; background-color: gray;
-                                text-align: center;">
-                                <img src="{{url_for ('static', filename='land-icon.jpg') }}" 
-                                style="width: 80%;height: 100%;">
-                            </div>
-                            <div style="width: 100%; flex: 5%; height: 10%; justify-self: flex-end; justify-items: end;">
-                                <div style="width: 30px; height: 30px; line-height: 30px; vertical-align: middle; text-align: center; border-radius: 50%; color: white;
-                                background-color: #0056b3; ">+</div>
-                            </div>
-                            <div style="width: 100%; flex: 5%; height: 10%;">
-                                <div>N5,000</div>
-                            </div>
-                            <div style="width: 50%; flex: 5%; height: 15%;">
-                                <div style="display: -webkit-box; line-clamp: 2; -webkit-line-clamp: 2; -webkit-box-orient: vertical;
-                                overflow: hidden; word-break: keep-all; text-overflow: ellipsis;">
-                                Add a description for the itemwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwww)</div>
-                            </div>
-                            <div style="width: 100%; flex: 5%; color: red;">Out of stock</div>  
+                            <div style="max-width: 100%; flex: 5%; color: red; font-size: 10px;">Out of stock</div>  
                         </div>
 
-                        <div style="flex-basis: 30%; max-width: 30%; flex-grow: 0; flex-shrink: 1; height: 350px; border-radius: 15px;
-                            border: 1px solid olive; display: flex; flex-direction: column; gap: 6px; padding: 15px;">
-                        
-                            <div style="width: 100%; flex: 70%; height: 70%; border-radius: 15px; background-color: gray;
+                        <div style="flex-basis: 20%; max-width: 20%; flex-grow: 0; flex-shrink: 1; height: 250px; border-radius: 15px;
+                            border: 1px solid olive; display: flex; flex-direction: column; gap: 2px; padding: 5px;
+                            box-sizing: border-box;">                  
+                            <div style="max-width: 100%; flex: 70%; height: 70%; border-radius: 15px; background-color: gray;
                                 text-align: center;">
-                                <img src="{{url_for ('static', filename='land-icon.jpg') }}" 
-                                style="width: 80%;height: 100%;">
+                                <img src="{{url_for ('static', filename='land-icon.jpg') }}" onclick="openFullImage(this)"
+                                style="width: 90%; height: 100%;">
                             </div>
-                            <div style="width: 100%; flex: 5%; height: 10%; justify-self: flex-end; justify-items: end;">
-                                <div style="width: 30px; height: 30px; line-height: 30px; vertical-align: middle; text-align: center; border-radius: 50%; color: white;
-                                background-color: #0056b3; ">+</div>
-                            </div>
-                            <div style="width: 100%; flex: 5%; height: 10%;">
-                                <div>N5,000</div>
-                            </div>
-                            <div style="width: 50%; flex: 5%; height: 15%;">
-                                <div style="display: -webkit-box; line-clamp: 2; -webkit-line-clamp: 2; -webkit-box-orient: vertical;
-                                overflow: hidden; word-break: keep-all; text-overflow: ellipsis;">
+                            <div style="flex: 5%; display: flex; align-items: center; gap: 10px; max-width: 100%;">
+                                <div style="flex: 80%;">
+                                    <div>N5,000</div>
+                                </div>
+                                <div style="flex: 10%; justify-self: flex-end; justify-items: end;">
+                                    <div style="width: 30px; height: 30px; line-height: 30px; vertical-align: middle;
+                                    text-align: center; border-radius: 50%; color: white; background-color: #0056b3;"
+                                    >+</div>
+                                </div>
+                            </div>                      
+                            <div style="max-width: 80%; flex: 5%;">
+                                <div style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">
                                 Add a description for the itemwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwww)</div>
                             </div>
-                            <div style="width: 100%; flex: 5%; color: red;">Out of stock</div>  
+                            <div style="max-width: 100%; flex: 5%; color: red; font-size: 10px;">Out of stock</div>  
+                        </div>
+
+                        <div style="flex-basis: 20%; max-width: 20%; flex-grow: 0; flex-shrink: 1; height: 250px; border-radius: 15px;
+                            border: 1px solid olive; display: flex; flex-direction: column; gap: 2px; padding: 5px;
+                            box-sizing: border-box;">                  
+                            <div style="max-width: 100%; flex: 70%; height: 70%; border-radius: 15px; background-color: gray;
+                                text-align: center;">
+                                <img src="{{url_for ('static', filename='land-icon.jpg') }}" onclick="openFullImage(this)"
+                                style="width: 90%; height: 100%;">
+                            </div>
+                            <div style="flex: 5%; display: flex; align-items: center; gap: 10px; max-width: 100%;">
+                                <div style="flex: 80%;">
+                                    <div>N10,000</div>
+                                </div>
+                                <div style="flex: 10%; justify-self: flex-end; justify-items: end;">
+                                    <div style="width: 30px; height: 30px; line-height: 30px; vertical-align: middle;
+                                    text-align: center; border-radius: 50%; color: white; background-color: #0056b3;"
+                                    >+</div>
+                                </div>
+                            </div>                      
+                            <div style="max-width: 80%; flex: 5%;">
+                                <div style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">
+                                Add a description for the itemwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwww)</div>
+                            </div>
+                            <div style="max-width: 100%; flex: 5%; color: red; font-size: 10px;">Out of stock</div>  
                         </div>
                     </div>
                 </div>
@@ -501,74 +558,79 @@
                     </div>
 
                     <div style="display: flex; max-width: 100%; gap: 15px;">
-                        <div style="flex-basis: 30%; max-width: 30%; flex-grow: 0; flex-shrink: 1; height: 350px; border-radius: 15px;
-                            border: 1px solid olive; display: flex; flex-direction: column; gap: 6px; padding: 15px;">
-                        
-                            <div style="width: 100%; flex: 70%; height: 70%; border-radius: 15px; background-color: gray;
+                        <div style="flex-basis: 20%; max-width: 20%; flex-grow: 0; flex-shrink: 1; height: 250px; border-radius: 15px;
+                            border: 1px solid olive; display: flex; flex-direction: column; gap: 2px; padding: 5px;
+                            box-sizing: border-box;">                  
+                            <div style="max-width: 100%; flex: 70%; height: 70%; border-radius: 15px; background-color: gray;
                                 text-align: center;">
-                                <img src="{{url_for ('static', filename='land-icon.jpg') }}" 
-                                style="width: 80%;height: 100%;">
+                                <img src="{{url_for ('static', filename='land-icon.jpg') }}" onclick="openFullImage(this)"
+                                style="width: 90%; height: 100%;">
                             </div>
-                            <div style="width: 100%; flex: 5%; height: 10%; justify-self: flex-end; justify-items: end;">
-                                <div style="width: 30px; height: 30px; line-height: 30px; vertical-align: middle;
-                                text-align: center; border-radius: 50%; color: white; background-color: #0056b3;"
-                                >+</div>
-                            </div>
-                            <div style="width: 100%; flex: 5%; height: 10%;">
-                                <div>N30,800</div>
-                            </div>
-                            <div style="width: 50%; flex: 5%; height: 15%;">
-                                <div style="display: -webkit-box; line-clamp: 2; -webkit-line-clamp: 2; -webkit-box-orient: vertical;
-                                overflow: hidden; word-break: keep-all; text-overflow: ellipsis;">
+                            <div style="flex: 5%; display: flex; align-items: center; gap: 10px; max-width: 100%;">
+                                <div style="flex: 80%;">
+                                    <div>N30,800</div>
+                                </div>
+                                <div style="flex: 10%; justify-self: flex-end; justify-items: end;">
+                                    <div style="width: 30px; height: 30px; line-height: 30px; vertical-align: middle;
+                                    text-align: center; border-radius: 50%; color: white; background-color: #0056b3;"
+                                    >+</div>
+                                </div>
+                            </div>                      
+                            <div style="max-width: 80%; flex: 5%;">
+                                <div style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">
                                 Add a description for the itemwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwww)</div>
                             </div>
-                            <div style="width: 100%; flex: 5%; color: red;"></div>  
+                            <div style="max-width: 100%; flex: 5%; color: red; font-size: 10px;">Out of stock</div>  
                         </div>
 
-                        <div style="flex-basis: 30%; max-width: 30%; flex-grow: 0; flex-shrink: 1; height: 350px; border-radius: 15px;
-                            border: 1px solid olive; display: flex; flex-direction: column; gap: 6px; padding: 15px;">
-                        
-                            <div style="width: 100%; flex: 70%; height: 70%; border-radius: 15px; background-color: gray;
+                        <div style="flex-basis: 20%; max-width: 20%; flex-grow: 0; flex-shrink: 1; height: 250px; border-radius: 15px;
+                            border: 1px solid olive; display: flex; flex-direction: column; gap: 2px; padding: 5px;
+                            box-sizing: border-box;">                  
+                            <div style="max-width: 100%; flex: 70%; height: 70%; border-radius: 15px; background-color: gray;
                                 text-align: center;">
-                                <img src="{{url_for ('static', filename='land-icon.jpg') }}" 
-                                style="width: 80%;height: 100%;">
+                                <img src="{{url_for ('static', filename='land-icon.jpg') }}" onclick="openFullImage(this)"
+                                style="width: 90%; height: 100%;">
                             </div>
-                            <div style="width: 100%; flex: 5%; height: 10%; justify-self: flex-end; justify-items: end;">
-                                <div style="width: 30px; height: 30px; line-height: 30px; vertical-align: middle; text-align: center; border-radius: 50%; color: white;
-                                background-color: #0056b3; ">+</div>
-                            </div>
-                            <div style="width: 100%; flex: 5%; height: 10%;">
-                                <div>N50,000</div>
-                            </div>
-                            <div style="width: 50%; flex: 5%; height: 15%;">
-                                <div style="display: -webkit-box; line-clamp: 2; -webkit-line-clamp: 2; -webkit-box-orient: vertical;
-                                overflow: hidden; word-break: keep-all; text-overflow: ellipsis;">
+                            <div style="flex: 5%; display: flex; align-items: center; gap: 10px; max-width: 100%;">
+                                <div style="flex: 80%;">
+                                    <div>N50,000</div>
+                                </div>
+                                <div style="flex: 10%; justify-self: flex-end; justify-items: end;">
+                                    <div style="width: 30px; height: 30px; line-height: 30px; vertical-align: middle;
+                                    text-align: center; border-radius: 50%; color: white; background-color: #0056b3;"
+                                    >+</div>
+                                </div>
+                            </div>                      
+                            <div style="max-width: 80%; flex: 5%;">
+                                <div style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">
                                 Add a description for the itemwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwww)</div>
                             </div>
-                            <div style="width: 100%; flex: 5%; color: red;">Out of stock</div>  
+                            <div style="max-width: 100%; flex: 5%; color: red; font-size: 10px;">Out of stock</div>  
                         </div>
 
-                        <div style="flex-basis: 30%; max-width: 30%; flex-grow: 0; flex-shrink: 1; height: 350px; border-radius: 15px;
-                            border: 1px solid olive; display: flex; flex-direction: column; gap: 6px; padding: 15px;">
-                        
-                            <div style="width: 100%; flex: 70%; height: 70%; border-radius: 15px; background-color: gray;
+                        <div style="flex-basis: 20%; max-width: 20%; flex-grow: 0; flex-shrink: 1; height: 250px; border-radius: 15px;
+                            border: 1px solid olive; display: flex; flex-direction: column; gap: 2px; padding: 5px;
+                            box-sizing: border-box;">                  
+                            <div style="max-width: 100%; flex: 70%; height: 70%; border-radius: 15px; background-color: gray;
                                 text-align: center;">
-                                <img src="{{url_for ('static', filename='land-icon.jpg') }}" 
-                                style="width: 80%;height: 100%;">
+                                <img src="{{url_for ('static', filename='land-icon.jpg') }}" onclick="openFullImage(this)"
+                                style="width: 90%; height: 100%;">
                             </div>
-                            <div style="width: 100%; flex: 5%; height: 10%; justify-self: flex-end; justify-items: end;">
-                                <div style="width: 30px; height: 30px; line-height: 30px; vertical-align: middle; text-align: center; border-radius: 50%; color: white;
-                                background-color: #0056b3; ">+</div>
-                            </div>
-                            <div style="width: 100%; flex: 5%; height: 10%;">
-                                <div>N125,500</div>
-                            </div>
-                            <div style="width: 50%; flex: 5%; height: 15%;">
-                                <div style="display: -webkit-box; line-clamp: 2; -webkit-line-clamp: 2; -webkit-box-orient: vertical;
-                                overflow: hidden; word-break: keep-all; text-overflow: ellipsis;">
+                            <div style="flex: 5%; display: flex; align-items: center; gap: 10px; max-width: 100%;">
+                                <div style="flex: 80%;">
+                                    <div>N125,500</div>
+                                </div>
+                                <div style="flex: 10%; justify-self: flex-end; justify-items: end;">
+                                    <div style="width: 30px; height: 30px; line-height: 30px; vertical-align: middle;
+                                    text-align: center; border-radius: 50%; color: white; background-color: #0056b3;"
+                                    >+</div>
+                                </div>
+                            </div>                      
+                            <div style="max-width: 80%; flex: 5%;">
+                                <div style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">
                                 Add a description for the itemwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwww)</div>
                             </div>
-                            <div style="width: 100%; flex: 5%; color: red;">Out of stock</div>  
+                            <div style="max-width: 100%; flex: 5%; color: red; font-size: 10px;">Out of stock</div>  
                         </div>
                     </div>
                 </div>
@@ -602,16 +664,17 @@
             </div>
             <div style="width: 90%; margin: auto; border-radius: 15px; margin-top: 20px;
                 display: flex; gap: 20px;"> 
-                <div style="flex: 40%; max-width: 40%; display: flex; flex-direction: column; background-color: white;">
+                <div style="flex: 40%; max-width: 40%; display: flex; flex-direction: column; background-color: white;"
+                    class="items-with-thumbnails" data-item-id="item1">
                     <div style="max-width: 100%; height: 400px; border-radius: 15px;
                         display: flex; gap: 20px;" id="fullitem-img-slideshow" class="lighbox-container">
                         <div style="width: 100%; height: 400px; display: flex; align-items: center;">
                             <img src="{{url_for ('static', filename='land-icon.jpg') }}" class="main-image" id="mainImage"
-                            style="width: 100%; height: 350px;">
+                            style="width: 100%; max-width: 100%; height: 350px;  margin-bottom: 20px;">
                         </div>
                     </div>
                     <div class="thumbnail-container" id="thumbnailContainer">
-                        <img src="{{url_for ('static', filename='land-icon.jpg') }}" class="thumbnail active"
+                        <img src="{{url_for ('static', filename='land-icon.jpg') }}" class="thumbnail"
                             style="width: 50px; height: 50px;">
                         <img src="{{url_for ('static', filename='kitchen-utensils.jpg') }}" class="thumbnail"
                         style="width: 50px; height: 50px;">
@@ -683,18 +746,22 @@
         const displaySubcategories = document.getElementById("vendor-subcategories-display");
         const displaySearchedstore = document.getElementById("vendor-nav-displayof-searchedstore");
         const containersearchAndSubcatg = document.getElementById("container-search-catg-andsubcatg");
-
+        const vendorCategorySearchDropdown = document.querySelector('.vendor-category-search-results-dropdown');
         const storesItems = document.getElementById("stores-items-arrangement");
-        vendornavSearchinput.addEventListener('input', function() {
-            displaySubcategories.style.display = "none";
-            displaySearchedstore.style.display = "block";
+        
+        vendornavSearchinput.addEventListener('input', function() { 
+            vendorCategorySearchDropdown.classList.add('blockDisplay');
             if (vendornavSearchinput.value === '') {
-                if (displaySearchedstore.style.display === "block") {
-                    displaySearchedstore.style.display = "none";
-                    displaySubcategories.style.display = "flex";
-                    displaySubcategories.style.marginTop = "0";
+                if (vendorCategorySearchDropdown.classList.contains('blockDisplay')) {
+                    vendorCategorySearchDropdown.classList.remove('blockDisplay');
                 }
             }
+            vendorCategorySearchDropdown.addEventListener('click', function() {
+                vendorCategorySearchDropdown.classList.remove('blockDisplay');
+                displaySubcategories.style.display = "none";
+                displaySearchedstore.style.display = "block";
+                vendornavSearchinput.value = '';
+            });
         });
         
         displaySearchedstore.addEventListener('click', function() {
@@ -708,29 +775,37 @@
         const ItemsFullimage = document.getElementById("Items-fullimage-lightbox");
         const storesItemsArrangement = document.getElementById("stores-items-arrangement");
         const homepageNavlist = document.getElementById("homepage-navlist-container");
-        function openFullImage() {
+        const itemsInSubcategories = document.getElementById("items-in-subcategories");
+        function openFullImage(element) {
             if (storesItemsArrangement.classList.contains("flexDisplay")) {
                 storesItemsArrangement.classList.remove("flexDisplay");
             }
             ItemsFullimage.classList.add("blockDisplay"); 
-            homepageNavlist.classList.add("noneDisplay");         
+            homepageNavlist.classList.add("noneDisplay");  
+            itemsInSubcategories.classList.add("noneDisplay");        
         }
 
         // ----------------------------------------------------------------------------------------------------------
-
         document.addEventListener('DOMContentLoaded', () => {
-            const mainImage = document.getElementById("mainImage");
             const thumbnails = document.querySelectorAll('.thumbnail');
-            thumbnails.forEach(thumbnail =>{
+            thumbnails.forEach (thumbnail => {
                 thumbnail.addEventListener('click', () => {
-                    thumbnails.forEach(thumb => thumb.classList.remove('active'));
+                    // find the parent element of the larger main image to scope the changes to it only
+                    const item = thumbnail.closest('.items-with-thumbnails');
+                    const itemId = item.dataset.itemId;
+                    const mainImage = item.querySelector('.main-image');
+                    // get the thumbnail's data-main-src
+                    const newSrc = thumbnail.src;
+                    // update the main image source
+                    mainImage.src = newSrc;
+                    // remove the class 'active' from all thumbnails in this item
+                    item.querySelectorAll('.thumbnail').forEach(thumb => {
+                        thumb.classList.remove('active');
+                    });
+                    // add 'active' class to the clicked thumbnail 
                     thumbnail.classList.add('active');
-                    mainImage.src = thumbnail.src;
                 });
             });
-            // set first image as default on page load
-            mainImage.src = thumbnails[0].src;
-            thumbnails[0].classList.add('active');
         });
 
 
@@ -752,16 +827,13 @@
         });
 
         // -------------------------------------------------------------------------------------------------------------
-        document.addEventListener('DOMContentLoaded', () => {
             const cookwareItems = document.getElementById("all-cookware-items");
-            const itemsInSubcategories = document.getElementById("items-in-subcategories");
-            const displaySubcategories = document.getElementById("vendor-subcategories-display");
-            cookwareItems.addEventListener('click', () => {
+            const inputAndClose = document.getElementById("inputAndClose");
+            function openSubcategory(element) {
                 displaySubcategories.style.display = "none";
                 itemsInSubcategories.classList.add('blockDisplay');
-            });
-        });
-
+                inputAndClose.classList.add("noneDisplay");
+            }
 
     // ----------------------------------------------------------------------------------------------------------------
         document.addEventListener('DOMContentLoaded', () => {
@@ -772,6 +844,43 @@
                 displayedSubcategories.classList.remove('blockDisplay');
                 storesItemsArrangement.classList.add('flexDisplay');
             });
+        });
+
+        // ------------------------------------------------------------------------------------------------------------
+        document.addEventListener('DOMContentLoaded', () => {
+            const seeAllKitchenCatg = document.getElementById("see-all-kitchen-catg");
+            const displayedSubcategories =document.getElementById("items-in-subcategories");
+            const searchDescriptionHeader = document.querySelector(".search-description-header");
+            const inputAndClose = document.getElementById("inputAndClose");
+            seeAllKitchenCatg.addEventListener('click', function() {
+                displaySubcategories.classList.add('noneDisplay');
+                inputAndClose.classList.add('noneDisplay');
+                displayedSubcategories.classList.add('blockDisplay');
+                searchDescriptionHeader.textContent = " < Kitchen";
+            });
+        });
+
+        // -------------------------------------------------------------------------------------------------------------
+        // only apply click event on this search icon for mobile devices
+        if (window.matchMedia ("(max-width: 768px)").matches) {
+            document.querySelector('.searchicon-for-items-in-subcategories').addEventListener('click', function() {
+                const input = document.querySelector('.input-for-items-in-subcategories');
+                input.classList.toggle('active');
+                if (input.classList.contains('active')) {
+                    input.focus();
+                }
+            });
+        }
+
+        const inputForSubcategoriesItems = document.querySelector('.input-for-items-in-subcategories');
+        const searchResultsAutocompleteDropdown = document.querySelector('.search-results-autocomplete-dropdown');
+        inputForSubcategoriesItems.addEventListener('input', () => {
+           searchResultsAutocompleteDropdown.classList.add('blockDisplay');
+            if (inputForSubcategoriesItems.value === '') {
+                if (searchResultsAutocompleteDropdown.classList.contains('blockDisplay')) {
+                    searchResultsAutocompleteDropdown.classList.remove('blockDisplay');
+                }
+            }
         });
       
     </script>

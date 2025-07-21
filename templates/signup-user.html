@@ -200,7 +200,7 @@
             <select name="countryCode">
               <option value="+234" selected>🇳🇬 +234</option>
             </select>
-            <input type="tel" name="phone" placeholder="Phone Number"/>
+            <input type="tel" name="phone" placeholder="Phone Number" id="phone_number"/>
           </div>
 
           <input type="email" placeholder="Email Address" id="email"/>
@@ -246,12 +246,14 @@
       const password = document.getElementById('password').value;
       const first_name = document.getElementById('first_name').value;
       const last_name = document.getElementById('last_name').value;
+      const phone_number = document.getElementById('phone_number').value;
       const messageElement = document.getElementById('message');
 
       // key-value pairs. the key ie the left side are the ID of the elements
       const userData = {
         email: email,
         password: password,
+        phone_number: phone_number,
         first_name: first_name,
         last_name: last_name,
       }
@@ -270,10 +272,12 @@
                 
           if (response.ok) {
               messageElement.style.color = 'green';
-              messageElement.textContent = data.message || 'User registered successfully!';
+              messageElement.textContent = data.message || 'Registration successful. Check your email for a verification link.';
               console.log('Registration successful', data);
               alert('Registration successful!');
-              window.location.href = form.action;
+              setTimeout(() => {
+                window.location.href = form.action;
+              }, 2000);            
           } else {
             throw new Error(`HTTP error! Status: ${response.status}`);
               messageElement.style.color = 'red';

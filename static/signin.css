@@ -18,3 +18,20 @@ input[type="submit"]
     background-color: #0056b3;
     margin-top: 50px;
 }
+.error {
+    color: red;
+    font-size: 0.9em;
+}
+.check {
+    font-size: 1.2em;
+}
+.valid {
+    color: #00cc00;
+}
+.invalid {
+    color: #ff0000;
+}
+.requirement {
+    display: flex;
+    align-items: center;
+}

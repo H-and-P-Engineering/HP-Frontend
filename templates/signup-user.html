@@ -96,6 +96,9 @@
       border-radius: 6px;
       font-size: 14px;
     }
+    .requirements {
+      margin-bottom: 18px;
+    }
 
     .checkbox {
       display: flex;
@@ -204,7 +207,32 @@
           </div>
 
           <input type="email" placeholder="Email Address" id="email"/>
-          <input type="password" placeholder="Create Password" id="password"/>
+          <div id="emailError" class="error" aria-live="polite"></div>
+
+          <input type="password" placeholder="Create Password" id="password" oninput="validatePassword()"/>
+          <div id="requirements" class="requirements">
+            <div class="requirement">
+              <span id="smallLetter" class="check invalid">❌</span> 1 small letter
+            </div>
+            <div class="requirement">
+              <span id="capitalLetter" class="check invalid">❌</span> 1 capital letter
+            </div>
+            <div class="requirement">
+              <span id="number" class="check invalid">❌</span> 1 number   
+            </div>
+            <div class="requirement">
+              <span id="specialChar" class="check invalid">❌</span> 1 special character
+            </div>
+            <div class="requirement">
+              <span id="minLength" class="check invalid">❌</span> 8 characters
+            </div>
+          </div>
+
+          <div class="input-group">
+            <label>Referral Code (Optional)</label>
+            <input type="text" id="referral" placeholder="Enter referral code">
+          </div>
+          <!-- <div id="passwordError" class="error" aria-live="polite"></div> -->
 
           <div class="checkbox">
             <input type="checkbox"/>
@@ -238,9 +266,34 @@
     //   Add commentMore actions
     }
 
+    function validatePassword() {
+      const password = document.getElementById('password').value;
+      const smallLetter = document.getElementById('smallLetter');
+      const capitalLetter = document.getElementById('capitalLetter');
+      const number = document.getElementById('number');
+      const specialChar = document.getElementById('specialChar');
+      const minLength = document.getElementById('minLength');
+      // check each requirement
+      smallLetter.textContent = /[a-z]/.test(password) ? '✅' : '❌';
+      smallLetter.className = 'check' + ( /[a-z]/.test(password) ? 'valid' : 'invalid');
+
+      capitalLetter.textContent = /[A-Z]/.test(password) ? '✅' : '❌';
+      capitalLetter.className = 'check' + ( /[A-Z]/.test(password) ? 'valid' : 'invalid');
+
+      number.textContent = /\d/.test(password) ? '✅' : '❌';
+      number.className = 'check' + ( /\d/.test(password) ? 'valid' : 'invalid');
+
+      specialChar.textContent = /[!@#$%^&*()]/.test(password) ? '✅' : '❌';
+      specialChar.className = 'check' + ( /[!@#$%^&*()]/.test(password) ? 'valid' : 'invalid');
+
+      minLength.textContent = password.length >= 8 ? '✅' : '❌';
+      minLength.className = 'check' + ( password.length >= 8 ? 'valid' : 'invalid');
+    }
     document.getElementById('registerForm').addEventListener('submit', async function (event) {
       event.preventDefault();
 
+      // nb: the main thin for registration is number, so you can register the same email but with a
+      // different phone number
       const form = event.target;
       const email = document.getElementById('email').value;
       const password = document.getElementById('password').value;
@@ -248,7 +301,21 @@
       const last_name = document.getElementById('last_name').value;
       const phone_number = document.getElementById('phone_number').value;
       const messageElement = document.getElementById('message');
+      const emailError = document.getElementById('emailError');
 
+      // email allows alphanumeric, dots, hyphens, underscores before @, then domain
+      const emailRegex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+      // password regex: min 8 chars, no spaces, atleast one uppercase, lowercase, digit, special char
+      const passwordRegex = /^(?=.[A-Z])(?=.[a-z])(?=.\d)(?=.[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>?])\S{8,}$/;
+      // validate email
+      if (!emailRegex.test(email)) {
+        emailError.textContent = 'Invalid email address';
+        return false;
+        
+      } else {
+        emailError.textContent = '';
+      }
+      
       // key-value pairs. the key ie the left side are the ID of the elements
       const userData = {
         email: email,

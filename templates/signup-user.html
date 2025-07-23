@@ -96,6 +96,9 @@
       border-radius: 6px;
       font-size: 14px;
     }
+    .requirements {
+      margin-bottom: 18px;
+    }
 
     .checkbox {
       display: flex;
@@ -185,7 +188,7 @@
 
   <div class="container">
     <div class="left-pane">
-      <img src="{{ url_for ('static', filename='signupimg2.jpg') }}" alt="Subway scene"> <!-- Replace with actual image -->
+      <img src="{{ url_for ('static', filename='signupimg2.jpg') }}" alt="Subway scene">
     </div>
 
     <div class="right-pane">
@@ -194,7 +197,10 @@
         <p>Create your account in a second</p>
         <form action="{{ url_for ('verify_useremail_otp') }}" method="post" id="registerForm">
           <input type="text" placeholder="First Name" id="first_name"/>
+          <div id="firstNameError" class="error"></div>
+
           <input type="text" placeholder="Last Name" id="last_name"/>
+          <div id="lastNameError" class="error"></div>
 
           <div class="phone-group">
             <select name="countryCode">
@@ -202,9 +208,35 @@
             </select>
             <input type="tel" name="phone" placeholder="Phone Number" id="phone_number"/>
           </div>
+          <div id="phoneError" class="error"></div>
 
           <input type="email" placeholder="Email Address" id="email"/>
-          <input type="password" placeholder="Create Password" id="password"/>
+          <div id="emailError" class="error" aria-live="polite"></div>
+
+          <input type="password" placeholder="Create Password" id="password" oninput="validatePassword()"/>
+          <div id="requirements" class="requirements">
+            <div class="requirement">
+              <span id="smallLetter" class="check invalid">❌</span> 1 small letter
+            </div>
+            <div class="requirement">
+              <span id="capitalLetter" class="check invalid">❌</span> 1 capital letter
+            </div>
+            <div class="requirement">
+              <span id="number" class="check invalid">❌</span> 1 number   
+            </div>
+            <div class="requirement">
+              <span id="specialChar" class="check invalid">❌</span> 1 special character
+            </div>
+            <div class="requirement">
+              <span id="minLength" class="check invalid">❌</span> 8 characters
+            </div>
+          </div>
+
+          <div class="input-group">
+            <label>Referral Code (Optional)</label>
+            <input type="text" id="referral" placeholder="Enter referral code">
+          </div>
+          <!-- <div id="passwordError" class="error" aria-live="polite"></div> -->
 
           <div class="checkbox">
             <input type="checkbox"/>
@@ -215,22 +247,32 @@
         </form>
         <p id="message" style="color: red; text-align: center;">hii</p>
         <div class="login">
-          <p>Already a member? <a href="login.html">Login</a></p>
+          <p>Already a member? <a href="signin">Login</a></p>
         </div>
 
-        <hr>
-
-        <div class="social-icons">
-          <img src="https://cdn-icons-png.flaticon.com/512/281/281764.png" alt="Google">
+        <div class="social-icons" id="socialRegister">
+          <img src="https://cdn-icons-png.flaticon.com/512/281/281764.png" alt="Google" onclick="beginGoogleRegistration()">   
           <img src="https://cdn-icons-png.flaticon.com/512/145/145802.png" alt="Facebook">
           <img src="https://cdn-icons-png.flaticon.com/512/2111/2111463.png" alt="Instagram">
         </div>
+
+        <!-- <div id="g_id_onload" data-client_id="YOUR_CLIENT_ID_HERE" data-callback="handleCredentialResponse"
+            data-auto_prompt="false">
+        </div>
+        <div class="g_id_signin" data-type="standard" data-shape="rectangular" data-theme="dark" data-size="large"
+        style="display: none;"></div> -->
+
+        <div id="successMessage" class="successMessage">
+          <h2>Registration Successful!</h2>
+        </div>
+
       </div>
     </div>
   </div>
 
 </body>
 
+  <script src="https://accounts.google.com/gsi/client" async defer></script>
   <script>
     function toggleMenu() {
       const navLinks = document.getElementById('nav-links');
@@ -238,60 +280,345 @@
     //   Add commentMore actions
     }
 
-    document.getElementById('registerForm').addEventListener('submit', async function (event) {
+    // ---------------------------------------------------------------------------------------------------------------
+    // 1. the process starts with integrating Google's OAuth 2.0 into the app
+    // this function fetches the socials/begin API
+    function beginGoogleRegistration() {
+      // this function send a fetch request to /social/begin/ API which generates & redirects the request to a Google
+      // authorization URL (redirectUrl) and initially redirects the user 
+      // to it with parameters like client_id, redirect_uri(ie /socials/complete API), scope, response_type=code,
+      //  prompt: consent to always show the screen
+      // then the user is redirected to google sign in page, user authorizes the app and Google redirects the user's
+      // browser to the https://google/complete API (which is not included in front end, its a server-side API)
+      // with a code query parameter 
+      // and a GET request. The server handles this GET request and extracts the code (a one-time-use valid for 10mins).
+      //  The backend then uses the
+      // code internally to request an ID token (id, email, first & lastname), access token & refresh token from 
+      // Google's token endpoint. It uses the access token to call google API for user data. The ID token is sent
+      // when the client hits submit, then Backend validates the ID token (to be sure its legitimate for your app)
+      // and uses the validated sub(googleId) and user info to register the user
+      fetch ('https://hp-test-7rmp.onrender.com/api/v1/authentication/social/begin/google-oauth2/', {
+        method: 'GET'
+      })
+      .then(response => response.json())
+      .then(data => {
+        if (data.redirectUrl) {
+          window.location.href = data.redirectUrl;
+        } else {
+          document.getElementById("emailError").textContent = "Failed to start Google registration";
+        }
+      })
+      .catch(error => {
+        document.getElementById("emailError").textContent = "An error occured. Please try again";
+      });
+    }
+
+    // after Google authorization, google redirects to the /complete/ API with an authorization code. This API 
+    // takes the code and gives an ID token, extracts the sub(googleId) from (sub, email, name) in the code and 
+    // redirects the client to the webpage with query parameters, handle redirect callback and pre-fill form.
+    // The window.location.search property contains the query string portion of the URL
+    // (e.g., ?first_name=John&last_name=Doe&email=john.doe@example.com). The URLSearchParams API parses this string,
+    // and urlParams.get('key') retrieves the value for the specified key
+    // this is event listener for page load on redirect to google authorization url, this url contains parameters
+    // then user is redirected to gooogle sign in page and query parameters checked
+    window.addEventListener('load', () => {
+      const urlParams = new URLSearchParams(window.location.search);
+      const first_name = urlParams.get('first_name');
+      const last_name = urlParams.get("last_name");
+      const email = urlParams.get("email");
+      const googleId = urlParams.get("googleId");
+
+      // when the user authorizes the app in the google sign in page, the parameters/keys are given their values
+      // an
+      // used to pre-fill the form inputs
+      if (first_name || last_name || email || googleId) {
+        if (first_name) document.getElementById('first_name').value = decodeURIComponent(first_name);
+        if (last_name) document.getElementById('last_name').value = decodeURIComponent(last_name);
+        if (email) document.getElementById('email').value = decodeURIComponent(email);
+        // store the googleId in window.userData
+        if (googleId) window.userData = {
+          googleId: decodeURIComponent(googleId)
+        };
+      }
+    });
+
+    document.getElementById('registerForm').addEventListener('submit', function(event) {
       event.preventDefault();
-
-      const form = event.target;
-      const email = document.getElementById('email').value;
-      const password = document.getElementById('password').value;
-      const first_name = document.getElementById('first_name').value;
-      const last_name = document.getElementById('last_name').value;
-      const phone_number = document.getElementById('phone_number').value;
+      const first_name = document.getElementById("first_name").value.trim();
+      const last_name = document.getElementById("last_name").value.trim();
+      const phone_number = document.getElementById("phone_number").value.trim();
+      const email = document.getElementById("email").value.trim();
+      const password = document.getElementById("password").value;
       const messageElement = document.getElementById('message');
+      const firstNameError = document.getElementById('firstNameError');
+      const lastNameError = document.getElementById('lastNameError');
+      const phoneError = document.getElementById('phoneError');
+      const emailError = document.getElementById('emailError');
 
-      // key-value pairs. the key ie the left side are the ID of the elements
+      document.getElementById("password").addEventListener("input", () => {
+        const password = document.getElementById('password').value;
+        const smallLetter = document.getElementById('smallLetter');
+        const capitalLetter = document.getElementById('capitalLetter');
+        const number = document.getElementById('number');
+        const specialChar = document.getElementById('specialChar');
+        const minLength = document.getElementById('minLength');
+        // check each requirement
+        smallLetter.textContent = /[a-z]/.test(password) ? '✅' : '❌';
+        smallLetter.className = 'check' + ( /[a-z]/.test(password) ? 'valid' : 'invalid');
+
+        capitalLetter.textContent = /[A-Z]/.test(password) ? '✅' : '❌';
+        capitalLetter.className = 'check' + ( /[A-Z]/.test(password) ? 'valid' : 'invalid');
+
+        number.textContent = /\d/.test(password) ? '✅' : '❌';
+        number.className = 'check' + ( /\d/.test(password) ? 'valid' : 'invalid');
+
+        specialChar.textContent = /[!@#$%^&*()]/.test(password) ? '✅' : '❌';
+        specialChar.className = 'check' + ( /[!@#$%^&*()]/.test(password) ? 'valid' : 'invalid');
+
+        minLength.textContent = password.length >= 8 ? '✅' : '❌';
+        minLength.className = 'check' + ( password.length >= 8 ? 'valid' : 'invalid');
+      });
+      const emailRegex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+      const phoneRegex = /^\+234\d{10}$/;
+      // password regex: min 8 chars, no spaces, atleast one uppercase, lowercase, digit, special char
+      // const passwordRegex = /^(?=.[A-Z])(?=.[a-z])(?=.\d)(?=.[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>?])\S{8,}$/;
+  
+      if (!emailRegex.test(email)) 
+        emailError.textContent = 'Invalid email address';
+     
+      if (!first_name) 
+        firstNameError.textContent = "Enter First Name";
+      
+      if (!last_name) 
+        lastNameError.textContent = "Enter Last Name";
+      
+      if (!phoneRegex.test(phone_number)) 
+        phoneError.textContent = "Invalid phone number";
+      
+      if (firstNameError.textContent || lastNameError.textContent || phoneError.textContent ||
+        emailError.textContent) 
+          return;
+
       const userData = {
         email: email,
         password: password,
         phone_number: phone_number,
         first_name: first_name,
         last_name: last_name,
-      }
-      const bodyData = JSON.stringify(userData);
-      try {
-        // send fetch request
-          const response = await fetch('https://hp-test-7rmp.onrender.com/api/v1/authentication/register/', {
-              method: 'POST',
-              headers: {
-                  'Content-Type': 'application/json',
-              },
-              body: bodyData,
-          });  
-
-          const data = await response.json();
-                
-          if (response.ok) {
-              messageElement.style.color = 'green';
-              messageElement.textContent = data.message || 'Registration successful. Check your email for a verification link.';
-              console.log('Registration successful', data);
-              alert('Registration successful!');
-              setTimeout(() => {
-                window.location.href = form.action;
-              }, 2000);            
-          } else {
-            throw new Error(`HTTP error! Status: ${response.status}`);
-              messageElement.style.color = 'red';
-              // handle specific errors from the API
-              const errors = data.username || data.email || data.password || ['Registration failed'];
-              console.log('Not registered');
-              messageElement.textContent = errors[0];
-          }
-      } catch (error) {
-        console.error('error:', error);
-          // messageElement.style.color = 'red';
-          // messageElement.textContent = 'Error: Unable to connect to the server';
-      }
+      };
+      // so after user consents in the Google's page, Google redirects back to this API with a GET request
+      // containing query parameter. if googleId exists(indicating a Google registration flow), 
+      // the url is set to the social/complete API
+      // NB: the social/complete API is not called directly by the client via fetch, instead it is invoked by
+      // Google's redirect after the user authorizes the app
+      const url = window.userData?.googleId ? 'https://hp-test-7rmp.onrender.com/api/v1/authentication/social/complete/google-oauth2/' : 'https://hp-test-7rmp.onrender.com/api/v1/authentication/register/';
+      fetch(url, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': window.userData?.googleId ||  ''
+        },
+        body: JSON.stringify(userData)
+      }) 
+      .then(response => response.json())
+      .then(data => {
+        if (data.success) {
+          document.getElementById("registerForm").style.display = "none";
+          document.getElementById("successMessage").style.display = "block";
+        } else {
+          document.getElementById("emailError").textContent = "Registration failed: " + (data.error || '');
+        }
+      })
+      .catch(error => {
+        document.getElementById("emailError").textContent = "An error occured. Please try again";
+      });
     });
+    // ----------------------------------------------------------------------------------------------------------------
+    // function showGoogleRegister() {
+    //   document.querySelector('.g_id_signin').style.display = "block";
+    // }
+    // // this call back function is where google issues an ID token passed as response
+    // function handleCredentialResponse(response) {
+    //   const token = response.credential;
+    //   // the app then used the token to fetch user info from the google /userinfo api
+    //   fetch('https://www.googleapis.com/oauth2/v3/userinfo', {
+    //     headers: {
+    //       Authorization: `Bearer ${token}`
+    //     }
+    //   })
+    //   // this then happens after fetching the user info: the info is passed into variables and passed into the
+    //   //   input fields (email, first name and last name)
+    //   .then(res => res.json())
+    //   .then(data => {
+    //     const fullName = data.name || '';
+    //     const [first_name, last_name] = fullName.split(' ').filter(Boolean);
+    //     document.getElementById('first_name').value = data.given_name || first_name || '';
+    //     document.getElementById('last_name').value = data.given_name || last_name || '';
+    //     document.getElementById('email').value = data.email;
+    //     // default prefix, user can edit
+    //     // document.getElementById('phone_number').value = '+234';
+    //     // no password from google 
+    //     document.getElementById('password').value = '';
+    //     window.userData = {
+    //       // store the googleId for fetch
+    //       googleId: data.sub
+    //     };
+    //     // trigger form submission
+    //     document.getElementById("registerForm").dispatchEvent(new Event('submit'));
+    //   })
+    //   .catch(error => {
+    //     document.getElementById("emailError").textContent = "Error fetching Google data. Please try again"
+    //   });
+    // }
+
+    // // ----------------------------------------------------------------------------------------------------------------
+
+    // function validatePassword() {
+    //   const password = document.getElementById('password').value;
+    //   const smallLetter = document.getElementById('smallLetter');
+    //   const capitalLetter = document.getElementById('capitalLetter');
+    //   const number = document.getElementById('number');
+    //   const specialChar = document.getElementById('specialChar');
+    //   const minLength = document.getElementById('minLength');
+    //   // check each requirement
+    //   smallLetter.textContent = /[a-z]/.test(password) ? '✅' : '❌';
+    //   smallLetter.className = 'check' + ( /[a-z]/.test(password) ? 'valid' : 'invalid');
+
+    //   capitalLetter.textContent = /[A-Z]/.test(password) ? '✅' : '❌';
+    //   capitalLetter.className = 'check' + ( /[A-Z]/.test(password) ? 'valid' : 'invalid');
+
+    //   number.textContent = /\d/.test(password) ? '✅' : '❌';
+    //   number.className = 'check' + ( /\d/.test(password) ? 'valid' : 'invalid');
+
+    //   specialChar.textContent = /[!@#$%^&*()]/.test(password) ? '✅' : '❌';
+    //   specialChar.className = 'check' + ( /[!@#$%^&*()]/.test(password) ? 'valid' : 'invalid');
+
+    //   minLength.textContent = password.length >= 8 ? '✅' : '❌';
+    //   minLength.className = 'check' + ( password.length >= 8 ? 'valid' : 'invalid');
+    // }
+    // document.getElementById('registerForm').addEventListener('submit', async function (event) {
+    //   event.preventDefault();
+
+    //   // nb: the main thing for registration is number, so you can register the same email but with a
+    //   // different phone number
+    //   const form = event.target;
+    //   const email = document.getElementById('email').value.trim();
+    //   const password = document.getElementById('password').value;
+    //   const first_name = document.getElementById('first_name').value.trim();
+    //   const last_name = document.getElementById('last_name').value.trim();
+    //   const phone_number = document.getElementById('phone_number').value.trim();
+    //   const messageElement = document.getElementById('message');
+    //   const firstNameError = document.getElementById('firstNameError');
+    //   const lastNameError = document.getElementById('lastNameError');
+    //   const phoneError = document.getElementById('phoneError');
+    //   const emailError = document.getElementById('emailError');
+
+    //   // google registration contd: at this point, the authorized register with google div (with id "g_id_signin") 
+    //   // is appearing on the form ie the display is block and the input fields have been autofilled by google
+    //   // except password and phone number
+    //   const userGoogleData = {first_name, last_name, phone, email, password};
+    //   const url = window.userGoogleData?.googleId ? '/api/register/google' : '/api/register/manual'
+    //   let isGoogle = false;
+    //   let googleId = null;
+    //   // to confirm which API to send the user data to based on manual registration or socials registration, the
+    //   // code below checks if the register with google icon was clicked, which created the g_id_signin display
+    //   if (document.querySelector('.g_id_signin').style.display === 'block') {
+    //     isGoogle = true;
+    //     googleId = window.userData?.googleId;
+    //   }
+    //   // then we now fetch the back end API to send the inputs
+    //   fetch('/api/register', {
+    //     method: 'POST',
+    //     headers: {
+    //       'Content-Type': 'application/json',
+    //       'Authorization': googleId || ''
+    //     },
+    //     body: JSON.stringify(userGoogleData)
+    //   })
+    //   .then(response => response.json())
+    //   .then(data => {
+    //     if (data.success) {
+    //       document.getElementById('registerForm').style.display = "none";
+    //       document.getElementById("socialRegister").style.display = "none";
+    //       document.getElementById('successMessage').style.display = "block";
+    //     } else {
+    //       emailError.textContent = "Registration failed. Please try again";
+    //     }
+    //   })
+    //   .catch(error => {
+    //     emailError.textContent = "An error occured. Please try again";
+    //   });
+    //   // validate first name, last name, email, phone number:
+    //   // email allows alphanumeric, dots, hyphens, underscores before @, then domain
+    //   const emailRegex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+    //   const phoneRegex = /^\+234\d{10}$/;
+    //   // password regex: min 8 chars, no spaces, atleast one uppercase, lowercase, digit, special char
+    //   // const passwordRegex = /^(?=.[A-Z])(?=.[a-z])(?=.\d)(?=.[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>?])\S{8,}$/;
+  
+    //   if (!emailRegex.test(email)) 
+    //     emailError.textContent = 'Invalid email address';
+     
+    //   if (!first_name) 
+    //     firstNameError.textContent = "Enter First Name";
+      
+    //   if (!last_name) 
+    //     lastNameError.textContent = "Enter Last Name";
+      
+    //   if (!phoneRegex.test(phone_number)) 
+    //     phoneError.textContent = "Invalid phone number";
+      
+    //   if (firstNameError.textContent || lastNameError.textContent || phoneError.textContent ||
+    //     emailError.textContent) 
+    //       return;
+        
+
+      
+    //   // key-value pairs for manual input registration. the key ie the left side are the ID of the elements
+    //   const userData = {
+    //     email: email,
+    //     password: password,
+    //     phone_number: phone_number,
+    //     first_name: first_name,
+    //     last_name: last_name,
+    //   }
+    //   const bodyData = JSON.stringify(userData);
+    //   try {
+    //     // send fetch request
+    //       const response = await fetch('https://hp-test-7rmp.onrender.com/api/v1/authentication/register/', {
+    //           method: 'POST',
+    //           headers: {
+    //               'Content-Type': 'application/json',
+    //           },
+    //           body: bodyData,
+    //       });  
+
+    //       const data = await response.json();
+                
+    //       if (response.ok) {
+    //           messageElement.style.color = 'green';
+    //           messageElement.textContent = data.message || 'Registration successful. Check your email for a verification link.';
+    //           console.log('Registration successful', data);
+    //           alert('Registration successful!');
+    //           setTimeout(() => {
+    //             window.location.href = form.action;
+    //           }, 2000);            
+    //       } else {
+    //         throw new Error(`HTTP error! Status: ${response.status}`);
+    //           messageElement.style.color = 'red';
+    //           // handle specific errors from the API
+    //           const errors = data.username || data.email || data.password || ['Registration failed'];
+    //           console.log('Not registered');
+    //           messageElement.textContent = errors[0];
+    //       }
+    //   } catch (error) {
+    //     console.error('error:', error);
+    //       // messageElement.style.color = 'red';
+    //       // messageElement.textContent = 'Error: Unable to connect to the server';
+    //   }
+    // });
+
+    // ----------------------------------------------------------------------------------------------------------------
+    
   </script>
 </body>
 {% endblock %}

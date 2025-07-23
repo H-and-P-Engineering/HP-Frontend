@@ -35,3 +35,8 @@ input[type="submit"]
     display: flex;
     align-items: center;
 }
+.successMessage {
+    display: none;
+    text-align: center;
+    padding: 20px;
+}

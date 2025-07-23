@@ -297,20 +297,34 @@
       // Google's token endpoint. It uses the access token to call google API for user data. The ID token is sent
       // when the client hits submit, then Backend validates the ID token (to be sure its legitimate for your app)
       // and uses the validated sub(googleId) and user info to register the user
-      fetch ('https://hp-test-7rmp.onrender.com/api/v1/authentication/social/begin/google-oauth2/', {
-        method: 'GET'
-      })
-      .then(response => response.json())
-      .then(data => {
-        if (data.redirectUrl) {
-          window.location.href = data.redirectUrl;
-        } else {
-          document.getElementById("emailError").textContent = "Failed to start Google registration";
-        }
-      })
-      .catch(error => {
-        document.getElementById("emailError").textContent = "An error occured. Please try again";
-      });
+      // fetch ('https://hp-test-7rmp.onrender.com/api/v1/authentication/social/begin/google-oauth2/', {
+      //   method: 'GET'
+      // })
+      // const backend = 'google-oauth2'; // Replace with actual backend provider
+      try {
+      window.location.href = `https://hp-test-7rmp.onrender.com/api/v1/authentication/social/begin/google-oauth2/`;
+    } catch (error) {
+      document.getElementById("emailError").textContent = "An error occurred. Please try again";
+    }
+      // check redirect
+      // .then(response => {
+      //   console.log('Response status:', response.status);
+      //   console.log('Response headers:', response.headers.get('Location')); // Check redirect
+      //   return response.json();
+      // })
+      // // .then(response => response.json())
+      // // check json structure
+      // .then(data => {
+      //   console.log('Response data:', data);
+      //   if (data.redirectUrl) {
+      //     window.location.href = data.redirectUrl;
+      //   } else {
+      //     document.getElementById("emailError").textContent = "Failed to start Google registration";
+      //   }
+      // })
+      // .catch(error => {
+      //   document.getElementById("emailError").textContent = "An error occured. Please try again";
+      // });
     }
 
     // after Google authorization, google redirects to the /complete/ API with an authorization code. This API 
@@ -336,13 +350,14 @@
         if (last_name) document.getElementById('last_name').value = decodeURIComponent(last_name);
         if (email) document.getElementById('email').value = decodeURIComponent(email);
         // store the googleId in window.userData
-        if (googleId) window.userData = {
-          googleId: decodeURIComponent(googleId)
-        };
+        // if (googleId) window.userData = {
+        //   googleId: decodeURIComponent(googleId)
+        // };
+        if (googleId) sessionStorage.setItem('googleId', decodeURIComponent(googleId));
       }
     });
 
-    document.getElementById('registerForm').addEventListener('submit', function(event) {
+    document.getElementById('registerForm').addEventListener('submit', async function(event) {
       event.preventDefault();
       const first_name = document.getElementById("first_name").value.trim();
       const last_name = document.getElementById("last_name").value.trim();
@@ -406,32 +421,60 @@
         first_name: first_name,
         last_name: last_name,
       };
+      const googleId = sessionStorage.getItem('googleId');
       // so after user consents in the Google's page, Google redirects back to this API with a GET request
       // containing query parameter. if googleId exists(indicating a Google registration flow), 
       // the url is set to the social/complete API
       // NB: the social/complete API is not called directly by the client via fetch, instead it is invoked by
       // Google's redirect after the user authorizes the app
-      const url = window.userData?.googleId ? 'https://hp-test-7rmp.onrender.com/api/v1/authentication/social/complete/google-oauth2/' : 'https://hp-test-7rmp.onrender.com/api/v1/authentication/register/';
-      fetch(url, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          'Authorization': window.userData?.googleId ||  ''
-        },
-        body: JSON.stringify(userData)
-      }) 
-      .then(response => response.json())
-      .then(data => {
+      const url = googleId ? 'https://hp-test-7rmp.onrender.com/api/v1/authentication/social/complete/google-oauth2/' : 'https://hp-test-7rmp.onrender.com/api/v1/authentication/register/';
+      // user try catch, async and await combination to present error to the page and console
+      try {
+        document.getElementById('registerForm').querySelector('button').disabled = true; // Disable submit button
+        const response = await fetch(url, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            ...(googleId && { Authorization: `Bearer ${googleId}` }), // Adjust token format as needed
+          },
+          body: JSON.stringify(userData),
+        });
+        const data = await response.json();
+
         if (data.success) {
-          document.getElementById("registerForm").style.display = "none";
-          document.getElementById("successMessage").style.display = "block";
+          document.getElementById('registerForm').style.display = 'none';
+          document.getElementById('successMessage').style.display = 'block';
+          sessionStorage.removeItem('googleId'); // Clean up
         } else {
-          document.getElementById("emailError").textContent = "Registration failed: " + (data.error || '');
+          document.getElementById('emailError').textContent = `Registration failed: ${data.error || ''}`;
         }
-      })
-      .catch(error => {
-        document.getElementById("emailError").textContent = "An error occured. Please try again";
-      });
+      } catch (error) {
+        document.getElementById('emailError').textContent = 'An error occurred. Please try again';
+      } finally {
+        document.getElementById('registerForm').querySelector('button').disabled = false; // Re-enable button
+      }
+
+      // const url = window.userData?.googleId ? 'https://hp-test-7rmp.onrender.com/api/v1/authentication/social/complete/google-oauth2/' : 'https://hp-test-7rmp.onrender.com/api/v1/authentication/register/';
+      // fetch(url, {
+      //   method: 'POST',
+      //   headers: {
+      //     'Content-Type': 'application/json',
+      //     'Authorization': window.userData?.googleId ||  ''
+      //   },
+      //   body: JSON.stringify(userData)
+      // }) 
+      // .then(response => response.json())
+      // .then(data => {
+      //   if (data.success) {
+      //     document.getElementById("registerForm").style.display = "none";
+      //     document.getElementById("successMessage").style.display = "block";
+      //   } else {
+      //     document.getElementById("emailError").textContent = "Registration failed: " + (data.error || '');
+      //   }
+      // })
+      // .catch(error => {
+      //   document.getElementById("emailError").textContent = "An error occured. Please try again";
+      // });
     });
     // ----------------------------------------------------------------------------------------------------------------
     // function showGoogleRegister() {

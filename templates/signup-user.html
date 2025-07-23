@@ -335,25 +335,52 @@
     // and urlParams.get('key') retrieves the value for the specified key
     // this is event listener for page load on redirect to google authorization url, this url contains parameters
     // then user is redirected to gooogle sign in page and query parameters checked
-    window.addEventListener('load', () => {
+    document.addEventListener('DOMContentLoaded', () => {
       const urlParams = new URLSearchParams(window.location.search);
       const first_name = urlParams.get('first_name');
-      const last_name = urlParams.get("last_name");
-      const email = urlParams.get("email");
-      const googleId = urlParams.get("googleId");
+      const last_name = urlParams.get('last_name');
+      const email = urlParams.get('email');
+      const phone_number = urlParams.get('phone_number');
+      const googleId = urlParams.get('googleId');
+
+      console.log('Query Parameters:', {
+        first_name,
+        last_name,
+        email,
+        googleId,
+        rawSearch: window.location.search
+      });
 
       // when the user authorizes the app in the google sign in page, the parameters/keys are given their values
       // an
       // used to pre-fill the form inputs
       if (first_name || last_name || email || googleId) {
-        if (first_name) document.getElementById('first_name').value = decodeURIComponent(first_name);
-        if (last_name) document.getElementById('last_name').value = decodeURIComponent(last_name);
-        if (email) document.getElementById('email').value = decodeURIComponent(email);
+        try {
+          if (first_name) {
+            const firstNameInput = document.getElementById('first_name');
+            if (firstNameInput) firstNameInput.value = decodeURIComponent(first_name);
+            else console.error('Element with ID "first_name" not found');
+          }
+          if (last_name) {
+            const lastNameInput = document.getElementById('last_name');
+            if (lastNameInput) lastNameInput.value = decodeURIComponent(last_name);
+            else console.error('Element with ID "last_name" not found');
+          }
+          if (email) {
+            const emailInput = document.getElementById('email');
+            if (emailInput) emailInput.value = decodeURIComponent(email);
+            else console.error('Element with ID "email" not found');
+          }
+          if (googleId) {
+            sessionStorage.setItem('googleId', decodeURIComponent(googleId));
+          }
+        } catch (e) {
+          console.error('Error decoding query parameters:', e);
+        }
         // store the googleId in window.userData
         // if (googleId) window.userData = {
         //   googleId: decodeURIComponent(googleId)
         // };
-        if (googleId) sessionStorage.setItem('googleId', decodeURIComponent(googleId));
       }
     });
 

@@ -186,7 +186,7 @@
 
 <body>
 
-  <div class="container">
+  <div class="container" id="container">
     <div class="left-pane">
       <img src="{{ url_for ('static', filename='signupimg2.jpg') }}" alt="Subway scene">
     </div>
@@ -262,12 +262,12 @@
         <div class="g_id_signin" data-type="standard" data-shape="rectangular" data-theme="dark" data-size="large"
         style="display: none;"></div> -->
 
-        <div id="redirectMessage"></div>
-
       </div>
     </div>
   </div>
-
+  <div id="redirectMessage" class="redirectMessage" style="display: none;">
+    <h1>Authenticating....</h1>
+  </div>
 </body>
 
   <script src="https://accounts.google.com/gsi/client" async defer></script>
@@ -311,32 +311,40 @@
     // this event listener is for when google has redirected the browser to the second backend API. Meaning that
     //  the backend now has the user data and so can now be retrieved by front end
     window.addEventListener('load', async () => {
+    console.log("page load event fired");
       // check if this is aredirect from google or the intial click to sign up
       const urlParams = new URLSearchParams(window.location.search);
+      const is_new = params.get('is_new');
       // make sure the load is targeting the API load and not other page loads
       if (window.location.pathname === 'https://hp.kosenuel.com/createaccount-user') {
-        showPopup("Account exists. Please log in.", true, "/signin");
-        try {
-          // call this function to fetch and return user data into userData variable
-          const userData = await fetchUserData();
-          if (userData) {
-            const {user, is_new} = userData;
-            //store user data eg to use the name in the homepage eg 'Welcome Jeffrey'
-            // sessionStorage only accepts strings as values so the user object from backend is convertes to string
-            sessionStorage.setItem('user', JSON.stringify(user));
-            sessionStorage.setItem('access', userData.access);
-            sessionStorage.setItem('refresh', userData.refresh);
+        console.log("redirecting to path");
+        if (is_new !== null) {
+          document.getElementById("container").classList.add = "noneDisplay";
+          document.getElementById("redirectMessage").classList.add = "blockDisplay";
+          try {
+            // call this function to fetch and return user data into userData variable
+            const userData = await fetchUserData();
+            console.log("Fetch user data:", userData);
+            if (userData) {
+              const {user, is_new} = userData;
+              //store user data eg to use the name in the homepage eg 'Welcome Jeffrey'
+              // sessionStorage only accepts strings as values so the user object from backend is convertes to string
+              sessionStorage.setItem('user', JSON.stringify(user));
+              sessionStorage.setItem('access', userData.access);
+              sessionStorage.setItem('refresh', userData.refresh);
             
-            window.location.href = "/homepage";
-          
-          } else {
-
-            // if null was returned to the function eg user already exists or the server wasnt able to redirect
-            showPopup("Account exists. Please log in.", true, "/signin");
+              window.location.href = "/homepage";       
+            } else {
+              document.getElementById("container").classList.remove = "noneDisplay";
+              document.getElementById("redirectMessage").classList.remove = "blockDisplay";
+            }
+          } catch (error) {
+            console.log("inability to complete, EBUBE");
           }
-        } catch (error) {
-          console.log("inability to complete, EBUBE");
+        } else {
+          console.log("Not on post google redirect path");
         }
+        
       }
     //   const urlParams = new URLSearchParams(window.location.search);
     //   const first_name = urlParams.get('first_name');
@@ -388,14 +396,18 @@
     // it then uses the flag to determine the pages to take the browser
     async function fetchUserData() {
       try {
+        console.log("attempting to fetch userdata from API");
         const response = await fetch('https://hp-test-7rmp.onrender.com/api/v1/authentication/social/data/', {
           method: 'GET',
           credentials: 'include'
         });
-        const data = await response.json();
         if (!response.ok) {
           window.location.href = '/error';
+          return null;
         }
+        const data = await response.json();
+        console.log(data);
+        console.log("fetch response:", response.status);
         if (data.success === 'true' && data.data && data.data.user && data.data.user.is_new === 'true') {
           return {
             user: data.data.user,
@@ -404,6 +416,7 @@
           };
         } 
         if (data.success === 'false' && data.data.user.is_new === 'false') {
+          window.location.href = '/error';
           return null;
         }
       } catch (error) {

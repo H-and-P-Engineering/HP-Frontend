@@ -314,7 +314,7 @@
       // check if this is aredirect from google or the intial click to sign up
       const urlParams = new URLSearchParams(window.location.search);
       // make sure the load is targeting the API load and not other page loads
-      if (window.location.pathname === 'https://kosenuel.com/createaccount-user') {
+      if (window.location.pathname === 'https://hp.kosenuel.com/createaccount-user') {
         showPopup("Account exists. Please log in.", true, "/signin");
         try {
           // call this function to fetch and return user data into userData variable

@@ -6,6 +6,10 @@ app =Flask (__name__, template_folder="templates")
 def index():
     return render_template("index.html")
 
+@app.route("/error")
+def error():
+    return render_template("error.html")
+
 @app.route("/registeras")
 def registeras():
     return render_template("register-as.html")

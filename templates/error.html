@@ -1,0 +1,21 @@
+{% extends "layout.html" %}
+
+{% block body %}
+    <body>
+        <h1>Oops! Something went wron</h1>
+        <p>Our server is temporsrily unavailable. PLease try again later or contact support at hpsupport@gmail.com</p>
+        <button id="retyButton">Retry</button>
+
+        <script>
+            document.addEventListener(' DOMContentLoaded', () => {
+                const retryButton = document.getElementById("retryButton");
+                // use referrer as the target, fall back to site root
+                const referrer = document.referrer || '/';
+                retryButton.addEventListener('click', () => {
+                    window.location.href = referrer;
+                });
+            });
+        </script>
+    </body>
+
+{% endblock %}

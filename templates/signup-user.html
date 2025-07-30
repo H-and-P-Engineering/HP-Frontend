@@ -299,10 +299,21 @@
       document.body.appendChild(modal);
     }
     // this function fetches the socials/begin API to start integrating Google's OAuth 2.0 into the app
-    function beginGoogleRegistration() {
+    async function beginGoogleRegistration() {
       // const backend = 'google-oauth2'; // Replace with actual backend provider
       try {
-        window.location.href = `https://hp-test-7rmp.onrender.com/api/v1/authentication/social/begin/google-oauth2/`;
+        response = await fetch ('https://hp-test-7rmp.onrender.com/api/v1/authentication/social/begin/google-oauth2/', {
+          method: 'GET',
+          credentials: 'include'
+        });
+        if (!response.ok) {
+          // if the response is not ok(!200), the throw throws an exception caught by a try catch block,
+          // the new Error() constructor that creates an error object
+          throw new Error ('HTTP error found EBUBE'); 
+          window.location.href = '/error';
+        }
+        console.log(response);
+        window.location.href = response.url;
       } catch (error) {
         window.location.href = '/error';
         // document.getElementById("emailError").textContent = "An error occurred. Please try again";
@@ -311,32 +322,42 @@
     // this event listener is for when google has redirected the browser to the second backend API. Meaning that
     //  the backend now has the user data and so can now be retrieved by front end
     window.addEventListener('load', async () => {
-    console.log("page load event fired");
-      // check if this is aredirect from google or the intial click to sign up
-      const urlParams = new URLSearchParams(window.location.search);
-      const is_new = params.get('is_new');
+      console.log("page load event fired");
+      console.log(window.location.pathname);
+      // check if this is aredirect from google or the intial click to sign up    
       // make sure the load is targeting the API load and not other page loads
       if (window.location.pathname === 'https://hp.kosenuel.com/createaccount-user') {
-        console.log("redirecting to path");
-        if (is_new !== null) {
-          document.getElementById("container").classList.add = "noneDisplay";
+        const urlParams = new URLSearchParams(window.location.search);
+        // check if the parameter is present in the url
+        const hasis_new = urlParams.has('is_new');
+        // get the value of the parameter is_new
+        const is_new = urlParams.get('is_new');
+        if (hasis_new) {
+          console.log("redirecting to path");
+          document.getElementById("container").style.display = "none";
           document.getElementById("redirectMessage").classList.add = "blockDisplay";
           try {
             // call this function to fetch and return user data into userData variable
             const userData = await fetchUserData();
             console.log("Fetch user data:", userData);
             if (userData) {
-              const {user, is_new} = userData;
+              // destructure the object userData and extracts property user from it
+              const {user} = userData;
               //store user data eg to use the name in the homepage eg 'Welcome Jeffrey'
               // sessionStorage only accepts strings as values so the user object from backend is convertes to string
-              sessionStorage.setItem('user', JSON.stringify(user));
+              const is_new = user.is_new;
+              // sessionStorage.setItem('user', JSON.stringify(user));
               sessionStorage.setItem('access', userData.access);
               sessionStorage.setItem('refresh', userData.refresh);
-            
-              window.location.href = "/homepage";       
+              if(is_new === True) {
+                window.location.href = "/homepage";   
+              } else {
+                window.location.href = "/signin";   
+              }
             } else {
               document.getElementById("container").classList.remove = "noneDisplay";
               document.getElementById("redirectMessage").classList.remove = "blockDisplay";
+              window.location.href = "/error";   
             }
           } catch (error) {
             console.log("inability to complete, EBUBE");
@@ -345,6 +366,8 @@
           console.log("Not on post google redirect path");
         }
         
+      } else {
+        console.log(window.location.pathname);
       }
     //   const urlParams = new URLSearchParams(window.location.search);
     //   const first_name = urlParams.get('first_name');
@@ -416,12 +439,13 @@
           };
         } 
         if (data.success === 'false' && data.data.user.is_new === 'false') {
-          window.location.href = '/error';
+          throw new Error ("Existing user not registered");
+          window.location.href = '/signin';
           return null;
         }
       } catch (error) {
         window.location.href = '/error';
-    
+        return null;
       }
     }
 

@@ -185,7 +185,10 @@
   </style>
 
 <body>
-
+  <div id="redirectMessage" class="redirectMessage" style="display: none;">
+    <h1>Authenticating....</h1>
+  </div>
+  <div id="errorMessage"></div>
   <div class="container" id="container">
     <div class="left-pane">
       <img src="{{ url_for ('static', filename='signupimg2.jpg') }}" alt="Subway scene">
@@ -265,9 +268,6 @@
       </div>
     </div>
   </div>
-  <div id="redirectMessage" class="redirectMessage" style="display: none;">
-    <h1>Authenticating....</h1>
-  </div>
 </body>
 
   <script src="https://accounts.google.com/gsi/client" async defer></script>
@@ -315,8 +315,8 @@
         console.log(response);
         window.location.href = response.url;
       } catch (error) {
-        window.location.href = '/error';
-        // document.getElementById("emailError").textContent = "An error occurred. Please try again";
+        // window.location.href = '/error';
+        document.getElementById("ErrorMessage").textContent = "Unable to fetch API to start Google auth. Please try again";
       }  
     }
     // this event listener is for when google has redirected the browser to the second backend API. Meaning that
@@ -444,7 +444,9 @@
           return null;
         }
       } catch (error) {
-        window.location.href = '/error';
+        console.log(error);
+        // document.getElementById("redirectMessage").classList.add = "blockDisplay";
+        document.getElementById("ErrorMessage").textContent = "Unable to fetch API to start Google auth. Please try again";       
         return null;
       }
     }

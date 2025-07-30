@@ -4,13 +4,14 @@
     <body>
         <h1>Oops! Something went wrong</h1>
         <p>Our server is temporarily unavailable. Please try again later or contact support at hpsupport@gmail.com</p>
-        <button id="retyButton">Retry</button>
+        <button id="retryButton">Retry</button>
 
         <script>
-            document.addEventListener(' DOMContentLoaded', () => {
+            document.addEventListener('DOMContentLoaded', () => {
                 const retryButton = document.getElementById("retryButton");
                 // use referrer as the target, fall back to site root
                 const referrer = document.referrer || '/';
+                console.log(referrer);
                 retryButton.addEventListener('click', () => {
                     window.location.href = referrer;
                 });

@@ -369,7 +369,8 @@
             }
           } catch (error) {
             console.log("inability to complete, EBUBE");
-             showPopup("Unable to fetch user data API. Please try again", true, "/createaccount");
+            document.getElementById("ErrorMessage").textContent = "Unable to fetch API to start Google auth. Please try again";
+            //  showPopup("Unable to fetch user data API. Please try again", true, "/createaccount");
           }
         } else {
           console.log("Not on post google redirect path");
@@ -434,8 +435,10 @@
           credentials: 'include'
         });
         if (!response.ok) {
-          window.location.href = '/error';
-          return null;
+          console.log(response);
+          throw new Error (`response is no ok: ${response.status}`);
+          // window.location.href = '/error';
+          // return null;
         }
         const data = await response.json();
         console.log(data);

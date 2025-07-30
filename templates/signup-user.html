@@ -346,6 +346,7 @@
             const userData = await fetchUserData();
             console.log("Fetch user data:", userData);
             if (userData) {
+              console.log(userData);
               // destructure the object userData and extracts property user from it
               const {user} = userData;
               //store user data eg to use the name in the homepage eg 'Welcome Jeffrey'
@@ -355,14 +356,16 @@
               sessionStorage.setItem('access', userData.access);
               sessionStorage.setItem('refresh', userData.refresh);
               if(is_new === True) {
-                window.location.href = "/homepage";   
+                showPopup("New account created successfully. Welcome", true, "/homepage");   
               } else {
-                window.location.href = "/signin";   
+                showPopup("Account already exists. Please login", true, "/signin");  
               }
             } else {
-              document.getElementById("container").classList.remove = "noneDisplay";
-              document.getElementById("redirectMessage").classList.remove = "blockDisplay";
-              window.location.href = "/error";   
+              showPopup("Account already exists. Please login", true, "/signin");
+              // document.getElementById("container").classList.remove = "noneDisplay";
+              // document.getElementById("redirectMessage").classList.add = "blockDisplay";
+              
+              // window.location.href = "/error";   
             }
           } catch (error) {
             console.log("inability to complete, EBUBE");
@@ -451,6 +454,7 @@
         }
       } catch (error) {
         console.log(error);
+        console.log("Unable to fetch API to start Google auth. Please try again");
         // document.getElementById("redirectMessage").classList.add = "blockDisplay";
          showPopup("Unable to fetch API to start Google auth. Please try again", true, "/createaccount-user");
         document.getElementById("ErrorMessage").textContent = "Unable to fetch API to start Google auth. Please try again";       

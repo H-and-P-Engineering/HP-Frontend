@@ -406,6 +406,7 @@
           return null;
         }
         const data = await response.json();
+        console.log(data);
         console.log("fetch response:", response.status);
         if (data.success === 'true' && data.data && data.data.user && data.data.user.is_new === 'true') {
           return {

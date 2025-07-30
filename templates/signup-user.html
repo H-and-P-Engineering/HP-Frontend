@@ -300,25 +300,30 @@
     }
     // this function fetches the socials/begin API to start integrating Google's OAuth 2.0 into the app
     async function beginGoogleRegistration() {
-      // const backend = 'google-oauth2'; // Replace with actual backend provider
       try {
-        response = await fetch ('https://hp-test-7rmp.onrender.com/api/v1/authentication/social/begin/google-oauth2/', {
-          method: 'GET',
-          credentials: 'include'
-        });
-        if (!response.ok) {
-          // if the response is not ok(!200), the throw throws an exception caught by a try catch block,
-          // the new Error() constructor that creates an error object
-          throw new Error ('HTTP error found EBUBE'); 
-          window.location.href = '/error';
-        }
-        console.log(response);
-        window.location.href = response.url;
-      } catch (error) {
-         showPopup("Unable to fetch API to start Google auth. Please try again", true, "/createaccount-user");
-        // window.location.href = '/error';
-        // document.getElementById("ErrorMessage").textContent = "Unable to fetch API to start Google auth. Please try again";
-      }  
+        window.location.href = 'https://hp-test-7rmp.onrender.com/api/v1/authentication/social/begin/google-oauth2/';
+      } catch {
+        showPopup("Unable to fetch API to start Google auth. Please try again", true, "/createaccount-user");
+      }
+      // const backend = 'google-oauth2'; // Replace with actual backend provider
+      // try {
+      //   response = await fetch ('https://hp-test-7rmp.onrender.com/api/v1/authentication/social/begin/google-oauth2/', {
+      //     method: 'GET',
+      //     credentials: 'include'
+      //   });
+      //   if (!response.ok) {
+      //     // if the response is not ok(!200), the throw throws an exception caught by a try catch block,
+      //     // the new Error() constructor that creates an error object
+      //     throw new Error ('HTTP error found EBUBE'); 
+      //     window.location.href = '/error';
+      //   }
+      //   console.log(response);
+      //   window.location.href = response.url;
+      // } catch (error) {
+      //    showPopup("Unable to fetch API to start Google auth. Please try again", true, "/createaccount-user");
+      //   // window.location.href = '/error';
+      //   // document.getElementById("ErrorMessage").textContent = "Unable to fetch API to start Google auth. Please try again";
+      // }  
     }
     // this event listener is for when google has redirected the browser to the second backend API. Meaning that
     //  the backend now has the user data and so can now be retrieved by front end

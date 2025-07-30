@@ -315,8 +315,9 @@
         console.log(response);
         window.location.href = response.url;
       } catch (error) {
+         showPopup("Unable to fetch API to start Google auth. Please try again", true, "/createaccount-user");
         // window.location.href = '/error';
-        document.getElementById("ErrorMessage").textContent = "Unable to fetch API to start Google auth. Please try again";
+        // document.getElementById("ErrorMessage").textContent = "Unable to fetch API to start Google auth. Please try again";
       }  
     }
     // this event listener is for when google has redirected the browser to the second backend API. Meaning that
@@ -331,7 +332,6 @@
         // check if the parameter is present in the url
         const hasis_new = urlParams.has('is_new');
         // get the value of the parameter is_new
-        const is_new = urlParams.get('is_new');
         if (hasis_new) {
           console.log("redirecting to path");
           document.getElementById("container").style.display = "none";
@@ -361,6 +361,7 @@
             }
           } catch (error) {
             console.log("inability to complete, EBUBE");
+             showPopup("Unable to fetch user data API. Please try again", true, "/createaccount");
           }
         } else {
           console.log("Not on post google redirect path");
@@ -446,6 +447,7 @@
       } catch (error) {
         console.log(error);
         // document.getElementById("redirectMessage").classList.add = "blockDisplay";
+         showPopup("Unable to fetch API to start Google auth. Please try again", true, "/createaccount-user");
         document.getElementById("ErrorMessage").textContent = "Unable to fetch API to start Google auth. Please try again";       
         return null;
       }

@@ -300,8 +300,8 @@
     }
     document.addEventListener("click", (event) => {
       if (event.target.id ==='modalButton') {
-        window.history.pushState({}, document.title, window.location.pathname);
         document.getElementById("modal").remove();
+        window.history.pushState({}, document.title, window.location.pathname);
         // window.location=window.location.pathname;
       }
       

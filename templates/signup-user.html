@@ -279,9 +279,6 @@
     }
 
     // ---------------------------------------------------------------------------------------------------------------
-    document.getElementById("modalButton").addEventListener("click", function() {
-      this.parentElement.remove();
-    });
     function showPopup(message, isSuccess, redirectUrl) {
       const modal = document.createElement('div');
       modal.style.position = 'fixed';
@@ -301,6 +298,10 @@
       `;
       document.body.appendChild(modal);
     }
+    document.getElementById("modalButton").addEventListener("click", function() {
+      window.location=window.location.pathname;
+      this.parentElement.remove();
+    });
     // this function fetches the socials/begin API to start integrating Google's OAuth 2.0 into the app
     async function beginGoogleRegistration() {
       try {

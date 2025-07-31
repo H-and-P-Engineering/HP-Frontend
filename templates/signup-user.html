@@ -281,6 +281,7 @@
     // ---------------------------------------------------------------------------------------------------------------
     function showPopup(message, isSuccess, redirectUrl) {
       const modal = document.createElement('div');
+      modal.id = "redirectModal";
       modal.style.position = 'fixed';
       modal.style.top = '50%';
       modal.style.left = '50%';
@@ -292,12 +293,17 @@
       modal.style.zIndex = '1000';
       modal.innerHTML = `
       <p style="color: ${isSuccess ? 'green' : 'red'}; margin: 0;">${message}</p>
-      <button onclick="this.parentElement.remove();${
+      <button onclick="refreshPage();${
       redirectUrl ? `window.location.href='${redirectUrl}'` : ''
       }" style="margin-top: 10px;">OK</button>
       `;
       document.body.appendChild(modal);
+      function refreshPage() {
+        window.location.reload();
+        modal.remove();
+      }
     }
+    
     // this function fetches the socials/begin API to start integrating Google's OAuth 2.0 into the app
     async function beginGoogleRegistration() {
       try {
@@ -325,8 +331,8 @@
       //   // document.getElementById("ErrorMessage").textContent = "Unable to fetch API to start Google auth. Please try again";
       // }  
     }
-    // this event listener is for when google has redirected the browser to the second backend API. Meaning that
-    //  the backend now has the user data and so can now be retrieved by front end
+    // this event listener should be able to permit 1) manual form submission using formSubmitButton() and 2) when 
+    // server redirects back to this page afte collecting the user data to be retrieved fetchUserData()
     window.addEventListener('load', async () => {
       console.log("page load event fired");
       console.log(window.location.pathname);
@@ -335,7 +341,7 @@
         const urlParams = new URLSearchParams(window.location.search);
         // check if the parameter is present in the url
         const hasis_new = urlParams.has('is_new');
-        // get the value of the parameter is_new
+        // get the value of the parameter is_new. 
         if (!hasis_new) {
           formSubmitButton();      
         } else {

@@ -279,10 +279,9 @@
     }
 
     // ---------------------------------------------------------------------------------------------------------------
-    function refreshPage() {
-      window.location.reload();
+    document.getElementById("modalButton").addEventListener("click", function() {
       this.parentElement.remove();
-    }
+    });
     function showPopup(message, isSuccess, redirectUrl) {
       const modal = document.createElement('div');
       modal.style.position = 'fixed';
@@ -296,7 +295,7 @@
       modal.style.zIndex = '1000';
       modal.innerHTML = `
       <p style="color: ${isSuccess ? 'green' : 'red'}; margin: 0;">${message}</p>
-      <button id="modalButton" onclick="refreshPage();${
+      <button id="modalButton" onclick="window.location=window.location.pathname; ${
       redirectUrl ? `window.location.href='${redirectUrl}'` : ''
       }" style="margin-top: 10px;">OK</button>
       `;
@@ -338,8 +337,7 @@
       // make sure the load is targeting the API load and not other page loads
         const urlParams = new URLSearchParams(window.location.search);
         // check if the parameter is present in the url
-        const hasis_new = urlParams.has('is_new');
-        // get the value of the parameter is_new. 
+        const hasis_new = urlParams.has('is_new'); 
         if (!hasis_new) {
           formSubmitButton();      
         } else {

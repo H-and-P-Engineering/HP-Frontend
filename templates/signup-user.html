@@ -246,7 +246,7 @@
             <label>I agree to the terms and privacy policy</label>
           </div>
 
-          <button class="button" type="submit">Create an account</button>
+          <button class="button" type="submit" onclick="formSubmitButton()">Create an account</button>
         </form>
         <p id="message" style="color: red; text-align: center;">hii</p>
         <div class="login">
@@ -336,7 +336,9 @@
         // check if the parameter is present in the url
         const hasis_new = urlParams.has('is_new');
         // get the value of the parameter is_new
-        if (hasis_new) {
+        if (!hasis_new) {
+          formSubmitButton();      
+        } else {
           // document.getElementById("container").style.display = "none";
           // document.getElementById("redirectMessage").classList.add = "blockDisplay";
           try {
@@ -370,8 +372,6 @@
             document.getElementById("ErrorMessage").textContent = "Unable to fetch API to start Google auth. Please try again";
             //  showPopup("Unable to fetch user data API. Please try again", true, "/createaccount");
           }
-        } else {
-          console.log("Not on post google redirect path");
         }
     //   const urlParams = new URLSearchParams(window.location.search);
     //   const first_name = urlParams.get('first_name');
@@ -486,7 +486,7 @@
         minLength.className = 'check' + ( password.length >= 8 ? 'valid' : 'invalid');
     });
 
-    document.getElementById('registerForm').addEventListener('submit', async function(event) {
+    async function formSubmitButton(event) {
       event.preventDefault();
       const first_name = document.getElementById("first_name").value.trim();
       const last_name = document.getElementById("last_name").value.trim();
@@ -570,7 +570,7 @@
       } finally {
         document.getElementById('registerForm').querySelector('button').disabled = false; // Re-enable button
       }
-    });
+    };
     
     //   const bodyData = JSON.stringify(userData);
     //   try {

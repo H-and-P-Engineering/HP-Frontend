@@ -298,8 +298,12 @@
       `;
       document.body.appendChild(modal);
     }
-    document.getElementById("modalButton").addEventListener("click", function() {
-      window.location=window.location.pathname;
+    document.addEventListener("click", (event) => {
+      if (event.target.id ==='modalButton') {
+        window.history.pushState({}, document.title, window.location.pathname);
+        // window.location=window.location.pathname;
+      }
+      
       this.parentElement.remove();
     });
     // this function fetches the socials/begin API to start integrating Google's OAuth 2.0 into the app

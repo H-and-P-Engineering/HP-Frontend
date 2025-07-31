@@ -292,7 +292,7 @@
       modal.style.zIndex = '1000';
       modal.innerHTML = `
       <p style="color: ${isSuccess ? 'green' : 'red'}; margin: 0;">${message}</p>
-      <button id="modalButton" onclick="window.location=window.location.pathname; ${
+      <button id="modalButton" onclick="${
       redirectUrl ? `window.location.href='${redirectUrl}'` : ''
       }" style="margin-top: 10px;">OK</button>
       `;
@@ -301,6 +301,7 @@
     document.addEventListener("click", (event) => {
       if (event.target.id ==='modalButton') {
         window.history.pushState({}, document.title, window.location.pathname);
+        document.getElementById("modal").remove();
         // window.location=window.location.pathname;
       }
       

@@ -147,6 +147,13 @@ def user_cart_nav4():
 def useraccount(): 
     return render_template("user-account.html")
 
+@app.route("/credentials_form_user", methods=["GET", "POST"])
+def credentials_form_user():
+    if request.method == "POST":
+        return render_template("credentials-form-user.html")
+    else:
+        return render_template("credentials-form-user.html")
+
 @app.route("/user_filterby_for_landagents")
 def user_filterby_for_landagents(): 
     return render_template("user-filterby-for-landagents.html")
@@ -190,7 +197,7 @@ def landagent_profilepage():
     if request.method == "POST":
         return render_template("landagent-kyc.html")
     else:
-        return render_template("landagent-profilepage.html")
+        return render_template("landagent-kyc.html")
     
 @app.route("/landagent_dashboard", methods=["GET", "POST"])
 def landagent_dashboard():
@@ -245,9 +252,16 @@ def insights_page_housingagent():
 @app.route("/houseagent_profilepage", methods=["GET", "POST"])
 def houseagent_profilepage():
     if request.method == "POST":
-        return render_template("houseagent-profilepage.html")
+        return render_template("houseagent-kyc.html")
     else:
-        return render_template("houseagent-profilepage.html")
+        return render_template("houseagent-kyc.html")
+    
+@app.route("/houseagent_dashboard", methods=["GET", "POST"])
+def houseagent_dashboard():
+    if request.method == "POST":
+        return render_template("houseagent-dashboard.html")
+    else:
+        return render_template("houseagent-dashboard.html")
     
 @app.route("/houseagent_kyc_form", methods=["GET", "POST"])
 def houseagent_kyc_form():

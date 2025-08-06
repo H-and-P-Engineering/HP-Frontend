@@ -304,7 +304,8 @@
         const modal = document.getElementById("modal");
         if (modal) modal.remove();
         window.location=window.location.pathname;
-        // window.history.pushState({}, document.title, window.location.pathname);
+        // use pushState to avoid page reload
+        // // window.history.pushState({}, document.title, window.location.pathname);
         window.location.href = currentRedirectUrl;
       }
     });

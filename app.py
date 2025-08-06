@@ -188,9 +188,16 @@ def landing_agent_oneacre_listingpg2():
 @app.route("/landagent_profilepage", methods=["GET", "POST"])
 def landagent_profilepage():
     if request.method == "POST":
-        return render_template("landagent-profilepage.html")
+        return render_template("landagent-kyc.html")
     else:
         return render_template("landagent-profilepage.html")
+    
+@app.route("/landagent_dashboard", methods=["GET", "POST"])
+def landagent_dashboard():
+    if request.method == "POST":
+        return render_template("landagent-dashboard.html")
+    else:
+        return render_template("landagent-dashboard.html")
     
 @app.route("/landagent_kyc_form", methods=["GET", "POST"])
 def landagent_kyc_form():

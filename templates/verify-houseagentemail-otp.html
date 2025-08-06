@@ -2,86 +2,334 @@
 
 {% block body %}
 
-    <div class="top-nav">
-        <div class="personal-details-text"> < Verify Email Address</div>
-        <div class="login-link"> Login > </Login></div>
-    </div>
+    <title>Verify Email</title>
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Merriweather:wght@700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 
-    <div>
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Inter', sans-serif;
+      color: #0a0a0a;
+      background-color: #fff;
+    }
 
-        <div style="display: flex; flex-direction: column; align-items: center; width: 800px; margin: auto;
-            height: 450px; overflow-y: scroll;">
+    h1, h2 {
+      font-family: 'Merriweather', serif;
+    }
 
-            <div style="margin-top: 70px;">
-                <div>Verify your email</div>
-                <div>Enter the OTP sent to your email</div>
-                <div>markhomey@gmail.com</div>
-            </div>
+    .top-bar {
+      display: flex;
+      font-family: 'Merriweather', serif;
+      justify-content: space-between;
+      align-items: center;
+      padding: 20px 60px 10px;
+      font-size: 1.5rem;
+      font-weight: bold;
+    }
 
-            <form action="{{ url_for ('houseagent_profilepage') }}" method="post" style=" margin-top: 120px;
-            display: flex; flex-direction: column; align-items: center; width: 600px;">
+    .top-bar a {
+      text-decoration: none;
+      color: #0a0a0a;
+    }
 
-                <!-- this next div below will create a prompt for the user to set up store after the input at
-                the bottom with id="verify-otp-button-user" and type="button" is clicked -->
+    .divider {
+      height: 1px;
+      background-color: #ccc;
+      margin: 10px 50px 0;
+    }
 
-                <!-- Nb: bottom: 0; in this div below responds to the bottom of the web page not to the bottom
-                of its parent container because the parent container is not set as position: relative. -->
+    .container {
+      display: flex;
+      height: calc(95vh - 70px);
+      padding: 0 60px;
+      margin-top: 30px;
+    }
 
-                <div style="position: absolute; z-index: 1; bottom: 0px; width: 600px; display: none;
-                    border: 2px solid black; background-color: white;" id="prompt-to-setup-store-in-otp-page">
-                    <div style="width: 600px; height: 100px; background-color: #0056b3;"></div>
-                    <h2>Sign up complete!</h2>
-                    <div>Set up your store with a step by step checklist on how to get</div> <br>
-                    <div>your store ready for activation</div>
-                    <div style="display: flex; flex-direction: column; align-items: center;">
-                        <div>Add store information</div>
-                        <div>Setup store operations</div>
-                        <div>Create your catalog</div>
-                         
-                        <input type="submit" value="Set up store" style="width: 410px; height: 55px; color: white;
-                            background-color: #0056b3; margin-top: 120px;">
-                    </div>
-                </div>
-                
-                <div style="display: flex; justify-content: center;">
-                    <input autocomplete="off" autofocus type="number"
-                        style="width: 100px; height: 100px; background-color: #aaa; border-radius: 15px;">  
-                    <input autocomplete="off" autofocus type="number"
-                        style="width: 100px; height: 100px; background-color: #aaa; margin-left: 20px;                      
-                        border-radius: 15px;">
-                    <input autocomplete="off" autofocus type="number"
-                        style="width: 100px; height: 100px; background-color: #aaa; margin-left: 20px;
-                        border-radius: 15px;">
-                    <input autocomplete="off" autofocus type="number"
-                        style="width: 100px; height: 100px; background-color: #aaa; margin-left: 20px;
-                        border-radius: 15px;">
-                </div>
-                
+    .content-wrapper {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 100%;
+    }
+
+    .left {
+      flex: 1;
+      padding-right: 40px;
+      max-width: 500px;
+    }
+
+    .right {
+      flex: 2.2;
+      padding-left: 40px;
+    }
+
+    h1 {
+      font-size: 2.2rem;
+      font-weight: 700;
+      color: #0a0a0a;
+      margin: 0;
+    }
+
+    .left ul {
+      margin-top: 30px;
+      padding: 0;
+      list-style: none;
+    }
+
+    .left li {
+        display: flex;
+        align-items: center;
+        margin-bottom: 20px;
+        font-size: 0.9rem;
+    }
+
+    .left li i {
+        color: #0a0a0a; /* icon color */
+        font-size: 1rem;
+        margin-right: 12px;
+    }
+
     
-                <div style="margin-top: 50px;">
-                    <div>Haven't received the code yet?</div>
-                    <a>
-                        <div>Tap here to resend OTP in 46s</div>
-                    </a>
-                </div>
-                
-                <input type="button" value="Verify email" style="width: 410px; height: 55px; color: white;
-                    background-color: #0056b3; margin-top: 120px;" id="verify-otp-button-user">
-            </form>
+    .left p {
+      margin-top: 50px;
+      font-size: 0.8rem;
+    }
+
+    .left p strong {
+      color: #1c1c1c;
+    }
+
+    .logo {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 30px;
+    }
+
+    .logo img {
+      height: 60px;
+      margin-right: 10px;
+    }
+
+    .otp-instruction {
+      text-align: center;
+      font-family: merriweather;
+      font-weight: 400;
+      font-size: 1.6rem;
+      margin-bottom: 20px;
+    }
+
+    .otp-sub {
+      text-align: center;
+      font-size: 0.9rem;
+      margin-bottom: 30px;
+    }
+
+    /* START: OTP Box With Dashes */
+    .otp-box-wrapper {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 30px;
+    }
+
+    .otp-box-wrapper input {
+      width: 70px;
+      height: 70px;
+      font-size: 2.2rem;
+      text-align: center;
+      border: 1px solid #ccc;
+      border-radius: 10px;
+      font-family: 'Inter', sans-serif;
+    }
+
+    .dash {
+      font-size: 2.2rem;
+      color: #333;
+      margin: 0 5px;
+      user-select: none;
+    }
+    /* END: OTP Box With Dashes */
+
+    .verify-btn {
+      display: block;
+      width: 100%;
+      max-width: 70%;
+      margin: 0 auto;
+      padding: 18px;
+      background-color: #0a1e34;
+      color: white;
+      font-weight: 600;
+      font-size: 1.1rem;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      font-family: 'Inter', sans-serif;
+    }
+
+    .resend {
+      margin-top: 20px;
+      text-align: center;
+      font-size: 0.9rem;
+      color: #333;
+    }
+
+    .resend span {
+      color: #f0a500;
+      font-weight: bold;
+    }
+
+    @media (max-width: 768px) {
+      .container {
+        flex-direction: column;
+        padding: 20px;
+        margin-top: 0;
+
+      }
+      .left, .right {
+        flex: 1;
+        padding: 0;
+        max-width: 100%;
+      }
+      .content-wrapper {
+        flex-direction: column;
+      }
+
+    .top-bar {
+      padding: 15px 20px 5px; 
+      font-size: 1rem; 
+    }
+
+    .right {
+    min-height: calc(100vh - 80px); /* adjust for top-bar height */
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 0 10px;
+  }
+  }
+
+    @media (max-width: 1024px) {
+      .left {
+        display: none;
+      }
+
+      .right {
+        padding-left: 0;
+      }
+
+      .container {
+        padding: 0 20px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Top Bar -->
+  <div class="top-bar">
+    <a href="#">&lt; Verify Email Address</a>
+    <a href="#">Login &gt;</a>
+  </div>
+  <div class="divider"></div>
+
+  <!-- Page Content -->
+  <div class="container">
+    <div class="content-wrapper">
+      
+      <!-- Left -->
+      <div class="left">
+        <h1>Discover a world of<br>possibilities tailored<br>just for you.</h1>
+        <ul>
+           <li><i class="fa-solid fa-circle-check"></i> Expand Your Reach, Maximize Your Listings</li>
+            <li><i class="fa-solid fa-circle-check"></i> Professional Tools Built for Agents.</li>
+            <li><i class="fa-solid fa-circle-check"></i> Instant Access to Active Buyers & Renters</li>
+            <li><i class="fa-solid fa-circle-check"></i> Boost Your Brand & Close Deals Faster</li>
+        </ul>
+        <p>Have questions? Visit our <strong>Help Center</strong> or reach out to our <strong>Support Team</strong></p>
+      </div>
+
+      <!-- Right -->
+      <div class="right">
+        <div class="logo">
+          <img src="img/hp.png" alt="logo" />
+          <div>
+          </div>
         </div>
+        <div class="otp-instruction">Enter the OTP sent to your email</div>
+        <div class="otp-sub">We have sent a OTP to your email address</div>
+
+        <!-- START: OTP Box With Dashes -->
+        <div class="otp-box-wrapper">
+          <input type="text" maxlength="1" oninput="moveToNext(this, 1)">
+          <span class="dash">-</span>
+          <input type="text" maxlength="1" oninput="moveToNext(this, 2)">
+          <span class="dash">-</span>
+          <input type="text" maxlength="1" oninput="moveToNext(this, 3)">
+          <span class="dash">-</span>
+          <input type="text" maxlength="1" oninput="moveToNext(this, 4)">
+        </div>
+        <!-- END: OTP Box With Dashes -->
+
+        <a href="houseagent_profilepage">
+            <button class="verify-btn" onclick="verifyOTP()">Verify</button>
+        </a>
+        <div class="resend">Haven’t received the code yet?<br>Tap here to resend OTP in <span id="timer">46s</span></div>
+      </div>
+
     </div>
+  </div>
 
+  <script>
+    const inputs = document.querySelectorAll('.otp-box-wrapper input');
 
+    function moveToNext(current, index) {
+      if (current.value.length === 1 && index < inputs.length) {
+        inputs[index].focus();
+      }
+    }
 
-    <script>
+    // async function verifyOTP() {
+    //   const otp = Array.from(inputs).map(input => input.value).join('');
+    //   if (otp.length < 4) {
+    //     alert('Please enter all 4 digits of the OTP.');
+    //     return;
+    //   }
+    //   try {
+    //     const response = await fetch('https://hp-test-7rmp.onrender.com/api/v1/authentication/otp/', {
+    //         method: 'POST',
+    //         headers: {
+    //             'Content-Type': 'application/json',
+    //         },
+    //         body: JSON.stringify(otp),
+    //     });
+    //     const data = await response.json();
+    //     if (response.ok && result.success) {
+    //         alert("OTP Verified: " + otp);
+    //         window.location.href = '/homepage';
+    //     } else {
+    //         alert ("Invalid OTP. Please try again");
+    //     }
+    //   } catch (error) {
+    //     console.error('Error verifying OTP:', error);
+    //   }
+    // }
 
-        let promptToSetupvendorstore = document.getElementById("prompt-to-setup-store-in-otp-page");
-        let verifyOTPButtonUser = document.getElementById("verify-otp-button-user");
+    let seconds = 46;
+    const timerSpan = document.getElementById("timer");
+    const countdown = setInterval(() => {
+      seconds--;
+      timerSpan.innerText = seconds + "s";
+      if (seconds <= 0) {
+        clearInterval(countdown);
+        timerSpan.innerText = "now";
+      }
+    }, 1000);
+  </script>
 
-        verifyOTPButtonUser.addEventListener('click', function() {
-            promptToSetupvendorstore.style.display = "block";
-        });
+</body>
 
-
-    </script>
 {% endblock %}

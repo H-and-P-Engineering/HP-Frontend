@@ -65,7 +65,8 @@
 
     input[type="text"],
     input[type="email"],
-    input[type="password"] {
+    input[type="password"],
+    select[name="Users"] {
       width: 100%;
       padding: 14px;
       margin-bottom: 18px;
@@ -199,6 +200,16 @@
         <h1>Let's get you started on <br><strong>Housing&Properties</strong></h1>
         <p>Create your account in a second</p>
         <form action="{{ url_for ('verify_useremail_otp') }}" method="post" id="registerForm">
+          <div>
+            <select name="Users" id="userType">
+              <option disabled selected value="">User type</option>
+              <option value="buyer">Buyer</option>
+              <option value="land agent">Land agent</option>
+              <option value="house agent">House agent</option>
+              <option value="vendor">Vendor</option>
+              <option value="offer service">Offer service</option>
+            </select>
+          </div>
           <input type="text" placeholder="First Name" id="first_name"/>
           <div id="firstNameError" class="error"></div>
 
@@ -278,6 +289,28 @@
     //   Add commentMore actions
     }
 
+    // -----------------------------------------------------------------------------------------------------------------
+
+    document.getElementById('registerForm').addEventListener('submit', function(event) {
+      event.preventDefault();
+      const select = document.getElementById("userType");
+      const selectedValue = select.value;
+      let route;
+      if (selectedValue === "land agent") {
+        route = "/verify_landagentemail_otp";
+      } else if (selectedValue === "house agent") {
+        route = "/verify_houseagentemail_otp";
+      } else if (selectedValue === "buyer") {
+        route = "/verify_useremail_otp";
+      } else if (selectedValue === "vendor") {
+        route = "/verify_vendor_otp";
+      } else if (selectedValue === "offer service") {
+        route = "/verify_houseagentemail_otp";
+      }
+      this.action = route;
+      this.submit();
+    });
+
     // ---------------------------------------------------------------------------------------------------------------
     let currentRedirectUrl = '';
     function showPopup(message, isSuccess, redirectUrl) {
@@ -344,7 +377,7 @@
       // check if this is aredirect from google or the intial click to sign up    
       // make sure the load is targeting the API load and not other page loads
         const urlParams = new URLSearchParams(window.location.search);
-        // check if the parameter is present in the url
+        // check if the parameter is present in the url signifying the 2nd page load & redirect from the server
         const hasis_new = urlParams.has('is_new'); 
         if (!hasis_new) {
           formSubmitButton();      

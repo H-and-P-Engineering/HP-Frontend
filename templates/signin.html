@@ -122,25 +122,27 @@
       <div class="login-form">
         <h1>Login</h1>
         <p>Login your account in a second</p>
-        <input type="email" placeholder="Email Address" id="email"/>
-        <div id="emailError" class="error" aria-live="polite"></div>
+        <form action="{{ url_for ('homepage') }}" method="post" id="registerForm">
+          <input type="email" placeholder="Email Address" id="email"/>
+          <div id="emailError" class="error" aria-live="polite"></div>
         
-        <input type="password" placeholder="Password" id="password"/>
-        <div id="passwordError" class="error" aria-live="polite"></div>
+          <input type="password" placeholder="Password" id="password"/>
+          <div id="passwordError" class="error" aria-live="polite"></div>
 
-        <div class="checkbox">
-          <label><input type="checkbox" checked /> Keep me logged in</label>
-          <a href="#">Forgot password?</a>
-        </div>
+          <div class="checkbox">
+            <label><input type="checkbox" checked /> Keep me logged in</label>
+            <a href="#">Forgot password?</a>
+          </div>
 
-        <button type="submit" onclick="formSubmitButton()">Log in</button>
-        <div class="signup">Don't have an account? <a href="index.html">Sign up</a></div>
+          <button type="submit" onclick="formSubmitButton()">Log in</button>
+          <div class="signup">Don't have an account? <a href="index.html">Sign up</a></div>
 
-        <div class="social-login">
-          <img src="https://cdn-icons-png.flaticon.com/512/300/300221.png" alt="Google" />
-          <img src="https://cdn-icons-png.flaticon.com/512/124/124010.png" alt="Facebook" />
-          <img src="https://cdn-icons-png.flaticon.com/512/174/174855.png" alt="Instagram" />
-        </div>
+          <div class="social-login">
+            <img src="https://cdn-icons-png.flaticon.com/512/300/300221.png" alt="Google" onclick="beginGoogleRegistration()"/>
+            <img src="https://cdn-icons-png.flaticon.com/512/124/124010.png" alt="Facebook" />
+            <img src="https://cdn-icons-png.flaticon.com/512/174/174855.png" alt="Instagram" />
+          </div>
+        </form>
       </div>
     </div>
   </div>
@@ -148,6 +150,7 @@
 
   <script>
 
+    
     let currentRedirectUrl = '';
     function showPopup(message, isSuccess, redirectUrl) {
       // send the url passed into this function into the global variable currentUrl
@@ -276,80 +279,83 @@
       }
     }
 
-    async function formSubmitButton(event) {
-      event.preventDefault();
-      const email = document.getElementById("email").value.trim();
-      const password = document.getElementById("password").value;
-      const messageElement = document.getElementById('message');
-      const emailError = document.getElementById('emailError');
-      const passwordError = document.getElementById('passwordError');
+    function formSubmitButton() {
+      document.getElementById('registerForm').addEventListener('submit', async function(event) {
+        event.preventDefault();
     
-      // check if email & password is empty first, if the check is passed then the details can be sent to the API
-      if (!email) {
-        emailError.textContent = "Email may not be blank.";
-      }
-      if (!password) {
-        passwordError.textContent = "Password may not be blank.";
-      }
-      const emailRegex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/; 
-      if (!emailRegex.test(email)) 
-        emailError.textContent = 'Enter a valid email address.';     
-      if (emailError.textContent || passwordError.textContent) 
-          return;
-      const userData = {
-        email: email,
-        password: password,
-      };
-      // const googleId = sessionStorage.getItem('googleId');
-      const url = 'https://hp-test-7rmp.onrender.com/api/v1/authentication/login/';
-      // user try catch, async and await combination to present error to the page and console
-      // -try to send the request to the server/endpoint(s)
-      try {
-        document.getElementById('registerForm').querySelector('button').disabled = true; 
-        // response contains: 1) https status code eg 200, 2) status text eg "OK", "Unauthorized"
-        // 3) headers eg: Content-Type: application/json 4) body: accessible via methods like .json(), .text() to parse
-        // contains data sent by the server but needs to be parsed
-        const response = await fetch(url, {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify(userData),
-        });
-        // this method parses the body of the response into a javascript object which is assigned to the data variable,
-        // the content depends on what the backend returns in the serializer.py eg data (form data, id, token),
-        // message, flag (eg to identify new user)
-        const data = await response.json();
-
-        if (!response.ok) {
-          if (response.status === 400) {
-            // likely non-existent account or one of password or email is wrong
-            console.log(data);
-            showPopup(`Login failed. Provided email or password is invalid: ${data.message}`, false, "/signin");
-          } else if (response.status === 409) {
-            // the account is likely logged in another device/pending activation/locked/undergoing password reset
-            showPopup(`${data.message}`, false, "/signin");
-          } else if (response.status === 429) {
-            // the client has sent too many requests in a given time frame
-            showPopup(`Multiple login attempts: ${data.message}`, false, "/signin");
-          } else if (response.status >= 500) {
-            showPopup(`Server error. Please try again later.${data.message}`, false, "/signin");
-          }
-           else {
-            showPopup("An unexpected error occurred.", false, "/signin");
-          }
-        } else {
-          localStorage.setItem('token', data.token);
-          window.location.href = '/homepage';
+        const email = document.getElementById("email").value.trim();
+        const password = document.getElementById("password").value;
+        const messageElement = document.getElementById('message');
+        const emailError = document.getElementById('emailError');
+        const passwordError = document.getElementById('passwordError');
+    
+        // check if email & password is empty first, if the check is passed then the details can be sent to the API
+        if (!email) {
+          emailError.textContent = "Email may not be blank.";
         }
+        if (!password) {
+          passwordError.textContent = "Password may not be blank.";
+        }
+        const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/; 
+        if (!emailRegex.test(email)) 
+          emailError.textContent = 'Enter a valid email address.';     
+        if (emailError.textContent || passwordError.textContent) 
+            return;
+        const userData = {
+          email: email,
+          password: password,
+        };
+        // const googleId = sessionStorage.getItem('googleId');
+        const url = 'https://hp-test-7rmp.onrender.com/api/v1/authentication/login/';
+        // user try catch, async and await combination to present error to the page and console
+        // -try to send the request to the server/endpoint(s)
+        try {
+          document.getElementById('registerForm').querySelector('button').disabled = true; 
+          // response contains: 1) https status code eg 200, 2) status text eg "OK", "Unauthorized"
+          // 3) headers eg: Content-Type: application/json 4) body: accessible via methods like .json(), .text() to parse
+          // contains data sent by the server but needs to be parsed
+          const response = await fetch(url, {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(userData),
+          });
+          // this method parses the body of the response into a javascript object which is assigned to the data variable,
+          // the content depends on what the backend returns in the serializer.py eg data (form data, id, token),
+          // message, flag (eg to identify new user)
+          const data = await response.json();
+
+          if (!response.ok) {
+            if (response.status === 400) {
+              // likely non-existent account or one of password or email is wrong
+              console.log(data);
+              showPopup(`Login failed. Provided email or password is invalid: ${data.message}`, false, "/signin");
+            } else if (response.status === 409) {
+              // the account is likely logged in another device/pending activation/locked/undergoing password reset
+              showPopup(`${data.message}`, false, "/signin");
+            } else if (response.status === 429) {
+              // the client has sent too many requests in a given time frame
+              showPopup(`Multiple login attempts: ${data.message}`, false, "/signin");
+            } else if (response.status >= 500) {
+              showPopup(`Server error. Please try again later.${data.message}`, false, "/signin");
+            }
+            else {
+              showPopup("An unexpected error occurred.", false, "/signin");
+            }
+          } else {
+            localStorage.setItem('token', data.token);
+            window.location.href = '/homepage';
+          }
         
-      } catch (error) {
-        showPopup('An error occurred. Please try again', false, "/homepage");
-        // document.getElementById('emailError').textContent = 'An error occurred. Please try again';
-      } finally {
-        document.getElementById('registerForm').querySelector('button').disabled = false; // Re-enable button
-      }
-    };
+        } catch (error) {
+          showPopup('An error occurred. Please try again', false, "/homepage");
+          // document.getElementById('emailError').textContent = 'An error occurred. Please try again';
+        } finally {
+          document.getElementById('registerForm').querySelector('button').disabled = false; // Re-enable button
+        }
+      });
+    }
   </script>
 </body>
 

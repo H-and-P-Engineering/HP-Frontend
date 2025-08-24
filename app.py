@@ -22,6 +22,10 @@ def signin():
 def reg_direction():
     return render_template("registration-direction.html")
 
+@app.route("/verify_email")
+def verify_email():
+    return render_template("verify-email.html")
+
 @app.route("/createaccount-user", methods=["GET", "POST"])
 def createaccountuser():
     return render_template("signup-user.html")

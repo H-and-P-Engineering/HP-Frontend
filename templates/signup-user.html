@@ -390,19 +390,19 @@
               const is_new = user.is_new;
               const user_type = user.user_type;
               // sessionStorage.setItem('user', JSON.stringify(user));
-              sessionStorage.setItem('access', userData.access);
-              sessionStorage.setItem('refresh', userData.refresh);
+              localStorage.setItem('access', userData.access);
+              localStorage.setItem('refresh', userData.refresh);
               if(is_new === true) {
                 if (user_type === "BUYER") {
-                  window.location.href = "homepage";
+                  window.location.href = "/homepage";
                 } else if (user_type === "LAND_AGENT") {
-                  window.location.href = "landagent_profilepage";
+                  window.location.href = "/landagent_profilepage";
                 } else if (user_type === "HOUSE_AGENT") {
-                  window.location.href = "houseagent_profilepage";
+                  window.location.href = "/houseagent_profilepage";
                 } else if (user_type === "VENDOR") {
-                  window.location.href = "vendor_profilepage";
+                  window.location.href = "/vendor_profilepage";
                 } else if (user_type === "SERVICE_PROVIDER") {
-                  window.location.href = "homepage";
+                  window.location.href = "/homepage";
                 }
               } 
             } else {
@@ -679,15 +679,15 @@
             if (is_new) {
               console.log(data);
               if (user_type === "BUYER") {
-                window.location.href = "homepage";
+                window.location.href = "/homepage";
               } else if (user_type === "LAND_AGENT") {
-                  window.location.href = "landagent_profilepage";
+                  window.location.href = "/landagent_profilepage";
               } else if (user_type === "HOUSE_AGENT") {
-                  window.location.href = "houseagent_profilepage";
+                  window.location.href = "/houseagent_profilepage";
               } else if (user_type === "VENDOR") {
-                  window.location.href = "vendor_profilepage";
+                  window.location.href = "/vendor_profilepage";
               } else if (user_type === "SERVICE_PROVIDER") {
-                  window.location.href = "homepage";
+                  window.location.href = "/homepage";
               }
             } else {
               console.log("existing user not registered");

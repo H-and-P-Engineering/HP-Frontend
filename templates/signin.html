@@ -208,6 +208,7 @@
             // call this function to fetch and return user data into userData variable
             const userData = await fetchUserData();
             console.log("Fetch user data:", userData);
+            // if the account is logged in
             if (userData) {
               console.log(userData);
               // destructure the object userData and extracts property user from it
@@ -219,12 +220,23 @@
               sessionStorage.setItem('access', userData.access);
               sessionStorage.setItem('refresh', userData.refresh);
               if(is_new === true) {
-                showPopup("New account created successfully. Welcome", true, "/homepage");   
+                showPopup("Incorrect phone number or password. Please try again ", true, "/signin");   
               } else {
-                showPopup("Account already exists. Please login", true, "/signin");  
-              }
+                // if its not a new user trying to login
+                if (user_type === "BUYER") {
+                  window.location.href = "/homepage";
+                } else if (user_type === "LAND_AGENT") {
+                  window.location.href = "/landagent_profilepage";
+                } else if (user_type === "HOUSE_AGENT") {
+                  window.location.href = "/houseagent_profilepage";
+                } else if (user_type === "VENDOR") {
+                  window.location.href = "/vendor_profilepage";
+                } else if (user_type === "SERVICE_PROVIDER") {
+                  window.location.href = "/homepage";
+                }
+              }       
             } else {
-              showPopup("Account already exists. Please login", true, "/signin");
+              showPopup("Incorrect phone number or password. Please try again", true, "/signin");
               // document.getElementById("container").classList.remove = "noneDisplay";
               // document.getElementById("redirectMessage").classList.add = "blockDisplay";
               
@@ -257,16 +269,15 @@
         const data = await response.json();
         console.log(data);
         console.log("fetch response:", response.status);
-        if (data.data && data.data.user && data.data.user.is_new === 'true') {
+        if (data.data && data.data.user && data.data.user.is_new === 'false') {
           return {
             user: data.data.user,
             access: data.data.access,
             refresh: data.data.refresh
           };
         } 
-        if (data.data && data.data.user && data.data.user.is_new === 'false') {
-          throw new Error ("Existing user not registered");
-          window.location.href = '/signin';
+        if (data.data && data.data.user && data.data.user.is_new === 'true') {
+          throw new Error ("Incorrect phone number or password. Please try again");
           return null;
         }
       } catch (error) {
@@ -278,30 +289,31 @@
         return null;
       }
     }
-
-    function formSubmitButton() {
-      document.getElementById('registerForm').addEventListener('submit', async function(event) {
-        event.preventDefault();
-    
-        emailError.textContent = "";
-        passwordError.textContent = "";
-
+    document.getElementById('registerForm').addEventListener('submit', async function(event) {
+      event.preventDefault();
+      formSubmitButton();
+    });
+    async function formSubmitButton() {      
         const email = document.getElementById("email").value.trim();
         const password = document.getElementById("password").value;
         const messageElement = document.getElementById('message');
         const emailError = document.getElementById('emailError');
         const passwordError = document.getElementById('passwordError');
+
+        // clear previous error messages
+        emailError.textContent = "";
+        passwordError.textContent = "";
     
         // check if email & password is empty first, if the check is passed then the details can be sent to the API
+        const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
         if (!email) {
           emailError.textContent = "Email may not be blank.";
+        } else if (!emailRegex.test(email)) { 
+            emailError.textContent = 'Enter a valid email address.';
         }
         if (!password) {
           passwordError.textContent = "Password may not be blank.";
-        }
-        const emailRegex = /^[a-zA-Z0-9._%+-!#$&'*/=?^{}|~]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/; 
-        if (!emailRegex.test(email)) 
-          emailError.textContent = 'Enter a valid email address.';     
+        }    
         if (emailError.textContent || passwordError.textContent) 
             return;
         const userData = {
@@ -331,9 +343,20 @@
 
           if (!response.ok) {
             if (response.status === 400) {
+              const errorDetail = data.data.error?.detail || "";
+              switch (errorDetail) {
+                case "Login failed. Requested user email is not verified. Please verify your email.":
+                  showPopup(`Requested user email is not verified: ${errorDetail}`, false, "/verify_email");
+                  break;
+                case "Login failed. Provided email or password is invalid.":
+                  showPopup(`Incorrect email or password. Please try again: ${errorDetail}`, false, "/signin");
+                  break;
+                default:
+                  showPopup("Login failed. Please try again", false, "/signin");
+              }
               // likely non-existent account or one of password or email is wrong
               console.log(data);
-              showPopup(`Login failed. Provided email or password is invalid: ${data.message}`, false, "/signin");
+              showPopup(`Login failed. Provided email or password is invalid: ${data.error.detail}`, false, "/signin");
             } else if (response.status === 409) {
               // the account is likely logged in another device/pending activation/locked/undergoing password reset
               showPopup(`${data.message}`, false, "/signin");
@@ -347,8 +370,21 @@
               showPopup("An unexpected error occurred.", false, "/signin");
             }
           } else {
-            localStorage.setItem('token', data.token);
-            window.location.href = '/homepage';
+            console.log("The data:", data);
+            localStorage.setItem('access', data.data.access);
+            localStorage.setItem('refresh', data.data.refresh);
+            user_type = data.data.user_type;
+            if (user_type === "BUYER") {
+              window.location.href = "/homepage";
+            } else if (user_type === "LAND_AGENT") {
+              window.location.href = "/landagent_profilepage";
+            } else if (user_type === "HOUSE_AGENT") {
+              window.location.href = "/houseagent_profilepage";
+            } else if (user_type === "VENDOR") {
+              window.location.href = "/vendor_profilepage";
+            } else if (user_type === "SERVICE_PROVIDER") {
+              window.location.href = "/homepage";
+            }
           }
         
         } catch (error) {
@@ -357,7 +393,6 @@
         } finally {
           document.getElementById('registerForm').querySelector('button').disabled = false; // Re-enable button
         }
-      });
     }
   </script>
 </body>

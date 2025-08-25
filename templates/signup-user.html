@@ -475,14 +475,14 @@
         const data = await response.json();
         console.log(data);
         console.log("fetch response:", response.status);
-        if (data.data && data.data.user && data.data.user.is_new === true) {
+        if (data.data && data.data.user && data.data.user.is_new === "true") {
           return {
             user: data.data.user,
             access: data.data.access,
             refresh: data.data.refresh
           };
         } 
-        if (data.data && data.data.user && data.data.user.is_new === false) {
+        if (data.data && data.data.user && data.data.user.is_new === "false") {
           throw new Error ("Existing user not registered");
           showPopup("Account already exists. Please login", true, "/signin");
           return null;

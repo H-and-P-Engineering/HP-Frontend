@@ -373,9 +373,8 @@
         // check if the parameter is present in the url signifying the 2nd page load & redirect from the server
         const hasis_new = urlParams.has('is_new'); 
         if (!hasis_new) {
-          formSubmitButton();      
+          formSubmitButton;      
         } else {
-          console.log("has is_new present");
           // document.getElementById("container").style.display = "none";
           // document.getElementById("redirectMessage").classList.add = "blockDisplay";
           try {
@@ -476,16 +475,16 @@
         const data = await response.json();
         console.log(data);
         console.log("fetch response:", response.status);
-        if (data.data && data.data.user && data.data.user.is_new === 'true') {
+        if (data.data && data.data.user && data.data.user.is_new === true) {
           return {
             user: data.data.user,
             access: data.data.access,
             refresh: data.data.refresh
           };
         } 
-        if (data.data && data.data.user && data.data.user.is_new === 'false') {
+        if (data.data && data.data.user && data.data.user.is_new === false) {
           throw new Error ("Existing user not registered");
-          window.location.href = '/signin';
+          showPopup("Account already exists. Please login", true, "/signin");
           return null;
         }
       } catch (error) {
@@ -560,13 +559,11 @@
     //     });
     //   }
     // });
-    // document.getElementById('registerForm').addEventListener('submit', async function(event) {
-    //   event.preventDefault();
-    //   formSubmitButton();
-    // });
-    async function formSubmitButton() {  
-      document.getElementById('registerForm').addEventListener('submit', async function(event) {
+    document.getElementById('registerForm').addEventListener('submit', async function(event) {
       event.preventDefault();
+      formSubmitButton();
+    });
+    async function formSubmitButton() {    
         const user_type = document.getElementById("userType").value;
         const first_name = document.getElementById("first_name").value.trim();
         const last_name = document.getElementById("last_name").value.trim();
@@ -715,7 +712,6 @@
         } finally {
           document.getElementById('registerForm').querySelector('button').disabled = false; // Re-enable button
         }
-      });
     }
     
     //   const bodyData = JSON.stringify(userData);

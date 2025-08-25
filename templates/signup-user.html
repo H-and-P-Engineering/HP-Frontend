@@ -396,13 +396,7 @@
               } else {
                 showPopup("Account already exists. Please login", true, "/signin");  
               }
-            } else {
-              showPopup("Account already exists. Please login", true, "/signin");
-              // document.getElementById("container").classList.remove = "noneDisplay";
-              // document.getElementById("redirectMessage").classList.add = "blockDisplay";
-              
-              // window.location.href = "/error";   
-            }
+            } 
           } catch (error) {
             console.log("inability to complete, EBUBE");
             document.getElementById("ErrorMessage").textContent = "Unable to fetch API to start Google auth. Please try again";

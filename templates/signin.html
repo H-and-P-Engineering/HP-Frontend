@@ -342,6 +342,7 @@
           const data = await response.json();
 
           if (!response.ok) {
+            console.log(response);
             if (response.status === 400) {
               const errorDetail = data.data.error?.detail || "";
               switch (errorDetail) {
@@ -370,6 +371,7 @@
               showPopup("An unexpected error occurred.", false, "/signin");
             }
           } else {
+            console.log(response);
             console.log("The data:", data);
             localStorage.setItem('access', data.data.access);
             localStorage.setItem('refresh', data.data.refresh);

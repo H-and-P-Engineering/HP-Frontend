@@ -271,7 +271,7 @@
             <label>I agree to the terms and privacy policy</label>
           </div>
 
-          <button class="button" type="submit" onclick="formSubmitButton()">Create an account</button>
+          <button class="button" type="submit">Create an account</button>
         </form>
         <p id="message" style="color: red; text-align: center;">hii</p>
         <div class="login">
@@ -279,7 +279,7 @@
         </div>
 
         <div class="social-icons" id="socialRegister">
-          <img src="https://cdn-icons-png.flaticon.com/512/281/281764.png" alt="Google" onclick="beginGoogleRegistration()">   
+          <img src="https://cdn-icons-png.flaticon.com/512/281/281764.png" alt="Google" id="beginGoogleRegistration">   
           <img src="https://cdn-icons-png.flaticon.com/512/145/145802.png" alt="Facebook">
           <img src="https://cdn-icons-png.flaticon.com/512/2111/2111463.png" alt="Instagram">
         </div>
@@ -334,6 +334,7 @@
         window.location.href = currentRedirectUrl;
       }
     });
+    document.getElementById("beginGoogleRegistration").addEventListener("click", beginGoogleRegistration);
     // this function fetches the socials/begin API to start integrating Google's OAuth 2.0 into the app
     async function beginGoogleRegistration() {
       try {
@@ -374,6 +375,7 @@
         if (!hasis_new) {
           formSubmitButton();      
         } else {
+          console.log("has is_new present");
           // document.getElementById("container").style.display = "none";
           // document.getElementById("redirectMessage").classList.add = "blockDisplay";
           try {
@@ -549,10 +551,22 @@
     });
 
     const VALID_USER_TYPES = ["CLIENT", "LAND AGENT", "HOUSE AGENT", "VENDOR", "SERVICE_PROVIDER"];
-    function formSubmitButton() {
+    // document.addEventListener("DOMContentLoaded", function() {
+    //   const form = document.getElementById("registerForm");
+    //   if (form) {
+    //     form.addEventListener('submit', function(event) {
+    //       event.preventDefault();
+    //       formSubmitButton();
+    //     });
+    //   }
+    // });
+    // document.getElementById('registerForm').addEventListener('submit', async function(event) {
+    //   event.preventDefault();
+    //   formSubmitButton();
+    // });
+    async function formSubmitButton() {  
       document.getElementById('registerForm').addEventListener('submit', async function(event) {
-        event.preventDefault();
-        
+      event.preventDefault();
         const user_type = document.getElementById("userType").value;
         const first_name = document.getElementById("first_name").value.trim();
         const last_name = document.getElementById("last_name").value.trim();
@@ -581,7 +595,7 @@
         emailError.textContent = "";
         passwordError.textContent = "";
         
-        const emailRegex = /^[a-zA-Z0-9._%+-!#$&'*/=?^{}|~]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/; 
+        const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/; 
         // check if names, email & password is empty first, if the check is passed then the details can be sent to the API
         if (!first_name) 
           firstNameError.textContent = "First name may not be blank.";

@@ -204,10 +204,10 @@
             <select name="Users" id="userType">
               <option disabled selected value="">User type</option>
               <option value="CLIENT">Buyer</option>
-              <option value="ADMIN">Land Agent</option>
+              <option value="LAND AGENT">Land Agent</option>
               <option value="HOUSE AGENT">House Agent</option>
               <option value="VENDOR">Vendor</option>
-              <option value="Offer Service">Offer Service</option>
+              <option value="SERVICE_PROVIDER">Offer Service</option>
             </select>
           </div>
           <div id="userTypeError" class="error" aria-live="polite"></div>
@@ -570,7 +570,7 @@
         emailError.textContent = "";
         passwordError.textContent = "";
         
-        const emailRegex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+        const emailRegex = /^[a-zA-Z0-9._%+-!#$&'*/=?^{}|~]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/; 
         // check if names, email & password is empty first, if the check is passed then the details can be sent to the API
         if (!first_name) 
           firstNameError.textContent = "First name may not be blank.";

@@ -206,9 +206,9 @@
           <div id="margin-bottom">
             <select name="Users" id="userType">
               <option disabled selected value="">User type</option>
-              <option value="CLIENT">Buyer</option>
-              <option value="LAND AGENT">Land Agent</option>
-              <option value="HOUSE AGENT">House Agent</option>
+              <option value="BUYER">Buyer</option>
+              <option value="LAND_AGENT">Land Agent</option>
+              <option value="HOUSE_AGENT">House Agent</option>
               <option value="VENDOR">Vendor</option>
               <option value="SERVICE_PROVIDER">Offer Service</option>
             </select>
@@ -388,15 +388,31 @@
               //store user data eg to use the name in the homepage eg 'Welcome Jeffrey'
               // sessionStorage only accepts strings as values so the user object from backend is convertes to string
               const is_new = user.is_new;
+              const user_type = user.user_type;
               // sessionStorage.setItem('user', JSON.stringify(user));
               sessionStorage.setItem('access', userData.access);
               sessionStorage.setItem('refresh', userData.refresh);
               if(is_new === true) {
-                showPopup("New account created successfully. Welcome", true, "/homepage");   
-              } else {
-                showPopup("Account already exists. Please login", true, "/signin");  
-              }
-            } 
+                if (user_type === "BUYER") {
+                  window.location.href = "homepage";
+                } else if (user_type === "LAND_AGENT") {
+                  window.location.href = "landagent_profilepage";
+                } else if (user_type === "HOUSE_AGENT") {
+                  window.location.href = "houseagent_profilepage";
+                } else if (user_type === "VENDOR") {
+                  window.location.href = "vendor_profilepage";
+                } else if (user_type === "SERVICE_PROVIDER") {
+                  window.location.href = "homepage";
+                }
+              } 
+            } else {
+              // if userData is = null
+              showPopup("Account already exists. Please login", true, "/signin");
+              // document.getElementById("container").classList.remove = "noneDisplay";
+              // document.getElementById("redirectMessage").classList.add = "blockDisplay";
+              
+              // window.location.href = "/error";   
+            }
           } catch (error) {
             console.log("inability to complete, EBUBE");
             document.getElementById("ErrorMessage").textContent = "Unable to fetch API to start Google auth. Please try again";
@@ -471,14 +487,14 @@
         console.log("fetch response:", response.status);
         if (data.data && data.data.user && data.data.user.is_new === "true") {
           return {
+            // user contains is_new flag, user_type etc
             user: data.data.user,
             access: data.data.access,
-            refresh: data.data.refresh
+            refresh: data.data.refresh,
           };
         } 
         if (data.data && data.data.user && data.data.user.is_new === "false") {
           throw new Error ("Existing user not registered");
-          showPopup("Account already exists. Please login", true, "/signin");
           return null;
         }
       } catch (error) {
@@ -543,16 +559,7 @@
       phoneInput.value = cleanedValue;
     });
 
-    const VALID_USER_TYPES = ["CLIENT", "LAND AGENT", "HOUSE AGENT", "VENDOR", "SERVICE_PROVIDER"];
-    // document.addEventListener("DOMContentLoaded", function() {
-    //   const form = document.getElementById("registerForm");
-    //   if (form) {
-    //     form.addEventListener('submit', function(event) {
-    //       event.preventDefault();
-    //       formSubmitButton();
-    //     });
-    //   }
-    // });
+    const VALID_USER_TYPES = ["BUYER", "LAND_AGENT", "HOUSE_AGENT", "VENDOR", "SERVICE_PROVIDER"];
     document.getElementById('registerForm').addEventListener('submit', async function(event) {
       event.preventDefault();
       formSubmitButton();
@@ -665,30 +672,22 @@
             // store access token and refresh token in local storage
             localStorage.setItem('token', data.access);
             localStorage.setItem('token', data.refresh);
-            // const select = document.getElementById("userType");
-            // const selectedValue = select.value;
-            // let route;
-            // if (selectedValue === "land agent") {
-            //   route = "/verify_landagentemail_otp";
-            // } else if (selectedValue === "house agent") {
-            //   route = "/verify_houseagentemail_otp";
-            // } else if (selectedValue === "buyer") {
-            //   route = "/verify_useremail_otp";
-            // } else if (selectedValue === "vendor") {
-            //   route = "/verify_vendor_otp";
-            // } else if (selectedValue === "offer service") {
-            //   route = "/verify_houseagentemail_otp";
-            // }
-            // this.action = route;
-            // this.submit();
             // check the is_new flag to identify if a user existed or not. nb: The backend is returning a data,
             // containing user(form data and is_new flag) which are parsed into the front end data variable
             const is_new = data.data.user.is_new;
-            const userType = data.data.user_type;
+            const user_type = data.data.user_type;
             if (is_new) {
               console.log(data);
-              if (userType) {
-                window.location.href = "verify_email";
+              if (user_type === "BUYER") {
+                window.location.href = "homepage";
+              } else if (user_type === "LAND_AGENT") {
+                  window.location.href = "landagent_profilepage";
+              } else if (user_type === "HOUSE_AGENT") {
+                  window.location.href = "houseagent_profilepage";
+              } else if (user_type === "VENDOR") {
+                  window.location.href = "vendor_profilepage";
+              } else if (user_type === "SERVICE_PROVIDER") {
+                  window.location.href = "homepage";
               }
             } else {
               console.log("existing user not registered");

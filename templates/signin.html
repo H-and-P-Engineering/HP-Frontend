@@ -137,7 +137,7 @@
           <div class="signup">Don't have an account? <a href="index.html">Sign up</a></div>
 
           <div class="social-login">
-            <img src="https://cdn-icons-png.flaticon.com/512/300/300221.png" alt="Google" onclick="beginGoogleRegistration()"/>
+            <img src="https://cdn-icons-png.flaticon.com/512/300/300221.png" alt="Google" id="beginGoogleRegistration"/>
             <img src="https://cdn-icons-png.flaticon.com/512/124/124010.png" alt="Facebook" />
             <img src="https://cdn-icons-png.flaticon.com/512/174/174855.png" alt="Instagram" />
           </div>
@@ -180,6 +180,7 @@
         window.location.href = currentRedirectUrl;
       }
     });
+    document.getElementById("beginGoogleRegistration").addEventListener("click", beginGoogleRegistration);
     // this function fetches the socials/begin API to start integrating Google's OAuth 2.0 into the app
     async function beginGoogleRegistration() {
       try {
@@ -199,7 +200,7 @@
         // check if the parameter is present in the url
         const hasis_new = urlParams.has('is_new'); 
         if (!hasis_new) {
-          formSubmitButton();      
+          formSubmitButton;      
         } else {
           // document.getElementById("container").style.display = "none";
           // document.getElementById("redirectMessage").classList.add = "blockDisplay";

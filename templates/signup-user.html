@@ -69,12 +69,14 @@
     select[name="Users"] {
       width: 100%;
       padding: 14px;
-      margin-bottom: 18px;
       border: 1px solid #ccc;
       border-radius: 6px;
       font-size: 14px;
     }
 
+    #margin-bottom {
+      margin-bottom: 18px;
+    }
     .phone-group {
       display: flex;
       gap: 10px;
@@ -176,6 +178,7 @@
 
       .phone-group {
         flex-direction: column;
+        margin-bottom: 18px;
       }
 
       .phone-group select,
@@ -200,23 +203,27 @@
         <h1>Let's get you started on <br><strong>Housing&Properties</strong></h1>
         <p>Create your account in a second</p>
         <form action="{{ url_for ('verify_useremail_otp') }}" method="post" id="registerForm">
-          <div>
+          <div id="margin-bottom">
             <select name="Users" id="userType">
               <option disabled selected value="">User type</option>
               <option value="CLIENT">Buyer</option>
-              <option value="ADMIN">Land Agent</option>
+              <option value="LAND AGENT">Land Agent</option>
               <option value="HOUSE AGENT">House Agent</option>
               <option value="VENDOR">Vendor</option>
-              <option value="Offer Service">Offer Service</option>
+              <option value="SERVICE_PROVIDER">Offer Service</option>
             </select>
+            <div id="userTypeError" class="error" aria-live="polite"></div>
           </div>
-          <div id="userTypeError" class="error" aria-live="polite"></div>
+          
+          <div id="margin-bottom">
+            <input type="text" placeholder="First Name" id="first_name"/>
+            <div id="firstNameError" class="error" aria-live="polite"></div>
+          </div>
 
-          <input type="text" placeholder="First Name" id="first_name"/>
-          <div id="firstNameError" class="error" aria-live="polite"></div>
-
-          <input type="text" placeholder="Last Name" id="last_name"/>
-          <div id="lastNameError" class="error" aria-live="polite"></div>
+          <div id="margin-bottom">
+            <input type="text" placeholder="Last Name" id="last_name"/>
+            <div id="lastNameError" class="error" aria-live="polite"></div>
+          </div>
 
           <div class="phone-group">
             <select name="countryCode" id="countryCode">
@@ -226,11 +233,15 @@
           </div>
           <div id="phoneError" class="error"></div>
 
-          <input type="email" placeholder="Email Address" id="email"/>
-          <div id="emailError" class="error" aria-live="polite"></div>
+          <div id="margin-bottom">
+            <input type="email" placeholder="Email Address" id="email"/>
+            <div id="emailError" class="error" aria-live="polite"></div>
+          </div>
 
-          <input type="password" placeholder="Create Password" id="password"/>
-          <div id="passwordError" class="error" aria-live="polite"></div>
+          <div id="margin-bottom">
+            <input type="password" placeholder="Create Password" id="password"/>
+            <div id="passwordError" class="error" aria-live="polite"></div>
+          </div>
           <div id="requirements" class="requirements">
             <div class="requirement">
               <span id="smallLetter" class="check invalid">❌</span> 1 small letter
@@ -570,7 +581,7 @@
         emailError.textContent = "";
         passwordError.textContent = "";
         
-        const emailRegex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+        const emailRegex = /^[a-zA-Z0-9._%+-!#$&'*/=?^{}|~]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/; 
         // check if names, email & password is empty first, if the check is passed then the details can be sent to the API
         if (!first_name) 
           firstNameError.textContent = "First name may not be blank.";

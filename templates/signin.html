@@ -283,6 +283,9 @@
       document.getElementById('registerForm').addEventListener('submit', async function(event) {
         event.preventDefault();
     
+        emailError.textContent = "";
+        passwordError.textContent = "";
+
         const email = document.getElementById("email").value.trim();
         const password = document.getElementById("password").value;
         const messageElement = document.getElementById('message');
@@ -296,7 +299,7 @@
         if (!password) {
           passwordError.textContent = "Password may not be blank.";
         }
-        const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/; 
+        const emailRegex = /^[a-zA-Z0-9._%+-!#$&'*/=?^{}|~]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/; 
         if (!emailRegex.test(email)) 
           emailError.textContent = 'Enter a valid email address.';     
         if (emailError.textContent || passwordError.textContent) 
@@ -349,7 +352,7 @@
           }
         
         } catch (error) {
-          showPopup('An error occurred. Please try again', false, "/homepage");
+          showPopup('An error occurred. Please try again', false, "/signin");
           // document.getElementById('emailError').textContent = 'An error occurred. Please try again';
         } finally {
           document.getElementById('registerForm').querySelector('button').disabled = false; // Re-enable button

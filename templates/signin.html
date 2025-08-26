@@ -380,19 +380,21 @@
               // likely non-existent account or one of password or email is wrong
               console.log(data);
               showPopup(`Login failed. Provided email or password is invalid: ${data.error.detail}`, false, "/signin");
-            } else if (response.status === 409) {
-              // the account is likely logged in another device/pending activation/locked/undergoing password reset
-              showPopup(`${data.message}`, false, "/signin");
-            } else if (response.status === 429) {
-              // the client has sent too many requests in a given time frame
-              showPopup(`Multiple login attempts: ${data.message}`, false, "/signin");
-            } else if (response.status >= 500) {
-              showPopup(`Server error. Please try again later.${data.message}`, false, "/signin");
             } else {
               // Handle other non-2xx status codes
               const errorText = await response.text(); // Use .text() instead of .json() to avoid JSON parsing errors
-              console.error('API error:', response.status, errorText);
-              throw new Error(`API request failed with status ${response.status}: ${errorText}`);
+              if (response.status === 409) {
+                // the account is likely logged in another device/pending activation/locked/undergoing password reset
+                showPopup(`Account exists: ${errorText}`, false, "/signin");
+              } else if (response.status === 429) {
+                // the client has sent too many requests in a given time frame
+                showPopup(`Multiple login attempts: ${errorText}`, false, "/signin");
+              } else if (response.status >= 500) {
+                showPopup(`Server error. Please try again later.${errorText}`, false, "/signin");
+              } else {
+                console.error('API error:', response.status, errorText);
+                showPopup(`Registration failed: ${errorText}`, false, "/createaccount-user");
+              }
             }
           } 
           // handles true errors eg network failures, CORS issues, or JSON parsing errors. or any thrown error

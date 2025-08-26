@@ -693,17 +693,15 @@
               showPopup("Account exists. Please log in.", true, "/signin");
             }
           } else {
+            // Handle other non-2xx status codes
+            const errorText = await response.text(); // Use .text() to avoid JSON parsing errors
             if (response.status === 409) {
-                console.log('Account exists. Please log in.');
-                showPopup("Account exists. Please log in.", true, "/signin");
-                throw new Error('Account already exists');
-              } else {
-                // Handle other non-2xx status codes
-                const errorText = await response.text(); // Use .text() to avoid JSON parsing errors
-                console.error('API error:', response.status, errorText);
-                showPopup(`Registration failed: ${error.message}`, false, "/createaccount-user");
-                throw new Error(`API request failed with status ${response.status}: ${errorText}`);
-              }
+              console.log('Account does not exist. Please sign up.');
+              showPopup(`Account exists. Please log in: ${errorText}`, true, "/createaccount-user");
+            } else {
+              console.error('API error:', response.status, errorText);
+              showPopup(`An error occurred. Please try again: ${errorText}`, false, "/signin");
+            }
           }
 
         // handles true errors eg network failures, CORS issues, or JSON parsing errors. or any thrown error

@@ -384,8 +384,9 @@
               // Handle other non-2xx status codes
               const errorText = await response.text(); // Use .text() instead of .json() to avoid JSON parsing errors
               if (response.status === 409) {
-                // the account is likely logged in another device/pending activation/locked/undergoing password reset
-                showPopup(`Account exists: ${errorText}`, false, "/signin");
+                // // the account is likely logged in another device/pending activation/locked/undergoing password reset
+                // or doesnt exist
+                showPopup("Incorrect Email or password. Please try again", false, "/signin");
               } else if (response.status === 429) {
                 // the client has sent too many requests in a given time frame
                 showPopup(`Multiple login attempts: ${errorText}`, false, "/signin");
@@ -393,7 +394,7 @@
                 showPopup(`Server error. Please try again later.${errorText}`, false, "/signin");
               } else {
                 console.error('API error:', response.status, errorText);
-                showPopup(`Registration failed: ${errorText}`, false, "/createaccount-user");
+                showPopup(`Registration failed: ${errorText}`, false, "/signin");
               }
             }
           } 

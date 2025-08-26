@@ -375,7 +375,7 @@
             console.log("The data:", data);
             localStorage.setItem('access', data.data.access);
             localStorage.setItem('refresh', data.data.refresh);
-            user_type = data.data.user_type;
+            user_type = data.data.user.user_type;
             if (user_type === "BUYER") {
               window.location.href = "/homepage";
             } else if (user_type === "LAND_AGENT") {

@@ -343,9 +343,26 @@
           // this method parses the body of the response into a javascript object which is assigned to the data variable,
           // the content depends on what the backend returns in the serializer.py eg data (form data, id, token),
           // message, flag (eg to identify new user)
-          const data = await response.json();
-
-          if (!response.ok) {
+          if (response.ok) {
+            // the response body is a valid json if the response is ok else use await response.text()
+            const data = await response.json();
+            console.log(response);
+            console.log("The data:", data);
+            localStorage.setItem('access', data.data.access);
+            localStorage.setItem('refresh', data.data.refresh);
+            user_type = data.data.user.user_type;
+            if (user_type === "BUYER") {
+              window.location.href = "/homepage";
+            } else if (user_type === "LAND_AGENT") {
+              window.location.href = "/landagent_profilepage";
+            } else if (user_type === "HOUSE_AGENT") {
+              window.location.href = "/houseagent_profilepage";
+            } else if (user_type === "VENDOR") {
+              window.location.href = "/vendor_profilepage";
+            } else if (user_type === "SERVICE_PROVIDER") {
+              window.location.href = "/homepage";
+            }        
+          } else {
             console.log(response);
             console.log("The data:", data);
             if (response.status === 400) {
@@ -371,32 +388,16 @@
               showPopup(`Multiple login attempts: ${data.message}`, false, "/signin");
             } else if (response.status >= 500) {
               showPopup(`Server error. Please try again later.${data.message}`, false, "/signin");
+            } else {
+              // Handle other non-2xx status codes
+              const errorText = await response.text(); // Use .text() instead of .json() to avoid JSON parsing errors
+              console.error('API error:', response.status, errorText);
+              throw new Error(`API request failed with status ${response.status}: ${errorText}`);
             }
-            else {
-              showPopup("An unexpected error occurred.", false, "/signin");
-            }
-          } else {
-            console.log(response);
-            console.log("The data:", data);
-            localStorage.setItem('access', data.data.access);
-            localStorage.setItem('refresh', data.data.refresh);
-            user_type = data.data.user.user_type;
-            if (user_type === "BUYER") {
-              window.location.href = "/homepage";
-            } else if (user_type === "LAND_AGENT") {
-              window.location.href = "/landagent_profilepage";
-            } else if (user_type === "HOUSE_AGENT") {
-              window.location.href = "/houseagent_profilepage";
-            } else if (user_type === "VENDOR") {
-              window.location.href = "/vendor_profilepage";
-            } else if (user_type === "SERVICE_PROVIDER") {
-              window.location.href = "/homepage";
-            }
-          }
-        
+          } 
+          // handles true errors eg network failures, CORS issues, or JSON parsing errors. or any thrown error
         } catch (error) {
           showPopup('An error occurred. Please try again', false, "/signin");
-          // document.getElementById('emailError').textContent = 'An error occurred. Please try again';
         } finally {
           document.getElementById('registerForm').querySelector('button').disabled = false; // Re-enable button
         }

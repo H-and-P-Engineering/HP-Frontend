@@ -666,9 +666,9 @@
           // this method parses the body the body into a javascript object which is assigned to the data variable,
           // the content depends on what the backend returns in the serializer.py eg data (form data, id, token),
           // message, status_code, flag (eg to identify new user)
-          const data = await response.json();
-
           if (response.ok) {
+            // the response body is a valid json if the response is ok else use await response.text()
+            const data = await response.json();
             // store access token and refresh token in local storage
             localStorage.setItem('token', data.access);
             localStorage.setItem('token', data.refresh);
@@ -690,18 +690,25 @@
                   window.location.href = "/homepage";
               }
             } else {
-              console.log("existing user not registered");
-              // display the pop up message that their account already exists
               showPopup("Account exists. Please log in.", true, "/signin");
-              // document.getElementById("existing-client-popup").classList.add('blockDisplay');
             }
           } else {
-            showPopup(`Registration failed: ${error.message}`, false, "/createaccount-user");
+            if (response.status === 409) {
+                console.log('Account exists. Please log in.');
+                showPopup("Account exists. Please log in.", true, "/signin");
+                throw new Error('Account already exists');
+              } else {
+                // Handle other non-2xx status codes
+                const errorText = await response.text(); // Use .text() to avoid JSON parsing errors
+                console.error('API error:', response.status, errorText);
+                showPopup(`Registration failed: ${error.message}`, false, "/createaccount-user");
+                throw new Error(`API request failed with status ${response.status}: ${errorText}`);
+              }
           }
-        
+
+        // handles true errors eg network failures, CORS issues, or JSON parsing errors. or any thrown error
         } catch (error) {
-          showPopup('An error occurred. Please try again', false, "/createaccount-user");
-          // document.getElementById('emailError').textContent = 'An error occurred. Please try again';
+          showPopup('An error occurred. Please try again', false, "/signin");
         } finally {
           document.getElementById('registerForm').querySelector('button').disabled = false; // Re-enable button
         }

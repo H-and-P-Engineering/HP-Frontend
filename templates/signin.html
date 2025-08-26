@@ -343,6 +343,7 @@
 
           if (!response.ok) {
             console.log(response);
+            console.log("The data:", data);
             if (response.status === 400) {
               const errorDetail = data.data.error?.detail || "";
               switch (errorDetail) {

@@ -485,7 +485,7 @@
         const data = await response.json();
         console.log(data);
         console.log("fetch response:", response.status);
-        if (data.data && data.data.user && data.data.user.is_new === "true") {
+        if (data.data && data.data.user && data.data.user.is_new === true) {
           return {
             // user contains is_new flag, user_type etc
             user: data.data.user,
@@ -493,7 +493,7 @@
             refresh: data.data.refresh,
           };
         } 
-        if (data.data && data.data.user && data.data.user.is_new === "false") {
+        if (data.data && data.data.user && data.data.user.is_new === false) {
           throw new Error ("Existing user not registered");
           return null;
         }
@@ -675,7 +675,7 @@
             // check the is_new flag to identify if a user existed or not. nb: The backend is returning a data,
             // containing user(form data and is_new flag) which are parsed into the front end data variable
             const is_new = data.data.user.is_new;
-            const user_type = data.data.user_type;
+            const user_type = data.data.user.user_type;
             if (is_new) {
               console.log(data);
               if (user_type === "BUYER") {

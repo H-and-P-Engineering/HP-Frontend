@@ -216,6 +216,7 @@
               //store user data eg to use the name in the homepage eg 'Welcome Jeffrey'
               // sessionStorage only accepts strings as values so the user object from backend is convertes to string
               const is_new = user.is_new;
+              const user_type = user.user_type;
               // sessionStorage.setItem('user', JSON.stringify(user));
               sessionStorage.setItem('access', userData.access);
               sessionStorage.setItem('refresh', userData.refresh);

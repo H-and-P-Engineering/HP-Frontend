@@ -696,17 +696,17 @@
             // Handle other non-2xx status codes
             const errorText = await response.text(); // Use .text() to avoid JSON parsing errors
             if (response.status === 409) {
-              console.log('Account does not exist. Please sign up.');
-              showPopup(`Account exists. Please log in: ${errorText}`, true, "/createaccount-user");
+              console.log('Account exists. Please log in.', errorText.error.detail);
+              showPopup("Account exists. Please log in", true, "/signin");
             } else {
               console.error('API error:', response.status, errorText);
-              showPopup(`An error occurred. Please try again: ${errorText}`, false, "/signin");
+              showPopup(`An error occurred. Please try again: ${errorText}`, false, "/createaccount-user");
             }
           }
 
         // handles true errors eg network failures, CORS issues, or JSON parsing errors. or any thrown error
         } catch (error) {
-          showPopup('An error occurred. Please try again', false, "/signin");
+          showPopup('An error occurred. Please try again', false, "/createaccount-user");
         } finally {
           document.getElementById('registerForm').querySelector('button').disabled = false; // Re-enable button
         }

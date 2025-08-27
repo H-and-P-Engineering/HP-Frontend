@@ -201,69 +201,59 @@
         showPopup("Unable to fetch API to start Google auth. Please try again", true, "/createaccount-user");
       }
     }
-    // this event listener should be able to permit 1) manual form submission using formSubmitButton() and 2) when 
-    // server redirects back to this page afte collecting the user data to be retrieved fetchUserData()
+    // check for when the server redirects back to this page after google sign in
     window.addEventListener('load', async () => {
       console.log("page load event fired");
       console.log(window.location.pathname);
-      // check if this is aredirect from google or the intial click to sign up    
-      // make sure the load is targeting the API load and not other page loads
-        const urlParams = new URLSearchParams(window.location.search);
-        // check if the parameter is present in the url
-        const hasis_new = urlParams.has('is_new'); 
-        if (!hasis_new) {
-          formSubmitButton;      
-        } else {
-          // document.getElementById("container").style.display = "none";
-          // document.getElementById("redirectMessage").classList.add = "blockDisplay";
-          try {
-            // call this function to fetch and return user data into userData variable
-            const userData = await fetchUserData();
-            console.log("Fetch user data:", userData);
-            // if the account is logged in
-            if (userData) {
-              console.log(userData);
-              // destructure the object userData and extracts property user from it
-              const {user} = userData;
-              //store user data eg to use the name in the homepage eg 'Welcome Jeffrey'
-              // sessionStorage only accepts strings as values so the user object from backend is convertes to string
-              const is_new = user.is_new;
-              const user_type = user.user_type;
-              // sessionStorage.setItem('user', JSON.stringify(user));
-              sessionStorage.setItem('access', userData.access);
-              sessionStorage.setItem('refresh', userData.refresh);
-              if(is_new === true) {
-                showPopup("Incorrect phone number or password. Please try again ", true, "/signin");   
-              } else {
-                // if its not a new user trying to login
-                if (user_type === "BUYER") {
-                  window.location.href = "/homepage";
-                } else if (user_type === "LAND_AGENT") {
-                  window.location.href = "/landagent_profilepage";
-                } else if (user_type === "HOUSE_AGENT") {
-                  window.location.href = "/houseagent_profilepage";
-                } else if (user_type === "VENDOR") {
-                  window.location.href = "/vendor_profilepage";
-                } else if (user_type === "SERVICE_PROVIDER") {
-                  window.location.href = "/homepage";
-                }
-              }       
+      // the redirect after google login causes a load and adds a query to this pages url 
+      const urlParams = new URLSearchParams(window.location.search);
+      const hasis_new = urlParams.has('is_new'); 
+      if (hasis_new)  {
+        // you can now fetch and extract user_type to redirect to appropriate dashboards after googl login
+        try {
+          // call this function to fetch and return user data into userData variable
+          const userData = await fetchUserData();
+          console.log("Fetch user data:", userData);
+          // if the account is logged in
+          if (userData) {
+            console.log(userData);
+            // destructure the object userData and extracts property user from it
+            const {user} = userData;
+            //store user data eg to use the name in the homepage eg 'Welcome Jeffrey'
+            // sessionStorage only accepts strings as values so the user object from backend is convertes to string
+            const is_new = user.is_new;
+            const user_type = user.user_type;
+            // sessionStorage.setItem('user', JSON.stringify(user));
+            sessionStorage.setItem('access', userData.access);
+            sessionStorage.setItem('refresh', userData.refresh);
+            // although if is_new is true backend redirect user to signup page. But lets still check for it
+            if(is_new === true) {
+              showPopup("Incorrect phone number or password. Please try again ", true, "/signin");   
             } else {
-              showPopup("Incorrect phone number or password. Please try again", true, "/signin");
-              // document.getElementById("container").classList.remove = "noneDisplay";
-              // document.getElementById("redirectMessage").classList.add = "blockDisplay";
-              
-              // window.location.href = "/error";   
-            }
-          } catch (error) {
-            console.log("inability to complete, EBUBE");
-            document.getElementById("ErrorMessage").textContent = "Unable to fetch API to start Google auth. Please try again";
-            //  showPopup("Unable to fetch user data API. Please try again", true, "/createaccount");
+              if (user_type === "BUYER") {
+                window.location.href = "/homepage";
+              } else if (user_type === "LAND_AGENT") {
+                window.location.href = "/landagent_profilepage";
+              } else if (user_type === "HOUSE_AGENT") {
+                window.location.href = "/houseagent_profilepage";
+              } else if (user_type === "VENDOR") {
+                window.location.href = "/vendor_profilepage";
+              } else if (user_type === "SERVICE_PROVIDER") {
+                window.location.href = "/homepage";
+              }
+            }       
+          } else {
+            showPopup("Incorrect phone number or password. Please try again", true, "/signin");
           }
+        } catch (error) {
+          console.log("inability to complete, EBUBE");
+          document.getElementById("ErrorMessage").textContent = "Unable to fetch API to start Google auth. Please try again";
+          //  showPopup("Unable to fetch user data API. Please try again", true, "/createaccount");
         }
+      } 
+      // if theres no is_new then is a normal page load that will rely on user clicking a button to initiate action
     });
-    // // this function fetches user data and is_new flag from second API after google redirects to it(in the backend)
-    // it then uses the flag to determine the pages to take the browser
+    // // this function fetches user data and user_type from second API and is called in window load event
     async function fetchUserData() {
       try {
         console.log("attempting to fetch userdata from API");
@@ -285,15 +275,13 @@
             };
             console.log("Returning:", result);
             return result;
-          } 
-          if (data.data && data.data.user && data.data.user.is_new === true) {
-            throw new Error ("Incorrect phone number or password. Please try again");
-            return null;
+          } else {
+            showPopup("Something went wrong. Please try again", true, "/signin");
           }
-          showPopup("Something went wrong. Please try again", true, "/createaccount-user");
+          
         } else {
           console.log(response);
-          throw new Error (`response is not ok: ${response.status}`);
+          showPopup(`Something went wrong. Please try again ${response.status}`, true, "/signin");
           // window.location.href = '/error';
           // return null;
         }
@@ -303,9 +291,35 @@
         // document.getElementById("redirectMessage").classList.add = "blockDisplay";
         showPopup("Unable to fetch API to get userData. Please try again", true, "/createaccount-user");
         document.getElementById("ErrorMessage").textContent = "Unable to fetch API to start Google auth. Please try again";       
-        return null;
       }
     }
+
+    // real time password validation
+    document.getElementById("password").addEventListener("input", () => {
+        // const passwordRegex = /^(?=.[A-Z])(?=.[a-z])(?=.\d)(?=.[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>?])\S{8,}$/;
+        const password = document.getElementById('password').value;
+        const smallLetter = document.getElementById('smallLetter');
+        const capitalLetter = document.getElementById('capitalLetter');
+        const number = document.getElementById('number');
+        const specialChar = document.getElementById('specialChar');
+        const minLength = document.getElementById('minLength');
+        // check each requirement
+        smallLetter.textContent = /[a-z]/.test(password) ? '✅' : '❌';
+        smallLetter.className = 'check' + ( /[a-z]/.test(password) ? 'valid' : 'invalid');
+
+        capitalLetter.textContent = /[A-Z]/.test(password) ? '✅' : '❌';
+        capitalLetter.className = 'check' + ( /[A-Z]/.test(password) ? 'valid' : 'invalid');
+
+        number.textContent = /\d/.test(password) ? '✅' : '❌';
+        number.className = 'check' + ( /\d/.test(password) ? 'valid' : 'invalid');
+
+        specialChar.textContent = /[!@#$%^&*()]/.test(password) ? '✅' : '❌';
+        specialChar.className = 'check' + ( /[!@#$%^&*()]/.test(password) ? 'valid' : 'invalid');
+
+        minLength.textContent = password.length >= 8 ? '✅' : '❌';
+        minLength.className = 'check' + ( password.length >= 8 ? 'valid' : 'invalid');
+    });
+    
     document.getElementById('registerForm').addEventListener('submit', async function(event) {
       event.preventDefault();
       formSubmitButton();

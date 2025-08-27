@@ -23,7 +23,7 @@ def credentials_form():
     if request.method == "POST":
         return render_template("credentials-form.html")
     else:
-        return render_template("credentials-form-user.html")
+        return render_template("credentials-form.html")
 
 @app.route("/reg_direction")
 def reg_direction():

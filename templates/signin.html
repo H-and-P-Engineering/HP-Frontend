@@ -37,8 +37,7 @@
       justify-content: center;
       padding: 2rem;
     }
-    
-
+  
     .login-form {
       max-width: 400px;
       width: 100%;
@@ -57,10 +56,14 @@
     input[type="password"] {
       width: 100%;
       padding: 0.8rem;
-      margin: 0.5rem 0;
+      /* margin: 0.5rem 0; */
       border: 1px solid #ccc;
       border-radius: 5px;
     }
+
+     #margin-bottom {
+       margin-bottom: 18px;
+     }
     
     .checkbox {
       margin: 0.5rem 0;
@@ -122,11 +125,15 @@
         <h1>Login</h1>
         <p>Login your account in a second</p>
         <form action="{{ url_for ('homepage') }}" method="post" id="registerForm">
-          <input type="email" placeholder="Email Address" id="email"/>
-          <div id="emailError" class="error" aria-live="polite"></div>
+          <div id="margin-bottom">
+            <input type="email" placeholder="Email Address" id="email"/>
+            <div id="emailError" class="error" aria-live="polite"></div>
+          </div>
         
-          <input type="password" placeholder="Password" id="password"/>
-          <div id="passwordError" class="error" aria-live="polite"></div>
+          <div id="margin-bottom">
+            <input type="password" placeholder="Password" id="password"/>
+            <div id="passwordError" class="error" aria-live="polite"></div>
+          </div>
 
           <div class="checkbox">
             <label><input type="checkbox" checked /> Keep me logged in</label>
@@ -261,29 +268,30 @@
           method: 'GET',
           credentials: 'include'
         });
-        if (!response.ok) {
+        if (response.ok) {
+          const data = await response.json();
+          console.log(data);
+          console.log("fetch response:", response.status);
+          if (data.data && data.data.user && data.data.user.is_new === false) {
+            const result = {
+              user: data.data.user,
+              access: data.data.access,
+              refresh: data.data.refresh
+            };
+            console.log("Returning:", result);
+            return result;
+          } 
+          if (data.data && data.data.user && data.data.user.is_new === true) {
+            throw new Error ("Incorrect phone number or password. Please try again");
+            return null;
+          }
+          showPopup("Something went wrong. Please try again", true, "/createaccount-user");
+        } else {
           console.log(response);
           throw new Error (`response is not ok: ${response.status}`);
           // window.location.href = '/error';
           // return null;
         }
-        const data = await response.json();
-        console.log(data);
-        console.log("fetch response:", response.status);
-        if (data.data && data.data.user && data.data.user.is_new === false) {
-          const result = {
-            user: data.data.user,
-            access: data.data.access,
-            refresh: data.data.refresh
-          };
-          console.log("Returning:", result);
-          return result;
-        } 
-        if (data.data && data.data.user && data.data.user.is_new === true) {
-          throw new Error ("Incorrect phone number or password. Please try again");
-          return null;
-        }
-        showPopup("Something went wrong. Please try again", true, "/createaccount-user");
       } catch (error) {
         console.log(error);
         console.log("Unable to fetch API to start Google auth. Please try again");

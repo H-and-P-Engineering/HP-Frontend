@@ -18,6 +18,13 @@ def registeras():
 def signin():
     return render_template("signin.html")
 
+@app.route("/credentials_form", methods=["GET", "POST"])
+def credentials_form():
+    if request.method == "POST":
+        return render_template("credentials-form.html")
+    else:
+        return render_template("credentials-form-user.html")
+
 @app.route("/reg_direction")
 def reg_direction():
     return render_template("registration-direction.html")
@@ -150,13 +157,6 @@ def user_cart_nav4():
 @app.route("/user-account")
 def useraccount(): 
     return render_template("user-account.html")
-
-@app.route("/credentials_form_user", methods=["GET", "POST"])
-def credentials_form_user():
-    if request.method == "POST":
-        return render_template("credentials-form-user.html")
-    else:
-        return render_template("credentials-form-user.html")
 
 @app.route("/user_filterby_for_landagents")
 def user_filterby_for_landagents(): 

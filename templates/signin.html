@@ -209,13 +209,10 @@
       // check if this is aredirect from google or the intial click to sign up    
       // make sure the load is targeting the API load and not other page loads
         const urlParams = new URLSearchParams(window.location.search);
-        // check if the parameter is present in the url
+        // if the parameter not is present in the url that means backend has redirected and sent user data
         const hasis_new = urlParams.has('is_new'); 
-        if (!hasis_new) {
-          formSubmitButton;      
-        } else {
-          // document.getElementById("container").style.display = "none";
-          // document.getElementById("redirectMessage").classList.add = "blockDisplay";
+        if (!hasis_new)  {
+          // The page is now a backend redirect after google login. To fetch user data
           try {
             // call this function to fetch and return user data into userData variable
             const userData = await fetchUserData();
@@ -260,6 +257,10 @@
             document.getElementById("ErrorMessage").textContent = "Unable to fetch API to start Google auth. Please try again";
             //  showPopup("Unable to fetch user data API. Please try again", true, "/createaccount");
           }
+        } else {
+          // If hasis_new parameter is present. Then the page is a backend redirect from google sign up
+          // for a is_new=false user". So the user has to click login on this page  via any route 
+          console.log("This page is a backend redirect from google signup");
         }
     });
     // // this function fetches user data and is_new flag from second API after google redirects to it(in the backend)

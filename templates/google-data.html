@@ -3,6 +3,7 @@
 {% block body %}
   <style>
     .spinner {
+      display: block !important;
       position: fixed;
       width: 30px;
       height: 30px;
@@ -60,6 +61,11 @@
           window.location.href = currentRedirectUrl;
         }
       });
+
+      function toggleSpinner(show) {
+        document.getElementById("spinner").style.display = show ? "block" : "none";
+      }
+
       window.addEventListener('load', async () => {
         console.log("page load event fired");
         console.log(window.location.pathname);
@@ -125,15 +131,18 @@
                 refresh: data.data.refresh,
               };
             } else {
+              toggleSpinner(false);
               showPopup("Something went wrong. Please try again", true, "/signin");
             }
           } else {
+            toggleSpinner(false);
             console.log(response);
             showPopup("Response is not ok. Please try again", true, "/signin");
             // window.location.href = '/error';
             // return null;
           }
         } catch (error) {
+          toggleSpinner(false);
           console.log(error);
           console.log("Unable to fetch API to get user google data. Please try again");
           // document.getElementById("redirectMessage").classList.add = "blockDisplay";

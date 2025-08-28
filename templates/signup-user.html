@@ -157,6 +157,24 @@
       cursor: pointer;
     }
 
+    .spinner {
+      display: none !important;
+      position: fixed;
+      width: 30px;
+      height: 30px;
+      top: 50%;
+      left: 50%;
+      z-index: 1000;
+      border: 4px solid #f3f3f3;
+      border-top: 4px solid #3498db;
+      border-radius: 50%;
+      animation: spin 1s linear;
+    }
+    @keyframes spin {
+      0% { transform: rotate (0deg); }
+      100% { transform: rotate(360deg); }
+    }
+
     @media (max-width: 768px) {
       .container {
         flex-direction: column;
@@ -294,6 +312,7 @@
       </div>
     </div>
   </div>
+  <div id="spinner" class="spinner"></div>
 </body>
 
   <script src="https://accounts.google.com/gsi/client" async defer></script>
@@ -335,12 +354,19 @@
         window.location.href = currentRedirectUrl;
       }
     });
+
+    function toggleSpinner(show) {
+      document.getElementById("spinner").style.display = show ? "block" : "none";
+    }
+
     document.getElementById("beginGoogleRegistration").addEventListener("click", beginGoogleRegistration);
     // this function fetches the socials/begin API to start integrating Google's OAuth 2.0 into the app
     async function beginGoogleRegistration() {
+      toggleSpinner(true);
       try {
         window.location.href = 'https://hp-test-7rmp.onrender.com/api/v1/authentication/social/begin/google-oauth2/';
       } catch {
+        toggleSpinner(false);
         showPopup("Unable to fetch API to start Google auth. Please try again", true, "/createaccount-user");
       }
       // const backend = 'google-oauth2'; // Replace with actual backend provider
@@ -353,28 +379,28 @@
 
     // real time password validation
     document.getElementById("password").addEventListener("input", () => {
-        // const passwordRegex = /^(?=.[A-Z])(?=.[a-z])(?=.\d)(?=.[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>?])\S{8,}$/;
-        const password = document.getElementById('password').value;
-        const smallLetter = document.getElementById('smallLetter');
-        const capitalLetter = document.getElementById('capitalLetter');
-        const number = document.getElementById('number');
-        const specialChar = document.getElementById('specialChar');
-        const minLength = document.getElementById('minLength');
-        // check each requirement
-        smallLetter.textContent = /[a-z]/.test(password) ? '✅' : '❌';
-        smallLetter.className = 'check' + ( /[a-z]/.test(password) ? 'valid' : 'invalid');
+      // const passwordRegex = /^(?=.[A-Z])(?=.[a-z])(?=.\d)(?=.[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>?])\S{8,}$/;
+      const password = document.getElementById('password').value;
+      const smallLetter = document.getElementById('smallLetter');
+      const capitalLetter = document.getElementById('capitalLetter');
+      const number = document.getElementById('number');
+      const specialChar = document.getElementById('specialChar');
+      const minLength = document.getElementById('minLength');
+      // check each requirement
+      smallLetter.textContent = /[a-z]/.test(password) ? '✅' : '❌';
+      smallLetter.className = 'check' + ( /[a-z]/.test(password) ? 'valid' : 'invalid');
 
-        capitalLetter.textContent = /[A-Z]/.test(password) ? '✅' : '❌';
-        capitalLetter.className = 'check' + ( /[A-Z]/.test(password) ? 'valid' : 'invalid');
+      capitalLetter.textContent = /[A-Z]/.test(password) ? '✅' : '❌';
+      capitalLetter.className = 'check' + ( /[A-Z]/.test(password) ? 'valid' : 'invalid');
 
-        number.textContent = /\d/.test(password) ? '✅' : '❌';
-        number.className = 'check' + ( /\d/.test(password) ? 'valid' : 'invalid');
+      number.textContent = /\d/.test(password) ? '✅' : '❌';
+      number.className = 'check' + ( /\d/.test(password) ? 'valid' : 'invalid');
 
-        specialChar.textContent = /[!@#$%^&*()]/.test(password) ? '✅' : '❌';
-        specialChar.className = 'check' + ( /[!@#$%^&*()]/.test(password) ? 'valid' : 'invalid');
+      specialChar.textContent = /[!@#$%^&*()]/.test(password) ? '✅' : '❌';
+      specialChar.className = 'check' + ( /[!@#$%^&*()]/.test(password) ? 'valid' : 'invalid');
 
-        minLength.textContent = password.length >= 8 ? '✅' : '❌';
-        minLength.className = 'check' + ( password.length >= 8 ? 'valid' : 'invalid');
+      minLength.textContent = password.length >= 8 ? '✅' : '❌';
+      minLength.className = 'check' + ( password.length >= 8 ? 'valid' : 'invalid');
     });
 
     // real time phone number validation
@@ -406,7 +432,7 @@
       event.preventDefault();
       formSubmitButton();
     });
-    async function formSubmitButton() {    
+    async function formSubmitButton() {   
       const user_type = document.getElementById("userType").value;
       const first_name = document.getElementById("first_name").value.trim();
       const last_name = document.getElementById("last_name").value.trim();
@@ -492,6 +518,7 @@
       };
       const url = 'https://hp-test-7rmp.onrender.com/api/v1/authentication/register/';
       try {
+        toggleSpinner(true);
         document.getElementById('registerForm').querySelector('button').disabled = true; 
         // response contains: 1) https status code eg 200, 2) status text eg "OK", "Unauthorized"
         // 3) headers eg: Content-Type: application/json 4) body: accessible via methods like .json(), .text() to parse
@@ -520,9 +547,11 @@
             console.log(data);
             window.location.href = "/verify_email";
           } else {
+            toggleSpinner(false);
             showPopup("Account exists. Please log in.", true, "/signin");
           }
         } else {
+          toggleSpinner(false);
           // Handle other non-2xx status codes
           const errorText = await response.text(); // Use .text() to avoid JSON parsing errors
           if (response.status === 409) {
@@ -536,6 +565,7 @@
 
       // handles true errors eg network failures, CORS issues, or JSON parsing errors. or any thrown error
       } catch (error) {
+        toggleSpinner(false);
         showPopup('An error occurred. Please try again', false, "/createaccount-user");
       } finally {
         document.getElementById('registerForm').querySelector('button').disabled = false; // Re-enable button

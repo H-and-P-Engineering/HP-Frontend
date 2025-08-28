@@ -24,6 +24,10 @@ def credentials_form():
         return render_template("credentials-form.html")
     else:
         return render_template("credentials-form.html")
+    
+@app.route("/google_data")
+def google_data():
+    return render_template("google-data.html")
 
 @app.route("/reg_direction")
 def reg_direction():

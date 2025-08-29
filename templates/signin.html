@@ -111,17 +111,17 @@
     }
 
     .spinner {
-      display: none !important;
+      display: none;
       position: fixed;
-      width: 30px;
-      height: 30px;
+      width: 50px;
+      height: 50px;
       top: 50%;
       left: 50%;
       z-index: 1000;
       border: 4px solid #f3f3f3;
       border-top: 4px solid #3498db;
       border-radius: 50%;
-      animation: spin 1s linear;
+      animation: spin 1s linear infinite;
     }
     @keyframes spin {
       0% { transform: rotate (0deg); }
@@ -231,32 +231,6 @@
       }
     }
     
-    // real time password validation
-    document.getElementById("password").addEventListener("input", () => {
-      // const passwordRegex = /^(?=.[A-Z])(?=.[a-z])(?=.\d)(?=.[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>?])\S{8,}$/;
-      const password = document.getElementById('password').value;
-      const smallLetter = document.getElementById('smallLetter');
-      const capitalLetter = document.getElementById('capitalLetter');
-      const number = document.getElementById('number');
-      const specialChar = document.getElementById('specialChar');
-      const minLength = document.getElementById('minLength');
-      // check each requirement
-      smallLetter.textContent = /[a-z]/.test(password) ? '✅' : '❌';
-      smallLetter.className = 'check' + ( /[a-z]/.test(password) ? 'valid' : 'invalid');
-
-      capitalLetter.textContent = /[A-Z]/.test(password) ? '✅' : '❌';
-      capitalLetter.className = 'check' + ( /[A-Z]/.test(password) ? 'valid' : 'invalid');
-
-      number.textContent = /\d/.test(password) ? '✅' : '❌';
-      number.className = 'check' + ( /\d/.test(password) ? 'valid' : 'invalid');
-
-      specialChar.textContent = /[!@#$%^&*()]/.test(password) ? '✅' : '❌';
-      specialChar.className = 'check' + ( /[!@#$%^&*()]/.test(password) ? 'valid' : 'invalid');
-
-      minLength.textContent = password.length >= 8 ? '✅' : '❌';
-      minLength.className = 'check' + ( password.length >= 8 ? 'valid' : 'invalid');
-    });
-
     document.getElementById('registerForm').addEventListener('submit', async function(event) {
       event.preventDefault();
       formSubmitButton();
@@ -308,13 +282,13 @@
         // this method parses the body of the response into a javascript object which is assigned to the data variable,
         // the content depends on what the backend returns in the serializer.py eg data (form data, id, token),
         // message, flag (eg to identify new user)
+        const data = await response.json();
         if (response.ok) {
-          // the response body is a valid json if the response is ok else use await response.text()
-          const data = await response.json();
           console.log(response);
           console.log("The data:", data);
           localStorage.setItem('access', data.data.access);
           localStorage.setItem('refresh', data.data.refresh);
+          toggleSpinner(false);
           user_type = data.data.user.user_type;
           if (user_type === "BUYER") {
             window.location.href = "/homepage";
@@ -331,41 +305,42 @@
           toggleSpinner(false);
           console.log(response);
           console.log("The data:", data);
+          const errorDetail = data.error.detail;
           if (response.status === 400) {
-            const errorDetail = data.data.error?.detail || "";
             switch (errorDetail) {
               case "Login failed. Requested user email is not verified. Please verify your email.":
-                showPopup(`Requested user email is not verified: ${errorDetail}`, false, "/verify_email");
+                showPopup("Email is not verified. Click ok to verify", false, "/verify_email");
                 break;
               case "Login failed. Provided email or password is invalid.":
-                showPopup(`Incorrect email or password. Please try again: ${errorDetail}`, false, "/signin");
+                // likely non-existent account or one of password or email is wrong
+                showPopup("Incorrect email or password. Please try again", false, "/signin");
                 break;
               default:
+                console.log("error:", errorDetail);
                 showPopup("Login failed. Please try again", false, "/signin");
             }
-            // likely non-existent account or one of password or email is wrong
-            console.log(data);
-            showPopup(`Login failed. Provided email or password is invalid: ${data.error.detail}`, false, "/signin");
           } else {
             // Handle other non-2xx status codes
-            const errorText = await response.text(); // Use .text() instead of .json() to avoid JSON parsing errors
-            if (response.status === 409) {
+             if (response.status === 409) {
               // the account is likely logged in another device/pending activation/locked/undergoing password reset
-              // or doesnt exist
+              console.log("error:", errorDetail);
               showPopup("Incorrect Email or password. Please try again", false, "/signin");
             } else if (response.status === 429) {
-              // the client has sent too many requests in a given time frame
-              showPopup(`Multiple login attempts: ${errorText}`, false, "/signin");
+              // rate limiting: too many requests
+              console.log("error:", errorDetail);
+              showPopup("Multiple login attempts: Please wait 5 mins", false, "/signin");
             } else if (response.status >= 500) {
-              showPopup(`Server error. Please try again later.${errorText}`, false, "/signin");
+              console.log("error:", errorDetail);
+              showPopup(`Server error. Please try again later.${errorDetail}`, false, "/signin");
             } else {
-              console.error('API error:', response.status, errorText);
-              showPopup(`Registration failed: ${errorText}`, false, "/signin");
-            }
+              console.error("error:", response.status, errorDetail);
+              showPopup(`Registration failed: ${errorDetail}`, false, "/signin"); 
+            }     
           }
         } 
       // handles true errors eg network failures, CORS issues, or JSON parsing errors. or any thrown error
       } catch (error) {
+        console.error(error);
         toggleSpinner(false);
         showPopup('An error occurred. Please try again', false, "/signin");
       } finally {

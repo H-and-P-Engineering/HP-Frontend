@@ -69,16 +69,10 @@
                 document.getElementById("spinner").style.display = show ? "block" : "none";
             }
             // initializePage() first checks for the query parameters (sent via the url clicked in email,
-            //  which is sent on second page load (from server)) before calling this function
-            async function verifyEmail() {
-                const {user_uuid, verification_token} = getQueryFromUrl();
-                if (!user_uuid || verification_token) {
-                    console.log("no verification token provided.");
-                    showMessage("Missing verification parameters.", true, "Verification Error");
-                    return;
-                }
+            // before calling this function
+            async function verifyEmail(user_uuid, verification_token) { 
+              toggleSpinner(true);              
                 showMessage("Verifying your Email...", false, "Email Verification");
-                toggleSpinner(true);
                 // this is how the verification happens: the backend generates a verification_token valid for the 
                 // intended user, it stores the token in cache and uses the user_uuid to quickly locate the
                 // user record and checks if the provided token (in API) matches the stored token in cache
@@ -122,11 +116,13 @@
                 }
             }
             // page behaviour function. checks for availability of token before calling the verifyEmail()
+            // The first time this page loads is the href from signup and this page shows "registration successful"
+            // The 2nd load happens when they click on the link in email, this page loads again and triggers this function first
             function initializePage() {
                 const {user_uuid, verification_token} = getQueryFromUrl();
                 if (user_uuid && verification_token) {
                     // send them to the API
-                    verifyEmail();
+                    verifyEmail(user_uuid, verification_token);
                 } else {
                     showMessage("Please check your email (including spam) for a verification link.",
                         false, "Registration Successful"

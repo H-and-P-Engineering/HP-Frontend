@@ -346,7 +346,7 @@ def explorers_profilepage():
     else:
         return render_template("explorers-profilepage.html")
 
-# This if for the after logout, the page that serves them a login option back   
+# This is for the after logout, the page that serves them a login option back   
 @app.route("/after_logout_page")
 def after_logout_page():
     return render_template("after-logout-page.html")

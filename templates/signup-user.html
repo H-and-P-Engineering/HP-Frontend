@@ -236,7 +236,7 @@
       <div class="form-container">
         <h1>Let's get you started on <br><strong>Housing&Properties</strong></h1>
         <p>Create your account in a second</p>
-        <form action="{{ url_for ('verify_useremail_otp') }}" method="post" id="registerForm">
+        <form action="{{ url_for ('homepage') }}" method="post" id="registerForm">
           <div id="margin-bottom">
             <select name="Users" id="userType">
               <option disabled selected value="">User type</option>
@@ -391,225 +391,225 @@
       document.getElementById("spinner").style.display = show ? "block" : "none";
     }
 
-    document.getElementById("beginGoogleRegistration").addEventListener("click", beginGoogleRegistration);
-    // this function fetches the socials/begin API to start integrating Google's OAuth 2.0 into the app
-    async function beginGoogleRegistration() {
-      toggleSpinner(true);
-      try {
-        window.location.href = 'https://hp-test-7rmp.onrender.com/api/v1/authentication/social/begin/google-oauth2/';
-      } catch {
-        toggleSpinner(false);
-        showPopup("Unable to fetch API to start Google auth. Please try again", true, "/createaccount-user");
-      }
-      // const backend = 'google-oauth2'; // Replace with actual backend provider
-      // try {
-      //   response = await fetch ('https://hp-test-7rmp.onrender.com/api/v1/authentication/social/begin/${backend}/', {
-      //     method: 'GET',
-      //     credentials: 'include'
-      //   });
-    }
+    // document.getElementById("beginGoogleRegistration").addEventListener("click", beginGoogleRegistration);
+    // // this function fetches the socials/begin API to start integrating Google's OAuth 2.0 into the app
+    // async function beginGoogleRegistration() {
+    //   toggleSpinner(true);
+    //   try {
+    //     window.location.href = 'https://hp-test-7rmp.onrender.com/api/v1/authentication/social/begin/google-oauth2/';
+    //   } catch {
+    //     toggleSpinner(false);
+    //     showPopup("Unable to fetch API to start Google auth. Please try again", true, "/createaccount-user");
+    //   }
+    //   // const backend = 'google-oauth2'; // Replace with actual backend provider
+    //   // try {
+    //   //   response = await fetch ('https://hp-test-7rmp.onrender.com/api/v1/authentication/social/begin/${backend}/', {
+    //   //     method: 'GET',
+    //   //     credentials: 'include'
+    //   //   });
+    // }
 
-    // real time password validation
-    document.getElementById("password").addEventListener("input", () => {
-      // const passwordRegex = /^(?=.[A-Z])(?=.[a-z])(?=.\d)(?=.[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>?])\S{8,}$/;
-      const password = document.getElementById('password').value;
-      const smallLetter = document.getElementById('smallLetter');
-      const capitalLetter = document.getElementById('capitalLetter');
-      const number = document.getElementById('number');
-      const specialChar = document.getElementById('specialChar');
-      const minLength = document.getElementById('minLength');
-      // check each requirement
-      smallLetter.textContent = /[a-z]/.test(password) ? '✅' : '❌';
-      smallLetter.className = 'check' + ( /[a-z]/.test(password) ? 'valid' : 'invalid');
+    // // real time password validation
+    // document.getElementById("password").addEventListener("input", () => {
+    //   // const passwordRegex = /^(?=.[A-Z])(?=.[a-z])(?=.\d)(?=.[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>?])\S{8,}$/;
+    //   const password = document.getElementById('password').value;
+    //   const smallLetter = document.getElementById('smallLetter');
+    //   const capitalLetter = document.getElementById('capitalLetter');
+    //   const number = document.getElementById('number');
+    //   const specialChar = document.getElementById('specialChar');
+    //   const minLength = document.getElementById('minLength');
+    //   // check each requirement
+    //   smallLetter.textContent = /[a-z]/.test(password) ? '✅' : '❌';
+    //   smallLetter.className = 'check' + ( /[a-z]/.test(password) ? 'valid' : 'invalid');
 
-      capitalLetter.textContent = /[A-Z]/.test(password) ? '✅' : '❌';
-      capitalLetter.className = 'check' + ( /[A-Z]/.test(password) ? 'valid' : 'invalid');
+    //   capitalLetter.textContent = /[A-Z]/.test(password) ? '✅' : '❌';
+    //   capitalLetter.className = 'check' + ( /[A-Z]/.test(password) ? 'valid' : 'invalid');
 
-      number.textContent = /\d/.test(password) ? '✅' : '❌';
-      number.className = 'check' + ( /\d/.test(password) ? 'valid' : 'invalid');
+    //   number.textContent = /\d/.test(password) ? '✅' : '❌';
+    //   number.className = 'check' + ( /\d/.test(password) ? 'valid' : 'invalid');
 
-      specialChar.textContent = /[!@#$%^&*()]/.test(password) ? '✅' : '❌';
-      specialChar.className = 'check' + ( /[!@#$%^&*()]/.test(password) ? 'valid' : 'invalid');
+    //   specialChar.textContent = /[!@#$%^&*()]/.test(password) ? '✅' : '❌';
+    //   specialChar.className = 'check' + ( /[!@#$%^&*()]/.test(password) ? 'valid' : 'invalid');
 
-      minLength.textContent = password.length >= 8 ? '✅' : '❌';
-      minLength.className = 'check' + ( password.length >= 8 ? 'valid' : 'invalid');
-    });
+    //   minLength.textContent = password.length >= 8 ? '✅' : '❌';
+    //   minLength.className = 'check' + ( password.length >= 8 ? 'valid' : 'invalid');
+    // });
 
-    // real time phone number validation
-    document.getElementById("phone_number").addEventListener('input', function(event) {
-      const phoneInput = event.target;
-      const phoneError = document.getElementById("phoneError");
-      const originalValue = phoneInput.value;
-      // process each character, replace non-digits with ""
-      let cleanedValue = "";
+    // // real time phone number validation
+    // document.getElementById("phone_number").addEventListener('input', function(event) {
+    //   const phoneInput = event.target;
+    //   const phoneError = document.getElementById("phoneError");
+    //   const originalValue = phoneInput.value;
+    //   // process each character, replace non-digits with ""
+    //   let cleanedValue = "";
 
-      let hasNonDigit = false;
-      for (let char of originalValue) {
-        // if non-digit is found including spaces
-        if (/[^0-9]/.test(char)) {
-          hasNonDigit = true;
-        } else {
-          cleanedValue += char;
-        }
-      }
-      // remove prefix 0
-      if (cleanedValue.startsWith("0")) {
-        cleanedValue = cleanedValue.replace(/^0+/, "");
-      } 
-      phoneInput.value = cleanedValue;
-    });
+    //   let hasNonDigit = false;
+    //   for (let char of originalValue) {
+    //     // if non-digit is found including spaces
+    //     if (/[^0-9]/.test(char)) {
+    //       hasNonDigit = true;
+    //     } else {
+    //       cleanedValue += char;
+    //     }
+    //   }
+    //   // remove prefix 0
+    //   if (cleanedValue.startsWith("0")) {
+    //     cleanedValue = cleanedValue.replace(/^0+/, "");
+    //   } 
+    //   phoneInput.value = cleanedValue;
+    // });
 
-    const VALID_USER_TYPES = ["BUYER", "LAND_AGENT", "HOUSE_AGENT", "VENDOR", "SERVICE_PROVIDER"];
-    document.getElementById('registerForm').addEventListener('submit', async function(event) {
-      event.preventDefault();
-      formSubmitButton();
-    });
-    async function formSubmitButton() {   
-      const user_type = document.getElementById("userType").value;
-      const first_name = document.getElementById("first_name").value.trim();
-      const last_name = document.getElementById("last_name").value.trim();
-      const phone_input = document.getElementById("phone_number").value.trim();
-      const country_code = document.getElementById("countryCode").value;
-      const phone_number = country_code + phone_input;
-      const email = document.getElementById("email").value.trim();
-      const password = document.getElementById("password").value.trim();
-      const messageElement = document.getElementById('message');
-      const userTypeError = document.getElementById("userTypeError");
-      const firstNameError = document.getElementById('firstNameError');
-      const lastNameError = document.getElementById('lastNameError');
-      const phoneError = document.getElementById('phoneError');
-      const emailError = document.getElementById('emailError');
-      const passwordError = document.getElementById('passwordError');
-      const smallLetter = document.getElementById('smallLetter');
-      const capitalLetter = document.getElementById('capitalLetter');
-      const number = document.getElementById('number');
-      const specialChar = document.getElementById('specialChar');
-      const minLength = document.getElementById('minLength');
+    // const VALID_USER_TYPES = ["BUYER", "LAND_AGENT", "HOUSE_AGENT", "VENDOR", "SERVICE_PROVIDER"];
+    // document.getElementById('registerForm').addEventListener('submit', async function(event) {
+    //   event.preventDefault();
+    //   formSubmitButton();
+    // });
+    // async function formSubmitButton() {   
+    //   const user_type = document.getElementById("userType").value;
+    //   const first_name = document.getElementById("first_name").value.trim();
+    //   const last_name = document.getElementById("last_name").value.trim();
+    //   const phone_input = document.getElementById("phone_number").value.trim();
+    //   const country_code = document.getElementById("countryCode").value;
+    //   const phone_number = country_code + phone_input;
+    //   const email = document.getElementById("email").value.trim();
+    //   const password = document.getElementById("password").value.trim();
+    //   const messageElement = document.getElementById('message');
+    //   const userTypeError = document.getElementById("userTypeError");
+    //   const firstNameError = document.getElementById('firstNameError');
+    //   const lastNameError = document.getElementById('lastNameError');
+    //   const phoneError = document.getElementById('phoneError');
+    //   const emailError = document.getElementById('emailError');
+    //   const passwordError = document.getElementById('passwordError');
+    //   const smallLetter = document.getElementById('smallLetter');
+    //   const capitalLetter = document.getElementById('capitalLetter');
+    //   const number = document.getElementById('number');
+    //   const specialChar = document.getElementById('specialChar');
+    //   const minLength = document.getElementById('minLength');
 
-      // clear previous error messages
-      userTypeError.textContent = "";
-      firstNameError.textContent = "";
-      lastNameError.textContent = "";
-      phoneError.textContent = "";
-      emailError.textContent = "";
-      passwordError.textContent = "";
+    //   // clear previous error messages
+    //   userTypeError.textContent = "";
+    //   firstNameError.textContent = "";
+    //   lastNameError.textContent = "";
+    //   phoneError.textContent = "";
+    //   emailError.textContent = "";
+    //   passwordError.textContent = "";
         
-      const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/; 
-      // check if names, email & password is empty first, if the check is passed then the details can be sent to the API
-      if (!first_name) 
-        firstNameError.textContent = "First name may not be blank.";
-      if (!last_name) 
-        lastNameError.textContent = "Last name may not be blank.";
-      if (!email) {
-        emailError.textContent = "Email may not be blank.";
-      } else if (!emailRegex.test(email)) { 
-        emailError.textContent = 'Enter a valid email address.';
-      }
-      if (!password) {
-        passwordError.textContent = "Password may not be blank.";
-      }
-      if (!phone_input) {
-        phoneError.textContent = "Phone number may not be blank.";
-      } else { 
-        let phoneRegex;
-        // define regex patterns based on country code
-        switch (country_code) {
-          case "+234":
-            // nigeria: 10 digits beginning with either 7, 8 or 9 and code 234 infront
-            phoneRegex = /^\+234[7-9]\d{9}$/;
-            break;
-          default:
-            // // fallback for unsupported country codes eg a malicious manipulation of code in devTools
-            phoneRegex = null;
-        }
-        if (!phoneRegex) {
-          phoneError.textContent = "Invalid Phone Number";
-        } else if(!phoneRegex.test(phone_number)) {
-          // if phoneRegex exists (ie valid country code) it tests countryCode + cleanedPhone against the
-          // phoneRegex. This is reinforcing against instances eg if the user types the right initial digit eg 70216 but goes to backspace
-          phoneError.textContent = "invalid phone number";
-        }
-      }  
-      if (!user_type) {
-        userTypeError.textContent = "Select User Type";
-      } else if (!VALID_USER_TYPES.includes(user_type)) {
-        userTypeError.textContent = "Invalid User Type selected."
-      }
-      if (firstNameError.textContent || lastNameError.textContent || phoneError.textContent ||
-        emailError.textContent || userTypeError.textContent || smallLetter.innerHTML !== "✅" ||
-        capitalLetter.innerHTML !== "✅" ||
-        number.innerHTML !== "✅" || specialChar.innerHTML !== "✅" || minLength.innerHTML !== "✅") 
-          return;
-      const userData = {
-        user_type: user_type,
-        email: email,
-        password: password,
-        phone_number: phone_number,
-        first_name: first_name,
-        last_name: last_name,
-      };
-      const url = 'https://hp-test-7rmp.onrender.com/api/v1/authentication/register/';
-      try {
-        toggleSpinner(true);
-        document.getElementById('registerForm').querySelector('button').disabled = true; 
-        // response contains: 1) https status code eg 200, 2) status text eg "OK", "Unauthorized"
-        // 3) headers eg: Content-Type: application/json 4) body: accessible via methods like .json(), .text() to parse
-        // contains data sent by the server but needs to be parsed
-        const response = await fetch(url, {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify(userData),
-        });
-        // this method parses the body the body into a javascript object which is assigned to the data variable,
-        // the content depends on what the backend returns in the serializer.py eg data (form data, id, token),
-        // message, status_code, flag (eg to identify new user)
-        const data = await response.json();
-        if (response.ok) {
-          // store access token and refresh token in local storage
-          localStorage.setItem('token', data.access);
-          localStorage.setItem('token', data.refresh);
-          toggleSpinner(false);
-          // check the is_new flag to identify if a user existed or not. nb: The backend is returning a data,
-          // containing user(form data and is_new flag) which are parsed into the front end data variable
-          const is_new = data.data.user.is_new;
-          const user_type = data.data.user.user_type;
-          if (is_new) {
-            console.log(data);
-            window.location.href = "/verify_email";
-          } else {
-            showPopup("Account exists. Please log in.", true, "/signin");
-          }
-        } else {
-          toggleSpinner(false);
-          const errorDetail = data.error.detail;
-          // Handle other non-2xx status codes
-          if (response.status === 409) {
-            console.log("error:", errorDetail);
-            showPopup("Account exists. Please log in", true, "/signin");
-          } else if (response.status === 429) {
-            // rate limiting: too many requests
-            console.log("error:", errorDetail);
-            showPopup(`Multiple login attempts: ${errorDetail}`, false, "/signin");
-          } else if (response.status >= 500) {
-            console.log("error:", errorDetail);
-            showPopup(`Server error. Please try again later.${errorDetail}`, false, "/signin");
-          } else {
-            console.log("error:", response.status, errorDetail);
-            showPopup(`An error occurred. Please try again: ${errorDetail}`, false, "/createaccount-user");
-          }
-        }
+    //   const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/; 
+    //   // check if names, email & password is empty first, if the check is passed then the details can be sent to the API
+    //   if (!first_name) 
+    //     firstNameError.textContent = "First name may not be blank.";
+    //   if (!last_name) 
+    //     lastNameError.textContent = "Last name may not be blank.";
+    //   if (!email) {
+    //     emailError.textContent = "Email may not be blank.";
+    //   } else if (!emailRegex.test(email)) { 
+    //     emailError.textContent = 'Enter a valid email address.';
+    //   }
+    //   if (!password) {
+    //     passwordError.textContent = "Password may not be blank.";
+    //   }
+    //   if (!phone_input) {
+    //     phoneError.textContent = "Phone number may not be blank.";
+    //   } else { 
+    //     let phoneRegex;
+    //     // define regex patterns based on country code
+    //     switch (country_code) {
+    //       case "+234":
+    //         // nigeria: 10 digits beginning with either 7, 8 or 9 and code 234 infront
+    //         phoneRegex = /^\+234[7-9]\d{9}$/;
+    //         break;
+    //       default:
+    //         // // fallback for unsupported country codes eg a malicious manipulation of code in devTools
+    //         phoneRegex = null;
+    //     }
+    //     if (!phoneRegex) {
+    //       phoneError.textContent = "Invalid Phone Number";
+    //     } else if(!phoneRegex.test(phone_number)) {
+    //       // if phoneRegex exists (ie valid country code) it tests countryCode + cleanedPhone against the
+    //       // phoneRegex. This is reinforcing against instances eg if the user types the right initial digit eg 70216 but goes to backspace
+    //       phoneError.textContent = "invalid phone number";
+    //     }
+    //   }  
+    //   if (!user_type) {
+    //     userTypeError.textContent = "Select User Type";
+    //   } else if (!VALID_USER_TYPES.includes(user_type)) {
+    //     userTypeError.textContent = "Invalid User Type selected."
+    //   }
+    //   if (firstNameError.textContent || lastNameError.textContent || phoneError.textContent ||
+    //     emailError.textContent || userTypeError.textContent || smallLetter.innerHTML !== "✅" ||
+    //     capitalLetter.innerHTML !== "✅" ||
+    //     number.innerHTML !== "✅" || specialChar.innerHTML !== "✅" || minLength.innerHTML !== "✅") 
+    //       return;
+    //   const userData = {
+    //     user_type: user_type,
+    //     email: email,
+    //     password: password,
+    //     phone_number: phone_number,
+    //     first_name: first_name,
+    //     last_name: last_name,
+    //   };
+    //   const url = 'https://hp-test-7rmp.onrender.com/api/v1/authentication/register/';
+    //   try {
+    //     toggleSpinner(true);
+    //     document.getElementById('registerForm').querySelector('button').disabled = true; 
+    //     // response contains: 1) https status code eg 200, 2) status text eg "OK", "Unauthorized"
+    //     // 3) headers eg: Content-Type: application/json 4) body: accessible via methods like .json(), .text() to parse
+    //     // contains data sent by the server but needs to be parsed
+    //     const response = await fetch(url, {
+    //       method: 'POST',
+    //       headers: {
+    //         'Content-Type': 'application/json',
+    //       },
+    //       body: JSON.stringify(userData),
+    //     });
+    //     // this method parses the body the body into a javascript object which is assigned to the data variable,
+    //     // the content depends on what the backend returns in the serializer.py eg data (form data, id, token),
+    //     // message, status_code, flag (eg to identify new user)
+    //     const data = await response.json();
+    //     if (response.ok) {
+    //       // store access token and refresh token in local storage
+    //       localStorage.setItem('token', data.access);
+    //       localStorage.setItem('token', data.refresh);
+    //       toggleSpinner(false);
+    //       // check the is_new flag to identify if a user existed or not. nb: The backend is returning a data,
+    //       // containing user(form data and is_new flag) which are parsed into the front end data variable
+    //       const is_new = data.data.user.is_new;
+    //       const user_type = data.data.user.user_type;
+    //       if (is_new) {
+    //         console.log(data);
+    //         window.location.href = "/verify_email";
+    //       } else {
+    //         showPopup("Account exists. Please log in.", true, "/signin");
+    //       }
+    //     } else {
+    //       toggleSpinner(false);
+    //       const errorDetail = data.error.detail;
+    //       // Handle other non-2xx status codes
+    //       if (response.status === 409) {
+    //         console.log("error:", errorDetail);
+    //         showPopup("Account exists. Please log in", true, "/signin");
+    //       } else if (response.status === 429) {
+    //         // rate limiting: too many requests
+    //         console.log("error:", errorDetail);
+    //         showPopup(`Multiple login attempts: ${errorDetail}`, false, "/signin");
+    //       } else if (response.status >= 500) {
+    //         console.log("error:", errorDetail);
+    //         showPopup(`Server error. Please try again later.${errorDetail}`, false, "/signin");
+    //       } else {
+    //         console.log("error:", response.status, errorDetail);
+    //         showPopup(`An error occurred. Please try again: ${errorDetail}`, false, "/createaccount-user");
+    //       }
+    //     }
 
-      // handles true errors eg network failures, CORS issues, JSON parsing errors, existing account 409 conflict,
-      // or any thrown error
-      } catch (error) {
-        console.log("API not fetched.", error);
-        showPopup(error, false, "/createaccount-user");
-      } finally {
-        document.getElementById('registerForm').querySelector('button').disabled = false; // Re-enable button
-      }
-    }
+    //   // handles true errors eg network failures, CORS issues, JSON parsing errors, existing account 409 conflict,
+    //   // or any thrown error
+    //   } catch (error) {
+    //     console.log("API not fetched.", error);
+    //     showPopup(error, false, "/createaccount-user");
+    //   } finally {
+    //     document.getElementById('registerForm').querySelector('button').disabled = false; // Re-enable button
+    //   }
+    // }
     // ----------------------------------------------------------------------------------------------------------------
     
   </script>

@@ -1,0 +1,201 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ category|title }} Items</title>
+    <style>
+      body { overflow-x: hidden; }
+      main { padding: 20px; } 
+      h1 { text-align: center;
+      }
+      .flexDisplay  {
+        display: flex;    
+      }
+      .blockDisplay  {
+        display: block;
+      }
+      .noneDisplay  {
+        display: none;
+      }
+      .header-container { width: 102%; margin-left: -9px; height: 70px; display: flex; justify-content: center; 
+        align-items: center; gap: 2px; background-color: #f7e7e7; z-index: 2; 
+      }
+      .mobile-toggle { position: relative; border: none; font-size: 24px; margin: 10px;
+      }
+      .sidebar { position: absolute; background-color: #fff; padding: 20px;
+        display: none; z-index: 10; padding-right: 0; border: 1px solid #e0dcd4;
+      }
+      #sidebarLand {
+        grid-template-columns: repeat(auto-fit, minmax(100px, 1fr)); gap: 30px; width: 600px;
+        height: 200px; flex-wrap: wrap;
+      }
+      #sidebarHouse {
+        width: 300px; height: 320px; flex-direction: column;
+      }
+      .mobile-toggle:hover > #sidebarLand {
+        display: grid;
+      }
+      .mobile-toggle:hover > #sidebarHouse {
+        display: flex;
+      }
+      /* for the img and span elements inside the <a> category */
+      .category {
+        position: relative; display: flex; gap: 15px; padding: 9px 5px; text-decoration: none;
+        color: black; font-size: 15px;
+      }
+      #sidebarLand > .category {
+        border-right: 1px solid black;
+      }
+      .category:hover  {
+        background-color: #f1f1f1; border-radius: 5px;
+      }
+      .input-closeX-parent { position: relative; width: 900px; height: 70px; display: flex; align-items: center;
+      }
+      .searchInput { width: 700px; height: 50px; border-radius: 10px; border: 1px solid black; padding: 5px 10px;
+        outline: none;
+      }
+      .closeX-parent { position: absolute; right: 10px; top: 50%; width: 35px; height: 35px; display: flex; 
+        align-items: center; justify-content: center; transform: translateY(-50%);
+      }
+      .searchText {
+        width: 90px; height: 50px; background-color: purple; border-radius: 10px; display: flex; align-items: center;
+        justify-content: center; color: white;
+      }
+      .vendor-category-search-results-dropdown { 
+        /* ensure the dropdown is directly under the input using top:100% */
+        position: absolute; top: 87%; display: none; width: 700px; z-index: 1;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); height: auto; background-color: white;
+      }
+    </style>
+  </head>
+
+  <body>
+    <header>
+      <div class="header-container">
+        <div class="mobile-toggle"> Land
+          <div class="sidebar" id="sidebarLand">
+            <a href="/Kitchen" class="category"> 500 sqm
+              <!-- <img src="{{ url_for ('static', filename='dashboard.png') }}" alt="Dashboard">
+              <span> < 500 sqm </span> -->
+            </a>
+            <a href="/Electronics" class="category"> 530-600 sqm
+              <!-- <img src="{{ url_for ('static', filename='hamburger.png') }}" alt="Listings">
+              <span> 530-600 sqm (1 plot)</span> -->
+            </a>
+            <a href="/650-1000sqm" class="category"> 650-1000 sqm </a>
+            <a href="/1350-1800sqm" class="category"> 1350-1800 sqm (3 plots) </a>
+            <a href="/2000-3600sqm" class="category"> 2000-3600 sqm (4 plots) </a>
+            <a href="/2700-3240sqm" class="category"> 2700-3240 sqm (5 plots) </a>
+            <a href="/2700-4800sqm" class="category"> 2700-4800 sqm (1 acre) </a>
+            <a href="/4900-8093sqm" class="category"> 4900-8093 sqm (< 1 hectare) </a>
+            <a href="/9000-20,000sqm" class="category"> 9000-20,000 sqm (< 2 hectares) </a>
+            <a href="/<30,000sqm" class="category"> < 30,000 sqm </a>
+            <a href="/<50,000sqm" class="category"> < 50,000 sqm </a>
+            <a href="/>50,000sqm" class="category"> > 50,000 sqm </a>
+            <!-- <div class="logout-button">
+              <img src="https://cdn-icons-png.flaticon.com/512/1828/1828479.png" alt="Logout"> Log out
+            </div> -->
+          </div>
+        </div>
+
+        <div class="mobile-toggle"> Aparment
+          <div class="sidebar" id="sidebarHouse">
+            <a href="/Duplex" class="category"> Duplex
+              <!-- <img src="{{ url_for ('static', filename='dashboard.png') }}" alt="Dashboard">
+              <span>Duplex</span> -->
+            </a>
+            <a href="/Studio Apartment" class="category"> Studio Apartment
+              <!-- <img src="{{ url_for ('static', filename='hamburger.png') }}" alt="Listings">
+              <span> Studio Apartment</span> -->
+            </a>
+            <a href="/2bedroomflat" class="category">
+              <img src="{{ url_for ('static', filename='messages.png') }}" alt="Messages">
+              <span> 2 bedroom flat</span>
+            </a>
+            <a href="/3bedroomflat" class="category">
+              <img src="{{ url_for ('static', filename='orders.png') }}" alt="Orders">
+              <span> 3 bedroom flat</span>
+            </a>
+            <a href="/>4bedroomflat" class="category">
+              <img src="{{ url_for ('static', filename='profile.png') }}" alt="Profile">
+              <span> > 4 bedroom flat</span>
+            </a>
+            <a href="/Condomonium" class="category">
+              <img src="{{ url_for ('static', filename='insights.png') }}" alt="Insights">
+              <span> Condomonium</span>
+            </a>
+            <a href="/Bungalow" class="category">
+              <img src="{{ url_for ('static', filename='insights.png') }}" alt="Insights">
+              <span> Bungalow</span>
+            </a>
+            <a href="/Penthouse" class="category">
+              <img src="{{ url_for ('static', filename='insights.png') }}" alt="Insights">
+              <span> Penthouse</span>
+            </a>
+            <a href="/BUY-HOUSE" class="category">
+              <img src="{{ url_for ('static', filename='insights.png') }}" alt="Insights">
+              <span class="buyText" style="font-size: 20px; font-weight: 400;"> BUY HOUSE </span>
+            </a>
+            <!-- <div class="logout-button">
+              <img src="https://cdn-icons-png.flaticon.com/512/1828/1828479.png" alt="Logout"> Log out
+            </div> -->
+          </div>
+        </div>
+
+        <div class="input-closeX-parent">
+          <input autocomplete="off" type="search" placeholder="Search Area/L.G.A"
+            class="searchInput" id="user-buyvendor-searchinput">
+          <!-- <span class="closeX-parent" id="container-close-search">
+            <span id="close-filter-display" class="close-filter-display">&times;</span>   
+          </span> -->
+          <div class="vendor-category-search-results-dropdown">
+            <ul>
+              <li>posha stores</li>
+              <li>pot</li>
+              <li>power furnitures</li>
+              <li>powerbank</li>
+            </ul>
+          </div>
+        </div>
+        <div class="searchText">
+          <div>Search</div>
+        </div>  
+      </div>
+    </header> 
+    <main></main>
+    <footer></footer>
+    
+    <script>
+      // const mobileToggle = document.querySelectorAll(".mobile-toggle");
+      // mobileToggle.forEach(Toggle => {
+      //   Toggle.addEventListener('mouseover', () => {
+      //     const sidebar = Toggle.querySelector(".sidebar");
+      //     if (sidebar.classList.contains('noneDisplay')) {
+      //       sidebar.style.display = 'flex';
+      //     }
+      //   });
+      //   Toggle.addEventListener('mouseout', () => {
+      //     const sidebar = Toggle.querySelector(".sidebar");
+      //     if (sidebar.classList.contains('noneDisplay')) {
+      //       sidebar.style.display = 'none';
+      //     }
+      //   });
+      // });
+
+      // -------------------------------------------------------------------------------------------------------------
+
+      const vendornavSearchinput = document.getElementById("user-buyvendor-searchinput");
+      const vendorCategorySearchDropdown = document.querySelector('.vendor-category-search-results-dropdown');
+      vendornavSearchinput.addEventListener('input', function() {
+        vendorCategorySearchDropdown.classList.add('blockDisplay');
+        if (vendornavSearchinput.value === '') {
+          if (vendorCategorySearchDropdown.classList.contains('blockDisplay')) {
+            vendorCategorySearchDropdown.classList.remove('blockDisplay');
+          }
+        }
+      });
+    </script>
+  </body>
+</html>

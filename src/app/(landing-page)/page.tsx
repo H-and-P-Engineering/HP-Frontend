@@ -2,7 +2,7 @@ import Image from "next/image";
 import BannerCarousel from "./components/banner-carousel";
 import BannerSubtitle from "./components/banner-subtitle";
 import BannerH1 from "./components/banner-h1";
-import FilterLandHouse from "./components/filter-by";
+import FilterLandHouse from "./components/filter-properties";
 // import React from "react";
 export default function Home() {
   const bannerImages = [

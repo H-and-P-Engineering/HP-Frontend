@@ -6,7 +6,7 @@ export default function BannerSubtitle({ children, className }: {
 }):  React.ReactNode {
 
     return (
-        <div className="text-[1.15em] font-[400] text-[#e1e9f6] tracking-[0.2px]">
+        <div className="text-[1.15em] font-[400] font-inter text-[#e1e9f6] tracking-[0.2px]">
           {children}
         </div>
     );

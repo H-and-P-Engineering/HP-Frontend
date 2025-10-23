@@ -39,7 +39,7 @@ export default function FilterLandHouse() {
             </div>
             <SmallSearchBar/>
             <button
-              className="bg-blue-600 text-white font-[Raleway] text-[1.5em] font-[400] rounded-[12px] px-7 py-2 w-auto shadow-[0_2px_12px_0_rgba(50,50,93,0.03)] flex items-center gap-[0.7em] transition-colors duration-150 hover:bg-[#e1e9f6] hover:text-[#254b83] cursor-pointer">
+              className="bg-brand-600 text-white font-[Raleway] text-[1.5em] font-[400] rounded-[12px] px-7 py-2 w-auto shadow-[0_2px_12px_0_rgba(50,50,93,0.03)] flex items-center gap-[0.7em] transition-colors duration-150 hover:bg-[#e1e9f6] hover:text-[#254b83] cursor-pointer">
               Finish
             </button>
         </form>

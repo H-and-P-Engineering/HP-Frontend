@@ -26,7 +26,7 @@ export default function Home() {
           <BannerH1>Find Your Dream Home, Land,<br />or Furniture in One Place</BannerH1>
           {/* Description  */}
           <div
-            className="text-[1.15em] font-light text-white leading-[1.5]">
+            className="text-[1.15em] font-light text-white leading-[1.5] font-inter">
             Browse verified listings, chat with
             <span
               className="bg-[#ffd900a6] text-[#222] rounded-[5px] px-[0.25em] py-[0.1em] font-semibold mx-[2px]"

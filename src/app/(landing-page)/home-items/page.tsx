@@ -4,7 +4,7 @@ import BannerSubtitle from "../components/banner-subtitle";
 import BannerH1 from "../components/banner-h1";
 import SearchBar from "../components/search-bar";
 // import React from "react";
-export default function Home() {
+export default function HomeItems() {
   const bannerImages = [
     '/images/banner-image1.webp',
     '/images/banner-image2.webp',

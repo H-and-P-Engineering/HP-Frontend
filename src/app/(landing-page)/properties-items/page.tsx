@@ -4,7 +4,7 @@ import BannerSubtitle from "../components/banner-subtitle";
 import BannerH1 from "../components/banner-h1";
 import FilterLandHouse from "../components/filter-properties";
 // import React from "react";
-export default function Home() {
+export default function PropertiesItems() {
   const bannerImages = [
     '/images/banner-image1.webp',
     '/images/banner-image2.webp',

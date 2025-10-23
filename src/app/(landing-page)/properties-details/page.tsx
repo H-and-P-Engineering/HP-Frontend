@@ -191,7 +191,7 @@ export default function PropertiesDetails() {
                     src="/images/google-map.webp"
                     alt="Google Map of Lagos area"
                     width={1200}
-                    height={1700}
+                    height={582}
                     // layout="fill"
                     // objectFit="cover"
                     objectPosition="center"

@@ -1,26 +1,23 @@
 import Image from "next/image"
 import { FcGoogle } from "react-icons/fc";
 import BackArrow from "../(landing-page)/components/back-arrow"
-export default function RatedAgents() {
+export default function SignUp() {
 
     return (
-        <main className="min-h-screen bg-white font-inter text-gray-800">
+        <main className="min-h-screen h-auto w-full bg-white font-inter text-gray-800">
             {/* Page wrapper */}
             <div className="min-h-screen flex flex-col">
               {/* Main two-column area */}
               <div className="flex-1 flex flex-col md:flex-row">
 
                 {/* Left: Image / visual */}
-                <div className="md:w-1/2 w-full">
+                <div className="position: relative md:w-1/2 w-full">
                   {/* Use your own image file here (family.jpg). Ensure proper licensing. */}
-                  <div className="h-full bg-gray-100">
+                  <div className="h-full w-full bg-gray-100">
                     <Image
                         src="/images/signup-image.webp"
                         alt="Decorative photo"
-                        width={845}
-                        height={1526}
-                        objectPosition="center"
-                        className="object-cover w-full h-[70vh] md:h-full"
+                        fill={true}
                         loading="lazy"
                     />
                   </div>

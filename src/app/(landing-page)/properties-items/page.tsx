@@ -1,4 +1,5 @@
 import Image from "next/image";
+import { FaChevronRight } from "react-icons/fa";
 import BannerCarousel from "../components/banner-carousel";
 import BannerSubtitle from "../components/banner-subtitle";
 import BannerH1 from "../components/banner-h1";
@@ -52,6 +53,15 @@ export default function PropertiesItems() {
             </button>
           </div>
 
+          <div className="flex items-center w-full mb-8">
+            <h2 className="text-3xl sm:text-4xl font-bold tracking-wide text-[#191a1d] text-center sm:text-left font-raleway">
+              Available
+            </h2>
+            <div className="ml-auto flex items-center gap-0.5">
+              <a className="text-[blue] underline">See all</a>
+              <FaChevronRight className=" text-[black] -mt-1" />
+            </div>
+          </div>
           {/* Property Grid */}
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-x-10 gap-y-12 w-full">
             {/* Card 1 */}
@@ -361,9 +371,15 @@ export default function PropertiesItems() {
       {/* Recently added */}
       <section className="w-screen mx-auto bg-white py-16 px-4 flex justify-center">
         <div className="w-full max-w-[1200px] flex flex-col items-center sm:items-start">
-          <h2 className="text-3xl sm:text-4xl font-bold mb-10 tracking-wide text-[#191a1d] text-center sm:text-left font-raleway">
-            Recently added
-          </h2>
+          <div className="flex items-center w-full mb-10">
+            <h2 className="text-3xl sm:text-4xl font-bold tracking-wide text-[#191a1d] text-center sm:text-left font-raleway">
+              Recently added
+            </h2>
+            <div className="ml-auto flex items-center gap-0.5">
+              <a className="text-[blue] underline">See all</a>
+              <FaChevronRight className=" text-[black] -mt-1" />
+            </div>
+          </div>
 
           {/* Property Grid */}
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-x-10 gap-y-12 w-full">
@@ -674,9 +690,15 @@ export default function PropertiesItems() {
       {/* Recently bought */}
       <section className="w-screen mx-auto bg-white py-16 px-4 flex justify-center">
         <div className="w-full max-w-[1200px] flex flex-col items-center sm:items-start">
-          <h2 className="text-3xl sm:text-4xl font-bold mb-10 tracking-wide text-[#191a1d] text-center sm:text-left font-raleway">
-            Recently bought
-          </h2>
+          <div className="flex items-center w-full mb-10">
+            <h2 className="text-3xl sm:text-4xl font-bold tracking-wide text-[#191a1d] text-center sm:text-left font-raleway">
+              Recently bought
+            </h2>
+            <div className="ml-auto flex items-center gap-0.5">
+              <a className="text-[blue] underline">See all</a>
+              <FaChevronRight className=" text-[black] -mt-1" />
+            </div>
+          </div>
 
           {/* Property Grid */}
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-x-10 gap-y-12 w-full">
@@ -987,9 +1009,15 @@ export default function PropertiesItems() {
       {/* Others searched */}
       <section className="w-screen mx-auto bg-white py-16 px-4 flex justify-center">
         <div className="w-full max-w-[1200px] flex flex-col items-center sm:items-start">
-          <h2 className="text-3xl sm:text-4xl font-bold mb-10 tracking-wide text-[#191a1d] text-center sm:text-left font-raleway">
-            Others searched
-          </h2>
+          <div className="flex items-center w-full mb-10">
+            <h2 className="text-3xl sm:text-4xl font-bold tracking-wide text-[#191a1d] text-center sm:text-left font-raleway">
+              Others searched
+            </h2>
+            <div className="ml-auto flex items-center gap-0.5">
+              <a className="text-[blue] underline">See all</a>
+              <FaChevronRight className=" text-[black] -mt-1" />
+            </div>
+          </div>
 
           {/* Property Grid */}
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-x-10 gap-y-12 w-full">

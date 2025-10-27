@@ -1,8 +1,12 @@
 import Image from "next/image";
+import { FaChevronRight } from "react-icons/fa";
+import { HiLocationMarker } from "react-icons/hi";
 import BannerCarousel from "./components/banner-carousel";
 import BannerSubtitle from "./components/banner-subtitle";
 import BannerH1 from "./components/banner-h1";
 import FilterLandHouse from "./components/filter-properties";
+import { Favorite, HomeIcon, Light, Size } from "@/components/icons";
+import StarRating from "./components/star-ratings";
 // import React from "react";
 export default function Home() {
   const bannerImages = [
@@ -49,7 +53,174 @@ export default function Home() {
         <FilterLandHouse/>
       </BannerCarousel>
 
-      
+      {/* Featured Properties */}
+      <section className="w-full flex justify-center bg-[#fff] py-16 px-4">
+        <div className="w-full max-w-[1200px] px-4 sm:px-6 flex flex-col items-center sm:items-start">
+          <div className="flex items-center w-full mb-10">
+            <h2 className="text-3xl sm:text-4xl font-bold tracking-wide text-[#191a1d] text-center sm:text-left font-raleway">
+              Featured Properties
+            </h2>
+            <div className="ml-auto flex items-center gap-0.5">
+              <a className="text-[blue] underline">See all</a>
+              <FaChevronRight className=" text-[black] -mt-1" />
+            </div>
+          </div>
+          {/* Property Grid */}
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-x-10 gap-y-12 w-full">
+            {/* Card 1 */}
+            <div className="bg-[#E8E5E533] rounded-[18px] shadow-[0_6px_28px_0_rgba(50,50,93,0.08)] hover:shadow-[0_12px_32px_0_rgba(50,50,93,0.13)] transition-shadow flex flex-col overflow-hidden">
+              <div className="relative h-[250px] w-full overflow-hidden">
+                <img src="images/item-img1.webp" alt="Akora Estate" className="w-full h-full object-cover" />
+                <Favorite />
+              </div>
+
+              <div className="flex flex-col gap-2.5 px-3 py-4">
+                {/* Top Row */}
+                <div className="flex items-center justify-between mb-1">
+                  <div className="flex items-center text-[#e34747] text-sm font-inter">
+                    {/* <img src="img/location.png" alt="Location" className="w-[15px] mr-1.5 mb-[2px]" /> */}
+                    <HiLocationMarker className="w-5 h-5 text-red-800" />
+                    Ikeja, Lagos
+                  </div>
+
+                  <div className="grid grid-cols-[auto_1fr] grid-areas-['label_label''avatar_name''stars_stars''see_see'] justify-items-end text-right gap-x-1.5 text-[#193a63] font-raleway scale-[0.95]">
+                    <span className="col-span-2 text-[13px] text-gray-500 flex items-center justify-end gap-[4px]">
+                      Listing Agent <i className="text-[#1d9bf0] text-[11px]">●</i>
+                    </span>
+                    <img src="images/banner-image1.webp" className="w-[32px] h-[32px] rounded-full object-cover border border-[#ccc] justify-self-end -mt-1 sm:-mt-2" alt="" />
+                    <span className="font-bold text-[15px]">Ugochukwu Pius</span>
+                    {/* <span className="col-span-2 text-[#ffa700] text-[14px] tracking-[1px] justify-self-end">&#9733;&#9733;&#9733;&#9733;&#9733;</span> */}
+                    <StarRating rating={3.5} />
+                    <span className="col-span-2 text-[#3571a6] text-[13px] underline cursor-pointer justify-self-end font-medium">See more</span>
+                  </div>
+                </div>
+
+                {/* Title */}
+                <div className="font-raleway font-bold text-[1.35em] text-[#191a1d] -mt-2">Akora Estate</div>
+
+                {/* Tags */}
+                <div className="flex gap-6 text-[#191a1d] text-[0.70rem] font-inter mt-4 mb-3">
+                  <span className="flex items-center gap-1.5">
+                    <HomeIcon /> 4 Bedroom Duplex
+                  </span>
+                  <span className="flex items-center gap-1.5 ">
+                    <Light /> Band A Light
+                  </span>
+                  <span className="flex items-center gap-1.5">
+                    <Size /> 500 SQ FT
+                  </span>
+                </div>
+
+                {/* Bottom Row */}
+                <div className="flex justify-between items-center mt-2">
+                  <div className="font-raleway text-[1.08em] font-bold text-[#191a1d] whitespace-nowrap">N150 million</div>
+                  <button className="bg-[#163C69] hover:bg-[#0f2b4a] text-white font-inter text-[15px] font-semibold rounded-full px-6 py-2 flex items-center gap-2 transition-all">View details &rarr;</button>
+                </div>
+              </div>
+            </div>
+
+            {/* Card 2 */}
+            <div className="bg-[#E8E5E533] rounded-[18px] shadow-[0_6px_28px_0_rgba(50,50,93,0.08)] hover:shadow-[0_12px_32px_0_rgba(50,50,93,0.13)] transition-shadow flex flex-col overflow-hidden">
+              <div className="relative h-[250px] w-full overflow-hidden">
+                <img src="images/banner-image1.webp" alt="Akora Estate" className="w-full h-full object-cover" />
+                <Favorite />
+              </div>
+
+              <div className="flex flex-col gap-2.5 px-3 py-4">
+                {/* Top Row */}
+                <div className="flex items-center justify-between mb-1">
+                  <div className="flex items-center text-[#e34747] text-sm font-inter">
+                    <img src="img/location.png" alt="Location" className="w-[15px] mr-1.5 mb-[2px]" />
+                    Ikeja, Lagos
+                  </div>
+
+                  <div className="grid grid-cols-[auto_1fr] grid-areas-['label_label''avatar_name''stars_stars''see_see'] justify-items-end text-right gap-x-1.5 text-[#193a63] font-raleway scale-[0.95]">
+                    <span className="col-span-2 text-[13px] text-gray-500 flex items-center justify-end gap-[4px]">
+                      Listing Agent <i className="text-[#1d9bf0] text-[11px]">●</i>
+                    </span>
+                    <img src="img/person1.jpg" className="w-[32px] h-[32px] rounded-full object-cover border border-[#ccc] justify-self-end -mt-1 sm:-mt-2" alt="" />
+                    <span className="font-bold text-[15px]">Ugochukwu Pius</span>
+                    <span className="col-span-2 text-[#ffa700] text-[14px] tracking-[1px] justify-self-end">&#9733;&#9733;&#9733;&#9733;&#9733;</span>
+                    <span className="col-span-2 text-[#3571a6] text-[13px] underline cursor-pointer justify-self-end font-medium">See more</span>
+                  </div>
+                </div>
+
+                {/* Title */}
+                <div className="font-raleway font-bold text-[1.35em] text-[#191a1d] -mt-2">Akora Estate</div>
+
+                {/* Tags */}
+                <div className="flex gap-6 text-[#191a1d] text-[0.70rem] font-inter mt-4 mb-3">
+                  <span className="flex items-center gap-1.5">
+                    <img src="img/houseicon.png" className="w-4 h-4" alt="" /> 4 Bedroom Duplex
+                  </span>
+                  <span className="flex items-center gap-1.5 ">
+                    <img src="img/bandlight.png" className="w-4 h-4" alt="" /> Band A Light
+                  </span>
+                  <span className="flex items-center gap-1.5">
+                    <img src="img/telescope.png" className="w-4 h-4" alt="" /> 500 SQ FT
+                  </span>
+                </div>
+
+                {/* Bottom Row */}
+                <div className="flex justify-between items-center mt-2">
+                  <div className="font-raleway text-[1.08em] font-bold text-[#191a1d] whitespace-nowrap">N150 million</div>
+                  <button className="bg-[#163C69] hover:bg-[#0f2b4a] text-white font-inter text-[15px] font-semibold rounded-full px-6 py-2 flex items-center gap-2 transition-all">View details &rarr;</button>
+                </div>
+              </div>
+            </div>
+
+            {/* Card 3 */}
+            <div className="bg-[#E8E5E533] rounded-[18px] shadow-[0_6px_28px_0_rgba(50,50,93,0.08)] hover:shadow-[0_12px_32px_0_rgba(50,50,93,0.13)] transition-shadow flex flex-col overflow-hidden">
+              <div className="relative h-[250px] w-full overflow-hidden">
+                <img src="img/house5.jpg" alt="Akora Estate" className="w-full h-full object-cover" />
+                <button className="absolute top-4 right-5 text-[#e34747] text-[1.5em] bg-transparent border-none rounded-full w-[39px] h-[39px] flex items-center justify-center shadow-[0_2px_8px_rgba(50,50,93,0.09)]">🤍</button>
+              </div>
+
+              <div className="flex flex-col gap-2.5 px-3 py-4">
+                {/* Top Row */}
+                <div className="flex items-center justify-between mb-1">
+                  <div className="flex items-center text-[#e34747] text-sm font-inter">
+                    <img src="img/location.png" alt="Location" className="w-[15px] mr-1.5 mb-[2px]" />
+                    Ikeja, Lagos
+                  </div>
+
+                  <div className="grid grid-cols-[auto_1fr] grid-areas-['label_label''avatar_name''stars_stars''see_see'] justify-items-end text-right gap-x-1.5 text-[#193a63] font-raleway scale-[0.95]">
+                    <span className="col-span-2 text-[13px] text-gray-500 flex items-center justify-end gap-[4px]">
+                      Listing Agent <i className="text-[#1d9bf0] text-[11px]">●</i>
+                    </span>
+                    <img src="img/person1.jpg" className="w-[32px] h-[32px] rounded-full object-cover border border-[#ccc] justify-self-end -mt-1 sm:-mt-2" alt="" />
+                    <span className="font-bold text-[15px]">Ugochukwu Pius</span>
+                    <span className="col-span-2 text-[#ffa700] text-[14px] tracking-[1px] justify-self-end">&#9733;&#9733;&#9733;&#9733;&#9733;</span>
+                    <span className="col-span-2 text-[#3571a6] text-[13px] underline cursor-pointer justify-self-end font-medium">See more</span>
+                  </div>
+                </div>
+
+                {/* Title */}
+                <div className="font-raleway font-bold text-[1.35em] text-[#191a1d] -mt-2">Akora Estate</div>
+
+                {/* Tags */}
+                <div className="flex gap-6 text-[#191a1d] text-[0.70rem] font-inter mt-4 mb-3">
+                  <span className="flex items-center gap-1.5">
+                    <img src="img/houseicon.png" className="w-4 h-4" alt="" /> 4 Bedroom Duplex
+                  </span>
+                  <span className="flex items-center gap-1.5 ">
+                    <img src="img/bandlight.png" className="w-4 h-4" alt="" /> Band A Light
+                  </span>
+                  <span className="flex items-center gap-1.5">
+                    <img src="img/telescope.png" className="w-4 h-4" alt="" /> 500 SQ FT
+                  </span>
+                </div>
+
+                {/* Bottom Row */}
+                <div className="flex justify-between items-center mt-2">
+                  <div className="font-raleway text-[1.08em] font-bold text-[#191a1d] whitespace-nowrap">N150 million</div>
+                  <button className="bg-[#163C69] hover:bg-[#0f2b4a] text-white font-inter text-[15px] font-semibold rounded-full px-6 py-2 flex items-center gap-2 transition-all">View details &rarr;</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
 
       {/* home items */}
       <section className="w-full px-4 sm:px-6 py-10 box-border mx-auto">

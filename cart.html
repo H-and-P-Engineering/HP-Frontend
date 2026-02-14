@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Cart | Housing and Prroperies</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="icon" type="image/png" href="img/logan.png">
+
+
+    <link href="https://fonts.googleapis.com/css2?family=Google+Sans+Flex&display=swap" rel="stylesheet">
+
+  <style>
+    /* Apply Google Sans Flex globally */
+    body {
+      font-family: "Google Sans Flex", ui-sans-serif, system-ui, -apple-system,
+                   "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans",
+                   "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+    }
+
+    /* Optional utility class if you want to apply specifically */
+    .google-sans {
+      font-family: "Google Sans Flex", ui-sans-serif, system-ui, -apple-system,
+                   "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans",
+                   "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+    }
+  </style>
+</head>
+<body class="bg-white">
+    <div class="min-h-screen flex flex-col">
+        <!-- Header -->
+        <header class=" px-6 py-4">
+            <div class="flex items-center justify-between">
+                <!-- Back Button -->
+                <button class="p-2 hover:bg-gray-100 rounded-lg transition">
+                    <svg class="w-5 h-5 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path>
+                    </svg>
+                </button>
+
+                <!-- Notification and Profile -->
+                <div class="flex items-center gap-4">
+                    <button class="p-2 hover:bg-gray-100 rounded-lg transition relative">
+                        <svg class="w-5 h-5 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9"></path>
+                        </svg>
+                        <span class="absolute top-1 right-1 w-2 h-2 bg-red-500 rounded-full"></span>
+                    </button>
+
+                    <div class="flex items-center gap-2 pl-4 border-l border-gray-200">
+                        <div class="w-10 h-10 rounded-full overflow-hidden">
+                            <img src="img/girl.jpg" alt="Profile" class="w-full h-full object-cover object-[center_5%]">
+                        </div>
+                        <span class="text-sm font-medium text-gray-800 google-sans">Cynthia Adegare <br><span class="text-gray-400 text-[13px]">Vendor</span> </span>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <!-- Main Content -->
+        <div class="flex-1 px-6 py-8">
+            <!-- Title -->
+             <h1 class="text-3xl font-bold text-gray-900 mb-8 google-sans">My Cart</h1>
+
+            <!-- Tabs -->
+            <div class="flex gap-8 mb-6 border-b border-gray-200">
+                <button class="tab-btn active pb-4 text-sm font-medium text-blue-600 border-b-2 border-blue-600 transition" data-tab="ongoing">
+                    Ongoing
+                </button>
+                <button class="tab-btn pb-4 text-sm font-medium text-gray-600 border-b-2 border-transparent hover:text-gray-900 transition" data-tab="completed">
+                    Completed
+                </button>
+            </div>
+
+            <!-- Empty State -->
+            <div class="flex flex-col items-center justify-center py-24">
+                <svg class="w-16 h-16 text-gray-300 mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"></path>
+                </svg>
+                <h2 class="text-xl font-semibold text-gray-700 mb-2">Your cart is empty!</h2>
+                    <p class="text-[13px] text-gray-500 text-center max-w-sm mb-6">
+                    Browse home services and book trusted professionals with ease.
+                    </p>
+                <button class="bg-[#163C69] hover:bg-[#123457] text-white font-medium py-2 px-8 rounded-full transition text-[13px]">
+                    Explore Services
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Tab switching functionality
+        document.querySelectorAll('.tab-btn').forEach(btn => {
+            btn.addEventListener('click', function() {
+                // Remove active state from all tabs
+                document.querySelectorAll('.tab-btn').forEach(b => {
+                    b.classList.remove('text-blue-600', 'border-blue-600');
+                    b.classList.add('text-gray-600', 'border-transparent');
+                });
+
+                // Add active state to clicked tab
+                this.classList.remove('text-gray-600', 'border-transparent');
+                this.classList.add('text-blue-600', 'border-blue-600');
+
+                // You can add tab content switching logic here
+                const tabName = this.dataset.tab;
+                console.log('Switched to tab:', tabName);
+            });
+        });
+
+        // Back button functionality
+        document.querySelector('button').addEventListener('click', function() {
+            window.history.back();
+        });
+    </script>
+</body>
+</html>

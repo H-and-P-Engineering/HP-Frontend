@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Login | Property App</title>
+
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <!-- Google Sans Flex: Set as default font -->
+  <link href="https://fonts.googleapis.com/css2?family=Google+Sans+Flex:wght@400;500;700&display=swap" rel="stylesheet">
+  <style>
+    body, html, * {
+      font-family: 'Google Sans Flex', ui-sans-serif, sans-serif !important;
+    }
+  </style>
+</head>
+<body class="min-h-screen bg-gray-900">
+
+  <div class="relative min-h-screen w-full bg-cover bg-center" style="background-image: url('img/hom.jpg');">
+    <!-- Overlay gradient -->
+    <div class="absolute inset-0 bg-gradient-to-r from-black/80 via-black/60 to-transparent"></div>
+
+    <div class="relative z-10 flex flex-col min-h-screen">
+      <!-- Header/logo -->
+      <div class="p-5 md:p-10">
+        <div class="w-10 h-10 flex items-center justify-center  font-bold text-white text-sm tracking-tight">
+              <img src="img/loga.png" alt="HP Logo" class="w-full h-full object-contain">
+        </div>
+      </div>
+
+      <div class="flex-1 flex flex-col lg:flex-row items-center justify-center lg:justify-start max-w-6xl mx-auto lg:mx-0">
+
+        <!-- Left hero text (hidden on mobile) -->
+        <div class="hidden lg:flex flex-1 items-center justify-center px-10">
+          <h1 class="text-white text-[2.6rem] xl:text-[3rem] font-light leading-tight drop-shadow-lg mt-12">
+            Log in<br>to explore<br>apartments and<br>unique properties.
+          </h1>
+        </div>
+
+        <!-- Right login panel: always visible, centered on mobile -->
+        <div class="flex-1 flex items-start justify-end px-4 sm:px-8 py-8">
+          <div class="w-full max-w-md bg-white/5 backdrop-blur-md border border-white/10 rounded-2xl px-6 sm:px-10 py-10 shadow-lg">
+            <h2 class="text-2xl sm:text-3xl font-semibold text-white text-center mb-2 google-sans">Welcome back!</h2>
+            <p class="text-sm text-gray-200 text-center mb-6">
+              Join our community of property seekers, agents, and vendors.<br>
+              It only takes a minute to get started
+            </p>
+            <form id="loginForm" class="space-y-5">
+              <div>
+                <label for="email" class="block text-xs text-gray-300 mb-2">Email or phone number</label>
+                <input id="email" name="email" type="text" autocomplete="username"
+                  placeholder="Enter your email or phone number"
+                  class="w-full rounded-lg border border-white/10 bg-white/0 px-4 py-3 text-sm text-white placeholder-gray-300 focus:outline-none focus:ring-2 focus:ring-white/20" />
+              </div>
+              <div>
+                <label for="password" class="block text-xs text-gray-300 mb-2">Password</label>
+                <div class="relative">
+                  <input id="password" name="password" type="password" autocomplete="current-password"
+                    placeholder="Enter your password"
+                    class="w-full rounded-lg border border-white/10 bg-white/0 px-4 py-3 text-sm text-white placeholder-gray-300 focus:outline-none focus:ring-2 focus:ring-white/20 pr-20" />
+                  <button type="button" id="togglePwd" class="absolute right-2 top-1/2 -translate-y-1/2 text-xs text-gray-300 hover:text-white">Show</button>
+                </div>
+              </div>
+              <div class="flex items-center justify-between text-xs text-gray-300">
+                <label class="flex items-center gap-2 cursor-pointer">
+                  <input id="remember" type="checkbox" class="h-4 w-4 border border-gray-500 bg-transparent rounded" />
+                  <span>Remember password</span>
+                </label>
+                <a href="#" id="forgot" class="hover:text-gray-100">Forgot password? Reset</a>
+              </div>
+              <button type="submit" class="w-full mt-2 py-3 rounded-full bg-white text-black font-semibold shadow-sm hover:bg-gray-100 transition text-sm">
+                Log in
+              </button>
+              <div class="flex items-center gap-3 my-4">
+                <div class="h-px bg-white/20 flex-1"></div>
+                <span class="text-xs text-gray-300 font-normal">OR</span>
+                <div class="h-px bg-white/20 flex-1"></div>
+              </div>
+              <button type="button" id="googleBtn"
+                class="w-full flex items-center justify-center gap-2 py-2.5 rounded-lg border border-white/20 bg-white/10 text-white hover:bg-white/20 transition text-sm font-medium">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 48 48"><path fill="#EA4335" d="M24 9.5c3.54 0 6.19 1.52 8.07 2.8l6-6C35.55 3.12 30.9 1 24 1 14.98 1 7.54 6.74 4.1 14.5l7.46 5.8C13.2 15.05 18.13 9.5 24 9.5z"/><path fill="#34A853" d="M46.5 24.5c0-1.53-.12-2.68-.37-3.86H24v7.25h12.87c-.55 3-2.7 6.1-6.47 8l6.28 4.86C43.76 37.82 46.5 31.71 46.5 24.5z"/><path fill="#4A90E2" d="M11.56 28.3A14.7 14.7 0 0111 24.5c0-1.67.28-3.28.78-4.78L4.31 13.92A23.98 23.98 0 001 24.5c0 3.36.8 6.53 2.31 9.33l8.24-5.53z"/><path fill="#FBBC05" d="M24 46.5c6.9 0 11.55-2.12 15.62-5.77l-7.46-5.8C30.19 34.22 27.6 35 24 35c-5.87 0-10.8-5.55-12.44-13.08l-7.46 5.8C7.54 41.76 14.98 46.5 24 46.5z"/></svg>
+                <span>Google</span>
+              </button>
+              <p class="text-center text-xs text-gray-300 mt-6">
+                Don't have an account? <a href="#signup" class="text-white font-medium hover:text-gray-100">Sign up</a>
+              </p>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- JS Password toggle and demo handlers -->
+  <script>
+    const togglePwdBtn = document.getElementById('togglePwd');
+    const passwordInput = document.getElementById('password');
+
+    togglePwdBtn.addEventListener('click', () => {
+      if (passwordInput.type === 'password') {
+        passwordInput.type = 'text';
+        togglePwdBtn.textContent = 'Hide';
+      } else {
+        passwordInput.type = 'password';
+        togglePwdBtn.textContent = 'Show';
+      }
+    });
+
+    document.getElementById('loginForm').addEventListener('submit', (e) => {
+      e.preventDefault();
+      const email = document.getElementById('email').value.trim();
+      const password = passwordInput.value;
+      if (!email || !password) {
+        alert('Please enter your email/phone and password.');
+        return;
+      }
+      alert(`Logging in as: ${email}`);
+    });
+
+    document.getElementById('googleBtn').addEventListener('click', () => {
+      alert('Google Sign-In (demo)');
+    });
+
+    document.getElementById('forgot').addEventListener('click', (e) => {
+      e.preventDefault();
+      alert('Forgot/Reset Password Flow (demo)');
+    });
+
+    document.querySelector('a[href="#signup"]').addEventListener('click', (e) => {
+      e.preventDefault();
+      alert('Sign Up Flow (demo)');
+    });
+  </script>
+</body>
+</html>

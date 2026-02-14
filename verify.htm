@@ -1,0 +1,218 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Verify Your Business</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+      <link href="https://fonts.googleapis.com/css2?family=Google+Sans+Flex&display=swap" rel="stylesheet">
+      <link rel="icon" type="image/png" href="img/logan.png">
+
+
+  <style>
+    /* Apply Google Sans Flex globally */
+    body {
+      font-family: "Google Sans Flex", ui-sans-serif, system-ui, -apple-system,
+                   "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans",
+                   "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+    }
+
+    /* Optional utility class if you want to apply specifically */
+    .google-sans {
+      font-family: "Google Sans Flex", ui-sans-serif, system-ui, -apple-system,
+                   "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans",
+                   "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+    }
+    /* small custom styles to match the design */
+    .left-visual {
+      background-image: url('img/coin.jpg');
+      background-size: cover;
+      background-position: center;
+    }
+    /* subtle focus for dashed file boxes */
+    .file-chooser:focus {
+      outline: none;
+      box-shadow: 0 0 0 4px rgba(29,78,216,0.08);
+    }
+  </style>
+</head>
+<body class="antialiased text-gray-800 bg-white">
+  <div class="min-h-screen flex">
+    <!-- LEFT VISUAL -->
+    <aside class="hidden lg:block w-1/2 left-visual relative">
+      <!-- small logo top-left -->
+      <div class="absolute top-6 left-6">
+        <div class="flex items-center gap-2">
+        <img 
+              src="img/logan.png" 
+              alt="Logo" 
+              class="w-8 h-8 rounded object-cover bg-white/80 p-1"
+            />       
+           </div>
+      </div>
+      <!-- vertical separator accent -->
+      <div class="absolute inset-y-0 right-0 w-1 bg-blue-500/80"></div>
+    </aside>
+
+    <!-- RIGHT FORM -->
+    <main class="flex-1 flex items-center justify-center py-12 px-6 lg:px-20">
+      <div class="w-full max-w-xl">
+        <header class="text-center mb-8">
+          <h1 class="text-2xl lg:text-3xl font-semibold">Verify Your Business</h1>
+          <p class="mt-3 text-sm text-gray-500">Complete your verification to build trust and unlock full platform features</p>
+        </header>
+
+        <form id="verifyForm" class="space-y-6">
+          <!-- Row: Upload your ID (select + file chooser) -->
+          <div class="grid grid-cols-12 gap-4 items-center">
+            <div class="col-span-12 sm:col-span-8">
+              <label class="block text-xs text-gray-600 mb-2">Upload your ID</label>
+              <div class="relative">
+                <select id="idType" class="w-full border border-gray-200 rounded-md py-3 px-3 text-sm bg-white">
+                  <option value="" disabled selected>Choose type</option>
+                  <option>National ID</option>
+                  <option>International Passport</option>
+                  <option>Driver's License</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="col-span-12 sm:col-span-4 flex justify-start sm:justify-end">
+              <button type="button" class="file-chooser w-40 h-12 rounded-lg border-2 border-dashed border-gray-300 text-sm text-gray-600 flex items-center justify-center gap-2 px-3 bg-white"
+                      data-target="idFile">
+                <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4 text-gray-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4" />
+                </svg>
+                Choose file
+                <input id="idFile" type="file" accept="image/*,.pdf" class="hidden" />
+              </button>
+            </div>
+          </div>
+
+          <!-- Business Registration -->
+          <div class="grid grid-cols-12 gap-4 items-center">
+            <div class="col-span-12 sm:col-span-8">
+              <label class="block text-xs text-gray-600 mb-2">Business Registration</label>
+              <input id="businessReg" type="text" placeholder="Upload CAC" class="w-full border border-gray-200 rounded-md py-3 px-3 text-sm bg-white" />
+            </div>
+
+            <div class="col-span-12 sm:col-span-4 flex justify-start sm:justify-end">
+              <button type="button" class="file-chooser w-40 h-12 rounded-lg border-2 border-dashed border-gray-300 text-sm text-gray-600 flex items-center justify-center gap-2 px-3 bg-white"
+                      data-target="cacFile">
+                <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4 text-gray-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4" />
+                </svg>
+                Choose file
+                <input id="cacFile" type="file" accept="image/*,.pdf" class="hidden" />
+              </button>
+            </div>
+          </div>
+
+          <!-- Office License -->
+          <div class="grid grid-cols-12 gap-4 items-center">
+            <div class="col-span-12 sm:col-span-8">
+              <label class="block text-xs text-gray-600 mb-2">Office License</label>
+              <input id="officeLicense" type="text" placeholder="Upload license" class="w-full border border-gray-200 rounded-md py-3 px-3 text-sm bg-white" />
+            </div>
+
+            <div class="col-span-12 sm:col-span-4 flex justify-start sm:justify-end">
+              <button type="button" class="file-chooser w-40 h-12 rounded-lg border-2 border-dashed border-gray-300 text-sm text-gray-600 flex items-center justify-center gap-2 px-3 bg-white"
+                      data-target="licenseFile">
+                <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4 text-gray-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4" />
+                </svg>
+                Choose file
+                <input id="licenseFile" type="file" accept="image/*,.pdf" class="hidden" />
+              </button>
+            </div>
+          </div>
+
+          <!-- Tax Identification Number -->
+          <div class="grid grid-cols-12 gap-4 items-center">
+            <div class="col-span-12 sm:col-span-8">
+              <label class="block text-xs text-gray-600 mb-2">Tax Identification Number</label>
+              <input id="tin" type="text" placeholder="Upload TIN" class="w-full border border-gray-200 rounded-md py-3 px-3 text-sm bg-white" />
+            </div>
+
+            <div class="col-span-12 sm:col-span-4 flex justify-start sm:justify-end">
+              <button type="button" class="file-chooser w-40 h-12 rounded-lg border-2 border-dashed border-gray-300 text-sm text-gray-600 flex items-center justify-center gap-2 px-3 bg-white"
+                      data-target="tinFile">
+                <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4 text-gray-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4" />
+                </svg>
+                Choose file
+                <input id="tinFile" type="file" accept="image/*,.pdf" class="hidden" />
+              </button>
+            </div>
+          </div>
+
+          <!-- Business Information group -->
+          <div class="space-y-4 pt-2">
+            <div>
+              <label class="block text-xs text-gray-600 mb-2">Business Information</label>
+              <input id="businessName" type="text" placeholder="Business name" class="w-full border border-gray-200 rounded-md py-3 px-3 text-sm bg-white mb-3" />
+              <input id="officeAddress" type="text" placeholder="Office address" class="w-full border border-gray-200 rounded-md py-3 px-3 text-sm bg-white mb-3" />
+              <input id="experience" type="text" placeholder="Years of experience" class="w-full border border-gray-200 rounded-md py-3 px-3 text-sm bg-white" />
+            </div>
+          </div>
+
+          <!-- Submit -->
+          <div>
+            <button id="submitBtn" type="submit" class="w-full bg-blue-900 hover:bg-blue-800 text-white py-3 rounded-full text-sm font-medium shadow-sm">
+              Submit for review
+            </button>
+            <p class="mt-3 text-center text-xs text-gray-500">Your documents will be reviewed within 24–48 hours</p>
+          </div>
+        </form>
+      </div>
+    </main>
+  </div>
+
+  <script>
+    // Wire up the dashed "Choose file" buttons so clicking them opens the hidden input,
+    // and show a short toast with filename (basic UX).
+    document.querySelectorAll('.file-chooser').forEach(btn => {
+      const targetId = btn.getAttribute('data-target');
+      const input = btn.querySelector('input[type="file"]') || document.getElementById(targetId);
+
+      // If input is nested use that, otherwise find by id
+      const fileInput = input || document.getElementById(targetId);
+
+      btn.addEventListener('click', () => {
+        if (fileInput) fileInput.click();
+      });
+
+      if (fileInput) {
+        fileInput.addEventListener('change', (e) => {
+          const file = e.target.files[0];
+          if (!file) return;
+          // short filename display inside the button
+          btn.innerHTML = `
+            <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4 text-gray-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4" />
+            </svg>
+            ${file.name.length > 18 ? file.name.slice(0,18) + '…' : file.name}
+          `;
+        });
+      }
+    });
+
+    // Simple client-side submit handling
+    document.getElementById('verifyForm').addEventListener('submit', function (e) {
+      e.preventDefault();
+      const submitBtn = document.getElementById('submitBtn');
+      submitBtn.disabled = true;
+      submitBtn.innerText = 'Submitting...';
+
+      // fake async submit
+      setTimeout(() => {
+        alert('Submitted for review — your documents will be reviewed within 24–48 hours.');
+        submitBtn.disabled = false;
+        submitBtn.innerText = 'Submit for review';
+        // optionally reset form
+        // this.reset();
+      }, 900);
+    });
+  </script>
+</body>
+</html>

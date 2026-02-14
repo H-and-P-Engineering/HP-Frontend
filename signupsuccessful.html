@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1"/>
+  <title>Verification Successful</title>
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Google Sans Flex font -->
+  <link href="https://fonts.googleapis.com/css2?family=Google+Sans+Flex:wght@400;500;700&display=swap" rel="stylesheet">
+          <link rel="icon" type="image/png" href="img/logan.png">
+
+  <style>
+    html, body, * {
+      font-family: 'Google Sans Flex', ui-sans-serif, sans-serif !important;
+    }
+  </style>
+</head>
+<body class="min-h-screen bg-gray-900">
+  <div class="relative min-h-screen w-full bg-cover bg-center" style="background-image: url('img/create.png');">
+    <!-- Dark overlay to make background darker -->
+    <div class="absolute inset-0 bg-black/50"></div>
+    <!-- Logo -->
+    <div class="absolute top-6 left-6 z-20">
+      <div class="w-10 h-10 flex items-center justify-center font-bold text-white text-sm tracking-tight">
+      </div>
+    </div>
+
+    <!-- Success Dialog -->
+    <div class="relative z-10 flex items-center justify-center min-h-screen px-2">
+      <div class="w-full max-w-md rounded-2xl bg-white/95 shadow-xl p-8 flex flex-col items-center text-center">
+        <span class="text-lg md:text-xl font-medium text-gray-900 mb-7 mt-2">Verification Successful</span>
+        <div class="flex items-center justify-center mb-2">
+          <!-- Success green check SVG with green ring shadow -->
+          <span class="inline-flex rounded-full bg-green-100 p-2 shadow-lg">
+            <svg width="60" height="60" fill="none" viewBox="0 0 60 60">
+              <circle cx="30" cy="30" r="26" fill="#fff" />
+              <circle cx="30" cy="30" r="22" stroke="#17C964" stroke-width="3" fill="#DCFCE7"/>
+              <path d="M21 31.5 28 38l11-13" stroke="#17C964" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+            </svg>
+          </span>
+        </div>
+      </div>
+    </div>
+  </div>
+</body>
+</html>
